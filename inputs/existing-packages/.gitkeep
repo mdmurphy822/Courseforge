@@ -1,0 +1,15 @@
+# Existing IMSCC Packages Directory
+
+Place IMSCC packages here for intake and remediation processing.
+
+Supported package formats:
+- .imscc (IMS Common Cartridge)
+- .zip (containing imsmanifest.xml)
+
+The imscc-extractor will automatically detect source LMS:
+- Brightspace/D2L
+- Canvas
+- Blackboard
+- Moodle
+- Sakai
+- Generic IMSCC

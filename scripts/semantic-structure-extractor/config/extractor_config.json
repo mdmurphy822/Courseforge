@@ -1,0 +1,25 @@
+{
+  "chapter_heading_levels": [1, 2],
+  "section_heading_levels": [2, 3, 4],
+  "subsection_heading_levels": [4, 5, 6],
+  "min_procedure_steps": 2,
+  "min_example_words": 20,
+  "definition_patterns": {
+    "strong_colon": true,
+    "inline_definition": true,
+    "dl_element": true
+  },
+  "key_term_extraction": {
+    "strong_tags": true,
+    "em_tags": true,
+    "max_term_length": 100
+  },
+  "bloom_verb_patterns": {
+    "remember": ["define", "list", "recall", "identify", "name", "state", "label", "match", "recognize"],
+    "understand": ["explain", "describe", "summarize", "classify", "compare", "interpret", "discuss"],
+    "apply": ["demonstrate", "implement", "solve", "use", "execute", "apply", "compute", "calculate"],
+    "analyze": ["analyze", "differentiate", "examine", "distinguish", "organize"],
+    "evaluate": ["evaluate", "assess", "critique", "justify", "judge", "argue", "defend"],
+    "create": ["create", "design", "construct", "develop", "formulate", "compose", "plan"]
+  }
+}

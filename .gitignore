@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+venv/
+.venv/
+
+# Generated outputs
+*.imscc
+*.zip
+exports/*
+!exports/.gitkeep
+
+# Keep examples
+!examples/
+!examples/*.imscc
+
+# Archive contents (keep structure)
+archive/debug-logs/*
+archive/old-exports/*
+archive/legacy/*
+!archive/**/.gitkeep
+
+# Downloaded assets
+runtime/agent_workspaces/downloads/*
+!runtime/agent_workspaces/downloads/.gitkeep
+
+# Input materials (user-provided)
+inputs/textbooks/*
+inputs/design-books/*
+inputs/exam-objectives/*
+inputs/existing-packages/*
+!inputs/**/.gitkeep
+
+# Local config
+.claude/settings.local.json
+.env
+.env.local
+
+# IDE/Editor
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

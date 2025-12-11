@@ -1,0 +1,40 @@
+# Courseforge Scripts Dependencies
+# Install with: pip install -r requirements.txt
+
+# HTML/XML Parsing
+beautifulsoup4>=4.9.0
+lxml>=4.6.0
+
+# Image Processing (for accessibility validation)
+Pillow>=8.0.0
+
+# Date/Time Utilities
+python-dateutil>=2.8.0
+
+# File Type Detection
+python-magic>=0.4.24
+
+# JSON Schema Validation
+jsonschema>=4.0.0
+
+# YAML Configuration Support
+PyYAML>=6.0
+
+# Testing Framework
+pytest>=7.0.0
+pytest-cov>=4.0.0
+
+# Code Quality
+flake8>=6.0.0
+
+# Accessibility Testing
+wcag-contrast-ratio>=0.9
+
+# Progress Bars (for CLI tools)
+tqdm>=4.64.0
+
+# Rich Console Output
+rich>=13.0.0
+
+# Type Hints Support
+typing-extensions>=4.0.0
