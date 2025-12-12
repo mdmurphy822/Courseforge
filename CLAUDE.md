@@ -12,7 +12,7 @@ AI-powered instructional design system that creates and remediates accessible, L
 
 ### Course Intake/Remediation Mode (NEW)
 **Input**: Any IMSCC package (Canvas, Blackboard, Moodle, Brightspace, etc.)
-**Output**: Fully accessible, enhanced IMSCC with 100% WCAG 2.1 AA compliance
+**Output**: Fully accessible, enhanced IMSCC with 100% WCAG 2.2 AA compliance
 
 ---
 
@@ -185,7 +185,7 @@ Textbooks must be pre-processed through DART before use:
    cd $DART_PATH
    python convert.py textbook.pdf -o /path/to/courseforge/inputs/textbooks/
    ```
-2. DART produces WCAG 2.1 AA accessible HTML
+2. DART produces WCAG 2.2 AA accessible HTML
 3. Place output in `inputs/textbooks/`
 4. Reference in course generation
 
@@ -266,7 +266,7 @@ Courseforge can import and remediate IMSCC packages from:
 4. content-analyzer identifies remediation needs
 5. Parallel remediation:
    - dart-automation-coordinator: PDFs/Office → accessible HTML
-   - accessibility-remediation: WCAG 2.1 AA fixes
+   - accessibility-remediation: WCAG 2.2 AA fixes
    - content-quality-remediation: Educational enhancements
    - intelligent-design-mapper: Interactive component styling
 6. remediation-validator: Final quality validation

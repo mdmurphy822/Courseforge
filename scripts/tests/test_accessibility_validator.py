@@ -1,6 +1,6 @@
 """
 Tests for the Accessibility Validator Module
-WCAG 2.1 AA Compliance Testing
+WCAG 2.2 AA Compliance Testing
 """
 
 import pytest
@@ -39,7 +39,7 @@ class TestAccessibilityValidator:
         assert report.total_issues > 0
 
         # Should have critical issues for missing alt
-        alt_issues = [i for i in report.issues if 'alt' in i.description.lower()]
+        alt_issues = [i for i in report.issues if 'alt' in i.message.lower()]
         assert len(alt_issues) > 0
 
     @pytest.mark.unit
@@ -51,7 +51,7 @@ class TestAccessibilityValidator:
 
         # Should not have alt text issues for this file
         alt_issues = [i for i in report.issues
-                      if 'alt' in i.description.lower() and 'missing' in i.description.lower()]
+                      if 'alt' in i.message.lower() and 'missing' in i.message.lower()]
         assert len(alt_issues) == 0
 
     @pytest.mark.unit
@@ -88,7 +88,7 @@ class TestAccessibilityValidator:
         report = validator.validate_file(html_path)
 
         # Should find heading hierarchy issues
-        heading_issues = [i for i in report.issues if 'heading' in i.description.lower()]
+        heading_issues = [i for i in report.issues if 'heading' in i.message.lower()]
         assert len(heading_issues) > 0
 
     @pytest.mark.unit
@@ -100,7 +100,7 @@ class TestAccessibilityValidator:
 
         # Should not have heading skip issues
         skip_issues = [i for i in report.issues
-                       if 'heading' in i.description.lower() and 'skip' in i.description.lower()]
+                       if 'heading' in i.message.lower() and 'skip' in i.message.lower()]
         assert len(skip_issues) == 0
 
     @pytest.mark.unit
@@ -123,7 +123,7 @@ class TestAccessibilityValidator:
         report = validator.validate_file(html_path)
 
         # Should flag multiple H1s
-        h1_issues = [i for i in report.issues if 'h1' in i.description.lower()]
+        h1_issues = [i for i in report.issues if 'h1' in i.message.lower()]
         assert len(h1_issues) > 0 or report.total_issues > 0
 
     # =========================================================================
@@ -139,7 +139,7 @@ class TestAccessibilityValidator:
 
         # Should find form/label issues
         form_issues = [i for i in report.issues
-                       if 'label' in i.description.lower() or 'form' in i.description.lower()]
+                       if 'label' in i.message.lower() or 'form' in i.message.lower()]
         assert len(form_issues) > 0
 
     @pytest.mark.unit
@@ -151,7 +151,7 @@ class TestAccessibilityValidator:
 
         # Should not have label association issues
         label_issues = [i for i in report.issues
-                        if 'label' in i.description.lower() and 'missing' in i.description.lower()]
+                        if 'label' in i.message.lower() and 'missing' in i.message.lower()]
         assert len(label_issues) == 0
 
     # =========================================================================
@@ -173,7 +173,7 @@ class TestAccessibilityValidator:
         report = validator.validate_file(html_path)
 
         # Should flag missing lang
-        lang_issues = [i for i in report.issues if 'lang' in i.description.lower()]
+        lang_issues = [i for i in report.issues if 'lang' in i.message.lower()]
         assert len(lang_issues) > 0
 
     @pytest.mark.unit
@@ -185,7 +185,7 @@ class TestAccessibilityValidator:
 
         # Should not have lang attribute issues
         lang_issues = [i for i in report.issues
-                       if 'lang' in i.description.lower() and 'missing' in i.description.lower()]
+                       if 'lang' in i.message.lower() and 'missing' in i.message.lower()]
         assert len(lang_issues) == 0
 
     # =========================================================================
@@ -212,7 +212,7 @@ class TestAccessibilityValidator:
         report = validator.validate_file(html_path)
 
         # Should flag generic link text
-        link_issues = [i for i in report.issues if 'link' in i.description.lower()]
+        link_issues = [i for i in report.issues if 'link' in i.message.lower()]
         assert len(link_issues) > 0
 
     @pytest.mark.unit
@@ -224,7 +224,7 @@ class TestAccessibilityValidator:
 
         # Should not have generic link text issues
         generic_link_issues = [i for i in report.issues
-                               if 'click here' in i.description.lower()]
+                               if 'click here' in i.message.lower()]
         assert len(generic_link_issues) == 0
 
     # =========================================================================
@@ -258,7 +258,7 @@ class TestAccessibilityValidator:
         report = validator.validate_file(html_path)
 
         # Should flag table without headers
-        table_issues = [i for i in report.issues if 'table' in i.description.lower()]
+        table_issues = [i for i in report.issues if 'table' in i.message.lower()]
         assert len(table_issues) > 0 or report.total_issues > 0
 
     @pytest.mark.unit
@@ -270,7 +270,7 @@ class TestAccessibilityValidator:
 
         # Should not have table header issues
         table_header_issues = [i for i in report.issues
-                               if 'table' in i.description.lower() and 'header' in i.description.lower()]
+                               if 'table' in i.message.lower() and 'header' in i.message.lower()]
         # Accessible content should have minimal table issues
         assert len(table_header_issues) <= 1
 
@@ -294,7 +294,7 @@ class TestAccessibilityValidator:
         report = validator.validate_file(html_path)
 
         # Should flag missing main
-        main_issues = [i for i in report.issues if 'main' in i.description.lower()]
+        main_issues = [i for i in report.issues if 'main' in i.message.lower()]
         assert len(main_issues) > 0 or report.total_issues > 0
 
     @pytest.mark.unit
@@ -306,7 +306,7 @@ class TestAccessibilityValidator:
 
         # Should not have missing landmark issues
         landmark_issues = [i for i in report.issues
-                           if 'landmark' in i.description.lower() and 'missing' in i.description.lower()]
+                           if 'landmark' in i.message.lower() and 'missing' in i.message.lower()]
         assert len(landmark_issues) == 0
 
     # =========================================================================
@@ -336,7 +336,7 @@ class TestAccessibilityValidator:
         report = validator.validate_file(html_path)
 
         # May recommend skip link
-        skip_issues = [i for i in report.issues if 'skip' in i.description.lower()]
+        skip_issues = [i for i in report.issues if 'skip' in i.message.lower()]
         # Skip link is recommended but may not be critical
         assert report is not None
 
@@ -349,7 +349,7 @@ class TestAccessibilityValidator:
 
         # Should not have missing skip link issues
         skip_issues = [i for i in report.issues
-                       if 'skip' in i.description.lower() and 'missing' in i.description.lower()]
+                       if 'skip' in i.message.lower() and 'missing' in i.message.lower()]
         assert len(skip_issues) == 0
 
     # =========================================================================

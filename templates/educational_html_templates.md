@@ -9,7 +9,7 @@ This repository documents researched educational HTML templates that are suitabl
 
 #### **Basic Lesson Template**
 - **Use Case**: Standard weekly content modules
-- **Accessibility**: WCAG 2.1 AA compliant
+- **Accessibility**: WCAG 2.2 AA compliant
 - **Brightspace Compatible**: ✅ Yes
 - **Features**: Self-contained, embedded CSS, clear hierarchy
 - **File**: `templates/lesson_basic.html`
@@ -101,7 +101,7 @@ This repository documents researched educational HTML templates that are suitabl
 
 #### **Interactive Lesson Template**
 - **Use Case**: Lessons with expandable sections and interactive elements
-- **Accessibility**: WCAG 2.1 AA compliant with keyboard navigation
+- **Accessibility**: WCAG 2.2 AA compliant with keyboard navigation
 - **Brightspace Compatible**: ✅ Yes (HTML5 only, no JavaScript)
 - **Features**: Collapsible sections, progress indicators, accessibility features
 
@@ -117,7 +117,7 @@ This repository documents researched educational HTML templates that are suitabl
 
 #### **Case Study Template**
 - **Use Case**: Problem-based learning scenarios
-- **Accessibility**: WCAG 2.1 AA compliant
+- **Accessibility**: WCAG 2.2 AA compliant
 - **Brightspace Compatible**: ✅ Yes
 - **Features**: Scenario presentation, analysis framework
 
@@ -150,7 +150,7 @@ This repository documents researched educational HTML templates that are suitabl
 #### **3. Accessible+ Template**
 - **Source**: accessible-template.com
 - **License**: Commercial (accessible version available)
-- **Accessibility**: WCAG 2.1 AA compliant
+- **Accessibility**: WCAG 2.2 AA compliant
 - **Features**: Bootstrap-based, accessibility-first design
 - **Brightspace Compatibility**: Good potential with modifications
 - **Status**: Evaluating free components
@@ -167,7 +167,7 @@ This repository documents researched educational HTML templates that are suitabl
 
 ## Accessibility Standards Applied
 
-### WCAG 2.1 AA Compliance Checklist
+### WCAG 2.2 AA Compliance Checklist
 - [ ] Proper heading hierarchy (H1-H6)
 - [ ] Sufficient color contrast (4.5:1 for normal text)
 - [ ] Alternative text for images

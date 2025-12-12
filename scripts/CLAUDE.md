@@ -87,7 +87,7 @@ Create separate, focused scripts for each major function:
 **Critical Requirements**:
 - Bootstrap 4.3.1 framework with CDN fallbacks
 - Interactive accordion functionality for key concepts
-- WCAG 2.1 AA accessibility compliance
+- WCAG 2.2 AA accessibility compliance
 - Responsive design for mobile compatibility
 - Professional typography and visual hierarchy
 - Consistent styling across all pages
@@ -267,7 +267,7 @@ def handle_error(error_type, error_message, context):
 - [ ] Generate valid IMSCC packages that import successfully to Brightspace
 - [ ] Create native assessment tools (assignments, quizzes, discussions)
 - [ ] Ensure all content displays correctly with professional formatting
-- [ ] Maintain WCAG 2.1 AA accessibility compliance
+- [ ] Maintain WCAG 2.2 AA accessibility compliance
 - [ ] Support responsive design across all devices
 
 ### Technical Requirements

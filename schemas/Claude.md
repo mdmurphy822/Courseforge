@@ -25,7 +25,7 @@ Assessment integration schemas for native Brightspace tools:
 - Gradebook integration specifications
 
 ### `/accessibility/`
-WCAG 2.1 AA compliance schemas and validation rules:
+WCAG 2.2 AA compliance schemas and validation rules:
 - Accessibility markup requirements
 - Screen reader compatibility specifications
 - Keyboard navigation standards

@@ -229,10 +229,10 @@
             "colorContrast": {
               "type": "object",
               "properties": {
-                "wcag21Compliance": {
+                "wcag22Compliance": {
                   "type": "boolean",
                   "default": true,
-                  "description": "Bootstrap 5 improved WCAG 2.1 compliance"
+                  "description": "Bootstrap 5 improved WCAG 2.2 compliance"
                 },
                 "contrastRatios": {
                   "type": "object",
@@ -560,7 +560,7 @@
                 "type": "string"
               },
               "default": [
-                "WCAG 2.1 AA compliance maintained",
+                "WCAG 2.2 AA compliance maintained",
                 "Keyboard navigation functionality",
                 "Screen reader compatibility",
                 "Color contrast ratios met",

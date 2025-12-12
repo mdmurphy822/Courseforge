@@ -323,7 +323,7 @@ Task(
     2. Select optimal component from template library
     3. Transform content to interactive components
     4. Apply consistent Courseforge styling
-    5. Ensure accessibility preserved (WCAG 2.1 AA)
+    5. Ensure accessibility preserved (WCAG 2.2 AA)
     6. Validate Brightspace compatibility
     7. Generate component mapping report
 
@@ -344,7 +344,7 @@ From `templates/` directory:
 
 ### CSS Framework
 - Bootstrap 4.3.1 with Courseforge customizations
-- WCAG 2.1 AA compliant color palette
+- WCAG 2.2 AA compliant color palette
 - Responsive breakpoints for mobile compatibility
 
 ## Quality Gates

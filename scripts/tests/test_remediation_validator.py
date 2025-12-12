@@ -32,7 +32,7 @@ class TestRemediationValidator:
     @pytest.mark.unit
     @pytest.mark.accessibility
     def test_validates_wcag_compliance(self, validator, temp_course_dir):
-        """Test WCAG 2.1 AA compliance validation"""
+        """Test WCAG 2.2 AA compliance validation"""
         v = validator(temp_course_dir)
         report = v.validate()
 

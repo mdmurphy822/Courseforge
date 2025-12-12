@@ -3,7 +3,7 @@
 
 """
 This module transforms plain HTML content into engaging, interactive
-course materials using the Courseforge template library with WCAG 2.1 AA
+course materials using the Courseforge template library with WCAG 2.2 AA
 accessibility compliance.
 """
 

@@ -1,6 +1,6 @@
 <!--
     Accessible Form Template
-    WCAG 2.1 AA Compliant
+    WCAG 2.2 AA Compliant
 
     Features:
     - Explicit label associations
@@ -216,13 +216,25 @@
         font-weight: bold;
     }
 
-    /* Enhanced focus indicators */
+    /* WCAG 2.2 2.4.13 Focus Appearance - minimum 2px outline with 3:1 contrast */
     .form-control:focus,
     .form-check-input:focus {
         border-color: #2c5aa0;
         box-shadow: 0 0 0 0.2rem rgba(44, 90, 160, 0.25);
-        outline: 3px solid #ffc107;
+        outline: 2px solid #2c5aa0;
         outline-offset: 2px;
+    }
+
+    /* WCAG 2.2 2.5.8 Target Size (Minimum) - 24x24 CSS pixels */
+    a, button, input, select, textarea, [role="button"], [tabindex="0"] {
+        min-height: 24px;
+        min-width: 24px;
+    }
+
+    /* WCAG 2.2 2.4.11/2.4.12 Focus Not Obscured */
+    *:focus {
+        scroll-margin-top: 80px;
+        scroll-margin-bottom: 80px;
     }
 
     /* Error state styling */

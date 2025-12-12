@@ -44,7 +44,7 @@ Configuration files located in `config/` subdirectory:
 - Single `.imscc` file ready for Brightspace import
 - IMS Common Cartridge 1.2.0 compliant structure
 - Native Brightspace assessment tool integration
-- WCAG 2.1 AA accessibility compliance
+- WCAG 2.2 AA accessibility compliance
 
 ## Dependencies
 

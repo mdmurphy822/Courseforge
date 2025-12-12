@@ -76,7 +76,7 @@ Complete collection of tools for creating IMS Common Cartridge (.imscc) packages
 Extracts and structures content from markdown course materials into JSON format for HTML generation.
 
 ### `/html-generator/` - Web Content Creation  
-Converts structured content JSON into HTML pages with Bootstrap framework and WCAG 2.1 AA accessibility compliance.
+Converts structured content JSON into HTML pages with Bootstrap framework and WCAG 2.2 AA accessibility compliance.
 
 ### `/assessment-xml-generator/` - Assessment Tools
 Creates native Brightspace assessment objects (QTI, D2L XML) for assignments, quizzes, and discussions.

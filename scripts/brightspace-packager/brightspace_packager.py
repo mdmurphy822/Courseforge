@@ -1285,7 +1285,7 @@ Export Directory: {self.export_directory}
 - Validation Report: {report_path}
 
 ## Notes
-This package was generated using the enhanced Brightspace Package Generator with full export directory management and WCAG 2.1 AA accessibility compliance.
+This package was generated using the enhanced Brightspace Package Generator with full export directory management and WCAG 2.2 AA accessibility compliance.
 """
         
         with open(report_path, 'w', encoding='utf-8') as f:

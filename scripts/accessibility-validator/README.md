@@ -1,10 +1,10 @@
 # Accessibility Validator
 
-WCAG 2.1 AA compliance checker for HTML educational content.
+WCAG 2.2 AA compliance checker for HTML educational content.
 
 ## Overview
 
-The Accessibility Validator performs comprehensive accessibility checks on HTML content to ensure compliance with WCAG 2.1 AA guidelines. It identifies issues with images, headings, forms, tables, links, and more.
+The Accessibility Validator performs comprehensive accessibility checks on HTML content to ensure compliance with WCAG 2.2 AA guidelines. It identifies issues with images, headings, forms, tables, links, and more.
 
 ## Features
 
@@ -69,7 +69,7 @@ python accessibility_validator.py --input page.html --strict
 ### Text Report
 ```
 ======================================================================
-WCAG 2.1 AA ACCESSIBILITY VALIDATION REPORT
+WCAG 2.2 AA ACCESSIBILITY VALIDATION REPORT
 ======================================================================
 File: content/week_01_overview.html
 Timestamp: 2025-12-08T10:30:00
@@ -80,7 +80,7 @@ Total Issues: 5
   Medium: 2
   Low: 0
 ----------------------------------------------------------------------
-WCAG 2.1 AA Compliant: NO
+WCAG 2.2 AA Compliant: NO
 ======================================================================
 
 ISSUES FOUND:

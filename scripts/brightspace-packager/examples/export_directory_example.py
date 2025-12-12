@@ -150,5 +150,5 @@ if __name__ == "__main__":
     print(f"\nNext Steps:")
     print(f"1. Test with actual course content from firstdraft directories")
     print(f"2. Verify Brightspace import compatibility") 
-    print(f"3. Validate WCAG 2.1 AA accessibility compliance")
+    print(f"3. Validate WCAG 2.2 AA accessibility compliance")
     print(f"4. Run OSCQR evaluation on generated packages")

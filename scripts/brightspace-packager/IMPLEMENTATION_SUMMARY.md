@@ -120,7 +120,7 @@ Validation Report Path: /path/to/courseforge/exports/YYYYMMDD_HHMMSS/validation_
 ### 1. Bootstrap Accordion Integration
 - Individual HTML objects for each learning objective
 - Interactive expand/collapse functionality
-- WCAG 2.1 AA accessibility compliance
+- WCAG 2.2 AA accessibility compliance
 - Mobile-responsive design
 
 ### 2. Native Assessment Tools
@@ -177,7 +177,7 @@ print(f"Export directory: {export_dir}")
 - **OSCQR Course Evaluator**: Automatic evaluation after package generation
 - **Schema Validation**: Real-time validation against `/schemas/` specifications
 - **Brightspace Import Testing**: Automated import compatibility verification
-- **Accessibility Testing**: WCAG 2.1 AA compliance validation
+- **Accessibility Testing**: WCAG 2.2 AA compliance validation
 
 ## Summary
 
@@ -201,6 +201,6 @@ The agent is now ready for production use and meets all specified requirements f
 - Dual package format support (IMSCC + D2L Export)  
 - Bootstrap 4.3.1 accordion functionality
 - Native Brightspace assessment integration
-- WCAG 2.1 AA accessibility compliance
+- WCAG 2.2 AA accessibility compliance
 - Configuration management and example usage
 - Comprehensive documentation and testing

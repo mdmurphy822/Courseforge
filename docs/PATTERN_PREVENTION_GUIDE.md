@@ -14,7 +14,7 @@ This guide documents patterns that can cause IMSCC import failures, accessibilit
 |----------|----------|--------|
 | Content Quality | 1, 4, 5, 7, 16, 22 | Educational effectiveness |
 | Technical/Manifest | 2, 3, 6, 8, 9, 10, 13 | Import failures |
-| Accessibility | 14, 15, 17, 18 | WCAG compliance |
+| Accessibility | 14, 15, 17, 18 | WCAG 2.2 compliance |
 | Assessment | 11, 12, 19, 20 | Grading functionality |
 | Structure | 21 | Navigation/organization |
 
@@ -251,7 +251,7 @@ def check_placeholder_content(html_content):
 
 ### Pattern 14: Missing Alt Text
 **Severity**: HIGH
-**Impact**: WCAG 2.1 AA failure
+**Impact**: WCAG 2.2 AA failure
 
 **Detection**:
 - `<img>` elements without `alt` attribute
@@ -283,7 +283,7 @@ def check_placeholder_content(html_content):
 
 ### Pattern 17: Insufficient Color Contrast
 **Severity**: HIGH
-**Impact**: WCAG 2.1 AA failure
+**Impact**: WCAG 2.2 AA failure
 
 **Detection**:
 - Text/background ratio below 4.5:1
@@ -402,7 +402,7 @@ def check_placeholder_content(html_content):
 - [ ] No duplicate identifiers
 - [ ] All images have alt text
 - [ ] Heading hierarchy is correct
-- [ ] Color contrast meets WCAG requirements
+- [ ] Color contrast meets WCAG 2.2 requirements
 - [ ] All assessments have point values
 - [ ] QTI schema validation passes
 - [ ] No circular dependencies
@@ -429,7 +429,7 @@ The quality-assurance agent validates against all 22 patterns before packaging. 
 
 ## References
 
-- [WCAG 2.1 AA Guidelines](https://www.w3.org/WAI/WCAG21/quickref/)
+- [WCAG 2.2 AA Guidelines](https://www.w3.org/WAI/WCAG22/quickref/)
 - [IMS Common Cartridge 1.2 Specification](https://www.imsglobal.org/cc/index.html)
 - [QTI 1.2 Specification](https://www.imsglobal.org/question/qtiv1p2/imsqti_asi_bindv1p2.html)
 - [Brightspace Import Requirements](https://community.d2l.com/)

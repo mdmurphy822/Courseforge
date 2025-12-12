@@ -1,6 +1,6 @@
 # Remediation Validator
 
-Comprehensive quality assurance validation for remediated course content, ensuring WCAG 2.1 AA compliance, OSCQR standards adherence, and Brightspace compatibility.
+Comprehensive quality assurance validation for remediated course content, ensuring WCAG 2.2 AA compliance, OSCQR standards adherence, and Brightspace compatibility.
 
 ## Overview
 
@@ -8,7 +8,7 @@ The Remediation Validator performs final quality assurance checks on course cont
 
 ## Features
 
-- **WCAG 2.1 AA compliance validation** - Automated accessibility checking
+- **WCAG 2.2 AA compliance validation** - Automated accessibility checking
 - **OSCQR standards adherence** - Educational quality metrics
 - **Brightspace compatibility testing** - LMS-specific validation
 - **Content integrity verification** - Broken link detection
@@ -44,7 +44,7 @@ python remediation_validator.py --files file1.html file2.html --output-dir /repo
 
 ## Validation Checks
 
-### WCAG 2.1 AA Accessibility
+### WCAG 2.2 AA Accessibility
 - **Images**: Alt text presence and quality
 - **Headings**: Proper hierarchy (no skipped levels)
 - **Links**: Descriptive link text (not "click here")

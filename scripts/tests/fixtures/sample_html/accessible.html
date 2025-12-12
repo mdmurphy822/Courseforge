@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accessible Test Page - WCAG 2.1 AA Compliant</title>
+    <title>Accessible Test Page - WCAG 2.2 AA Compliant</title>
     <style>
         .skip-link {
             position: absolute;
@@ -17,9 +17,22 @@
         .skip-link:focus {
             top: 0;
         }
-        a:focus, button:focus, input:focus {
-            outline: 3px solid #ffc107;
+        /* WCAG 2.2 2.4.13 Focus Appearance - minimum 2px outline with 3:1 contrast */
+        a:focus, button:focus, input:focus, select:focus, textarea:focus {
+            outline: 2px solid #2c5aa0;
             outline-offset: 2px;
+        }
+
+        /* WCAG 2.2 2.5.8 Target Size (Minimum) - 24x24 CSS pixels */
+        a, button, input, select, textarea, [role="button"], [tabindex="0"] {
+            min-height: 24px;
+            min-width: 24px;
+        }
+
+        /* WCAG 2.2 2.4.11/2.4.12 Focus Not Obscured */
+        *:focus {
+            scroll-margin-top: 80px;
+            scroll-margin-bottom: 80px;
         }
         /* Color contrast meets 4.5:1 minimum */
         body {
@@ -61,7 +74,7 @@
             <p>After completing this module, you will be able to:</p>
             <ul>
                 <li>Understand web accessibility fundamentals</li>
-                <li>Apply WCAG 2.1 AA guidelines to content</li>
+                <li>Apply WCAG 2.2 AA guidelines to content</li>
                 <li>Create accessible HTML structures</li>
             </ul>
         </section>

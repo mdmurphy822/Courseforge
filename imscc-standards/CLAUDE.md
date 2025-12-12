@@ -375,7 +375,7 @@ grep -r "imsccv1p3" *.xml  # Should find all IMSCC references
 - Include alt text for images
 - Use semantic HTML markup
 - Ensure keyboard navigation
-- Meet WCAG 2.1 AA standards
+- Meet WCAG 2.2 AA standards
 
 ### Maintainability
 - Use consistent naming conventions

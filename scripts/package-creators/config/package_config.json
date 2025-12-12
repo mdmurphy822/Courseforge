@@ -19,7 +19,7 @@
     "gradebook_integration": true
   },
   "accessibility": {
-    "wcag_compliance": "2.1_AA",
+    "wcag_compliance": "2.2_AA",
     "validate_alt_text": true,
     "keyboard_navigation": true,
     "screen_reader_support": true

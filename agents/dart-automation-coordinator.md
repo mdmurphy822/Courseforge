@@ -32,7 +32,7 @@ Coordinates parallel processing with optimal resource utilization:
 
 ### 3. Conversion Validation
 Validates all conversions meet accessibility standards:
-- WCAG 2.1 AA compliance verification
+- WCAG 2.2 AA compliance verification
 - Semantic HTML structure check
 - Image alt text presence
 - Heading hierarchy validation
@@ -74,7 +74,7 @@ Output: Converted HTML files + conversion report
 ```
 Input: Converted HTML files
 Process:
-  1. WCAG 2.1 AA compliance check
+  1. WCAG 2.2 AA compliance check
   2. Semantic structure validation
   3. Content integrity verification
   4. Navigation/linking check
@@ -105,7 +105,7 @@ Output: Updated course package with accessible content
 
 ### Conversion Output Standards
 All converted content must meet:
-- **WCAG 2.1 AA** - Full accessibility compliance
+- **WCAG 2.2 AA** - Full accessibility compliance
 - **Semantic HTML5** - Proper structure and landmarks
 - **Responsive Design** - Mobile-friendly layout
 - **Brightspace Compatible** - D2L import ready
@@ -151,7 +151,7 @@ Task(
     Requirements:
     1. Convert all PDFs to accessible HTML
     2. Convert all Office documents to accessible HTML
-    3. Validate WCAG 2.1 AA compliance
+    3. Validate WCAG 2.2 AA compliance
     4. Update course manifest with new resources
     5. Generate conversion report
 
@@ -217,7 +217,7 @@ Task(
 - [ ] LibreOffice available for Office documents
 
 ### Post-Conversion
-- [ ] All HTML files pass WCAG 2.1 AA validation
+- [ ] All HTML files pass WCAG 2.2 AA validation
 - [ ] Semantic structure present (headings, landmarks)
 - [ ] No broken links or missing resources
 - [ ] Content matches original (text comparison)

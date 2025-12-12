@@ -98,7 +98,7 @@ PROJECT_WORKSPACE/
 
 **Template Integration Features**:
 - **Bootstrap Framework Maintenance**: Preserve template's responsive design and component functionality
-- **Accessibility Compliance**: Maintain template's WCAG 2.1 AA features through conversion process
+- **Accessibility Compliance**: Maintain template's WCAG 2.2 AA features through conversion process
 - **Resource Management**: Use template's CDN integration and caching strategies for package efficiency
 - **Import Compatibility**: Follow template's proven file formats and organization for import success
 
@@ -231,7 +231,7 @@ for unit in course_outline.get_learning_units():
     - Assessment XML patterns proven to create functional Brightspace tools
     
     Input Content:
-    - Template-enhanced HTML with Bootstrap 4.3.1 and WCAG 2.1 AA compliance
+    - Template-enhanced HTML with Bootstrap 4.3.1 and WCAG 2.2 AA compliance
     - Pattern 22 prevented content with comprehensive educational depth
     - Modules with substantial theoretical foundations and authentic examples (count per course outline)
     - Assessment-aligned content supporting QTI quiz and D2L assignment creation

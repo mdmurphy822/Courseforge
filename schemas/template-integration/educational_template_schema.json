@@ -25,7 +25,7 @@
         "accessibilityLevel": {
           "type": "string",
           "enum": ["WCAG_2.0_AA", "WCAG_2.1_AA", "WCAG_2.2_AA"],
-          "default": "WCAG_2.1_AA",
+          "default": "WCAG_2.2_AA",
           "description": "Accessibility compliance level"
         },
         "brighspaceCompatible": {
@@ -460,7 +460,7 @@
               "type": "number",
               "minimum": 4.5,
               "default": 4.5,
-              "description": "Minimum color contrast ratio for WCAG 2.1 AA"
+              "description": "Minimum color contrast ratio for WCAG 2.2 AA"
             },
             "largeTextRatio": {
               "type": "number",

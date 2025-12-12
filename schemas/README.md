@@ -19,7 +19,7 @@ schemas/
 ├── academic-metadata/                  # Course metadata structures
 │   └── course_metadata_schema.json
 ├── accessibility/                      # Accessibility compliance
-│   └── wcag21_compliance_schema.json
+│   └── wcag22_compliance_schema.json
 ├── layouts/                           # Layout-specific schemas
 │   └── course_card_schema.json
 ├── assessment/                        # Assessment schemas
@@ -70,9 +70,9 @@ schemas/
 - Resource management (textbooks, technology, supplementary materials)
 - Universal Design for Learning (UDL) integration
 
-### 5. WCAG 2.1 AA Compliance Schema  
-**File**: `accessibility/wcag21_compliance_schema.json`
-**Purpose**: Comprehensive accessibility compliance based on WCAG 2.1 AA standards
+### 5. WCAG 2.2 AA Compliance Schema
+**File**: `accessibility/wcag22_compliance_schema.json`
+**Purpose**: Comprehensive accessibility compliance based on WCAG 2.2 AA standards
 **Key Features**:
 - All four WCAG principles (Perceivable, Operable, Understandable, Robust)
 - Educational-specific accessibility considerations
@@ -97,7 +97,7 @@ schemas/
 // Example integration with content-generator agent
 {
   "templateType": "enhanced_lesson", 
-  "accessibilityLevel": "WCAG_2.1_AA",
+  "accessibilityLevel": "WCAG_2.2_AA",
   "frameworkVersion": "Bootstrap_4.3.1",
   "educationalFeatures": {
     "courseCards": true,
@@ -117,7 +117,7 @@ All schemas include Brightspace-specific requirements:
 
 ### Quality Assurance Integration
 Schemas provide validation criteria for:
-- WCAG 2.1 AA accessibility compliance
+- WCAG 2.2 AA accessibility compliance
 - Educational content depth and engagement
 - Cross-browser compatibility
 - Mobile responsiveness
@@ -132,7 +132,7 @@ Schemas provide validation criteria for:
     "templateName": "Advanced Course Module",
     "source": "MIT_OCW",
     "frameworkVersion": "Bootstrap_4.3.1",
-    "accessibilityLevel": "WCAG_2.1_AA",
+    "accessibilityLevel": "WCAG_2.2_AA",
     "brighspaceCompatible": true
   },
   "courseCardLayout": {
@@ -151,7 +151,7 @@ Schemas provide validation criteria for:
 ```json
 {
   "complianceLevel": {
-    "standard": "WCAG_2.1_AA",
+    "standard": "WCAG_2.2_AA",
     "testing": {
       "automated": ["axe-core", "WAVE", "Lighthouse"],
       "manual": ["NVDA", "keyboard_testing"]
@@ -185,7 +185,7 @@ Schemas provide validation criteria for:
 - Mobile-first responsive design
 
 ### Accessibility Research
-- WCAG 2.1 AA compliance requirements
+- WCAG 2.2 AA compliance requirements
 - Cognitive accessibility for learning differences
 - Screen reader optimization
 - Color contrast validation
@@ -194,7 +194,7 @@ Schemas provide validation criteria for:
 
 ### High Priority (Immediate Implementation)
 1. **Course Card Layouts**: Implement responsive card grids for better course presentation
-2. **Accessibility Enhancements**: Apply WCAG 2.1 AA standards across all templates  
+2. **Accessibility Enhancements**: Apply WCAG 2.2 AA standards across all templates  
 3. **Navigation Context**: Replace internal links with context displays
 4. **Enhanced Visual Elements**: Add callout boxes and progress indicators
 
@@ -213,7 +213,7 @@ Schemas provide validation criteria for:
 ## Quality Assurance Checklist
 
 When implementing these schemas, validate:
-- [ ] WCAG 2.1 AA accessibility compliance
+- [ ] WCAG 2.2 AA accessibility compliance
 - [ ] Brightspace/D2L compatibility  
 - [ ] Mobile responsiveness across devices
 - [ ] Cross-browser compatibility

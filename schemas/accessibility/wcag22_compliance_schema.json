@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "WCAG 2.1 AA Compliance Schema for Educational Templates",
-  "description": "Comprehensive accessibility schema based on research findings from academic templates and WCAG 2.1 AA requirements",
-  "version": "1.0.0",
+  "title": "WCAG 2.2 AA Compliance Schema for Educational Templates",
+  "description": "Comprehensive accessibility schema based on research findings from academic templates and WCAG 2.2 AA requirements",
+  "version": "2.0.0",
   "type": "object",
   "properties": {
     "complianceLevel": {
@@ -11,7 +11,7 @@
         "standard": {
           "type": "string",
           "enum": ["WCAG_2.0_AA", "WCAG_2.1_AA", "WCAG_2.2_AA"],
-          "default": "WCAG_2.1_AA",
+          "default": "WCAG_2.2_AA",
           "description": "WCAG standard and level"
         },
         "testing": {
@@ -45,7 +45,7 @@
     },
     "perceivableRequirements": {
       "type": "object",
-      "description": "WCAG 2.1 Perceivable principle requirements",
+      "description": "WCAG 2.2 Perceivable principle requirements",
       "properties": {
         "textAlternatives": {
           "type": "object",
@@ -383,7 +383,7 @@
     },
     "operableRequirements": {
       "type": "object",
-      "description": "WCAG 2.1 Operable principle requirements",
+      "description": "WCAG 2.2 Operable principle requirements",
       "properties": {
         "keyboardAccessible": {
           "type": "object",
@@ -565,6 +565,92 @@
                   "description": "Proper heading hierarchy"
                 }
               }
+            },
+            "focusNotObscured": {
+              "type": "object",
+              "description": "2.4.11 Focus Not Obscured (Minimum) - WCAG 2.2 Level A",
+              "properties": {
+                "minimumVisibility": {
+                  "type": "boolean",
+                  "default": true,
+                  "description": "Focus indicator not entirely hidden by author-created content"
+                },
+                "enhancedVisibility": {
+                  "type": "boolean",
+                  "default": true,
+                  "description": "2.4.12 Focus indicator fully visible (WCAG 2.2 Level AA)"
+                }
+              }
+            },
+            "focusAppearance": {
+              "type": "object",
+              "description": "2.4.13 Focus Appearance - WCAG 2.2 Level AA",
+              "properties": {
+                "minimumOutlineWidth": {
+                  "type": "integer",
+                  "minimum": 2,
+                  "default": 2,
+                  "description": "Minimum focus outline width in CSS pixels"
+                },
+                "contrastRatio": {
+                  "type": "number",
+                  "minimum": 3.0,
+                  "default": 3.0,
+                  "description": "Minimum contrast ratio between focused and unfocused states"
+                },
+                "minimumArea": {
+                  "type": "string",
+                  "default": "2px solid outline or equivalent area",
+                  "description": "Focus indicator must have minimum area equal to 2px outline"
+                }
+              }
+            }
+          }
+        },
+        "inputModalities": {
+          "type": "object",
+          "description": "2.5 Input Modalities - WCAG 2.2 additions",
+          "properties": {
+            "draggingMovements": {
+              "type": "object",
+              "description": "2.5.7 Dragging Movements - WCAG 2.2 Level AA",
+              "properties": {
+                "singlePointerAlternative": {
+                  "type": "boolean",
+                  "default": true,
+                  "description": "Single pointer alternative for all drag operations"
+                },
+                "noPathDependence": {
+                  "type": "boolean",
+                  "default": true,
+                  "description": "Functionality does not depend on dragging path"
+                }
+              }
+            },
+            "targetSize": {
+              "type": "object",
+              "description": "2.5.8 Target Size (Minimum) - WCAG 2.2 Level AA",
+              "properties": {
+                "minimumSize": {
+                  "type": "integer",
+                  "minimum": 24,
+                  "default": 24,
+                  "description": "Minimum target size in CSS pixels"
+                },
+                "spacing": {
+                  "type": "integer",
+                  "default": 0,
+                  "description": "Spacing between adjacent targets if smaller than 24px"
+                },
+                "exceptions": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": ["inline", "user_agent", "essential", "equivalent"]
+                  },
+                  "description": "Exceptions to minimum target size requirement"
+                }
+              }
             }
           }
         }
@@ -572,7 +658,7 @@
     },
     "understandableRequirements": {
       "type": "object",
-      "description": "WCAG 2.1 Understandable principle requirements",
+      "description": "WCAG 2.2 Understandable principle requirements",
       "properties": {
         "readable": {
           "type": "object",
@@ -638,6 +724,26 @@
                   "description": "Users informed of context changes before interaction"
                 }
               }
+            },
+            "consistentHelp": {
+              "type": "object",
+              "description": "3.2.6 Consistent Help - WCAG 2.2 Level A",
+              "properties": {
+                "helpLocation": {
+                  "type": "string",
+                  "enum": ["header", "footer", "sidebar", "consistent_position"],
+                  "default": "footer",
+                  "description": "Help mechanisms appear in consistent location across pages"
+                },
+                "helpMechanisms": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": ["contact_info", "help_center", "chat", "faq", "support_form"]
+                  },
+                  "description": "Types of help mechanisms provided"
+                }
+              }
             }
           }
         },
@@ -679,6 +785,70 @@
                   "description": "Data checked for input errors"
                 }
               }
+            },
+            "redundantEntry": {
+              "type": "object",
+              "description": "3.3.7 Redundant Entry - WCAG 2.2 Level A",
+              "properties": {
+                "autoPopulate": {
+                  "type": "boolean",
+                  "default": true,
+                  "description": "Previously entered information auto-populated or selectable"
+                },
+                "exceptions": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": ["security", "essential", "invalid_data"]
+                  },
+                  "description": "Exceptions to redundant entry requirement"
+                }
+              }
+            },
+            "accessibleAuthentication": {
+              "type": "object",
+              "description": "3.3.8 Accessible Authentication (Minimum) - WCAG 2.2 Level AA",
+              "properties": {
+                "noCognitiveTests": {
+                  "type": "boolean",
+                  "default": true,
+                  "description": "No cognitive function tests (memorization, transcription, puzzle solving)"
+                },
+                "allowCopyPaste": {
+                  "type": "boolean",
+                  "default": true,
+                  "description": "Allow copying and pasting of passwords"
+                },
+                "allowPasswordManagers": {
+                  "type": "boolean",
+                  "default": true,
+                  "description": "Support password manager autofill"
+                },
+                "alternatives": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": ["object_recognition", "personal_content", "biometric", "email_link"]
+                  },
+                  "description": "Alternative authentication methods if cognitive test is present"
+                }
+              }
+            },
+            "accessibleAuthenticationEnhanced": {
+              "type": "object",
+              "description": "3.3.9 Accessible Authentication (Enhanced) - WCAG 2.2 Level AAA",
+              "properties": {
+                "noObjectRecognition": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "No object recognition tests (AAA level)"
+                },
+                "noPersonalContent": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "No personal content recognition (AAA level)"
+                }
+              }
             }
           }
         }
@@ -686,7 +856,7 @@
     },
     "robustRequirements": {
       "type": "object",
-      "description": "WCAG 2.1 Robust principle requirements",
+      "description": "WCAG 2.2 Robust principle requirements",
       "properties": {
         "compatible": {
           "type": "object",

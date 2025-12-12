@@ -631,7 +631,7 @@
         "wcagCompliance": {
           "type": "string",
           "enum": ["WCAG_2.0_AA", "WCAG_2.1_AA", "WCAG_2.2_AA"],
-          "default": "WCAG_2.1_AA",
+          "default": "WCAG_2.2_AA",
           "description": "WCAG compliance level"
         },
         "accommodations": {

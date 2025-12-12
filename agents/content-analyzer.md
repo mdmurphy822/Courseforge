@@ -14,7 +14,7 @@ The `content-analyzer` is a specialized subagent designed to analyze extracted c
 ## Core Capabilities
 
 ### 1. Accessibility Issue Detection
-Comprehensive WCAG 2.1 AA compliance analysis:
+Comprehensive WCAG 2.2 AA compliance analysis:
 
 | Category | Issues Detected |
 |----------|-----------------|
@@ -247,7 +247,7 @@ Task(
     Output: Remediation manifest at /workspace/remediation_queue.json
 
     Requirements:
-    1. Scan all HTML files for WCAG 2.1 AA violations
+    1. Scan all HTML files for WCAG 2.2 AA violations
     2. Identify content quality gaps
     3. Detect all non-HTML content requiring DART conversion
     4. Generate prioritized remediation queue
@@ -274,7 +274,7 @@ Task(
 - [ ] File paths valid and accessible
 - [ ] Agent assignments appropriate
 
-## WCAG 2.1 AA Criteria Checked
+## WCAG 2.2 AA Criteria Checked
 
 ### Perceivable (Level A + AA)
 - 1.1.1 Non-text Content

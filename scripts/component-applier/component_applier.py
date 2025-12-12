@@ -9,7 +9,7 @@ Features:
 - Pattern-based content detection
 - AI-assisted component recommendation (with Claude API)
 - Bootstrap 4.3.1 compatible output
-- WCAG 2.1 AA accessibility compliance
+- WCAG 2.2 AA accessibility compliance
 - Brightspace D2L compatibility
 
 Usage:

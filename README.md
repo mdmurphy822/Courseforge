@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
-[![WCAG 2.1 AA](https://img.shields.io/badge/WCAG-2.1%20AA-green.svg)](https://www.w3.org/WAI/WCAG21/quickref/)
+[![WCAG 2.2 AA](https://img.shields.io/badge/WCAG-2.2%20AA-green.svg)](https://www.w3.org/WAI/WCAG22/quickref/)
 
 **Education Reimagined. Access for All.**
 
@@ -18,7 +18,7 @@ Courseforge uses a multi-agent orchestration system to create high-quality onlin
 - **Simplified Pipeline**: Exam objectives + textbooks → IMSCC package
 - **DART Integration**: Accessibility-first textbook processing
 - **Multi-Agent System**: Specialized agents for each phase of development
-- **WCAG 2.1 AA**: Built-in accessibility compliance
+- **WCAG 2.2 AA**: Built-in accessibility compliance
 - **OSCQR Standards**: Educational quality validation
 - **Pattern Prevention**: 22+ error patterns identified and prevented
 
@@ -27,7 +27,7 @@ Courseforge uses a multi-agent orchestration system to create high-quality onlin
 - **Automated DART Conversion**: PDFs and Office docs → accessible HTML
 - **AI-Powered Accessibility Fixes**: Alt text, heading structure, contrast
 - **Intelligent Component Styling**: AI-selected interactive elements
-- **100% WCAG 2.1 AA Compliance**: Guaranteed accessibility output
+- **100% WCAG 2.2 AA Compliance**: Guaranteed accessibility output
 
 ## Example Package
 
@@ -36,7 +36,7 @@ See [`examples/intro_python.imscc`](examples/) for a complete 12-week Introducti
 - QTI 1.2 quizzes with Brightspace compatibility
 - Native assignment integration (`assignment_xmlv1p0`)
 - Discussion topics
-- WCAG 2.1 AA compliant content
+- WCAG 2.2 AA compliant content
 
 ## Quick Start
 
@@ -98,7 +98,7 @@ Courseforge/
 | `imscc-intake-parser` | Universal IMSCC import |
 | `content-analyzer` | Accessibility/quality gap detection |
 | `dart-automation-coordinator` | Automated document conversion |
-| `accessibility-remediation` | WCAG 2.1 AA fixes |
+| `accessibility-remediation` | WCAG 2.2 AA fixes |
 | `content-quality-remediation` | Educational depth enhancement |
 | `intelligent-design-mapper` | AI component selection |
 
@@ -124,7 +124,7 @@ cd $DART_PATH
 python convert.py textbook.pdf -o /path/to/courseforge/inputs/textbooks/
 ```
 
-DART produces WCAG 2.1 AA accessible HTML with:
+DART produces WCAG 2.2 AA accessible HTML with:
 - Semantic structure
 - Alt text for images
 - MathML for equations

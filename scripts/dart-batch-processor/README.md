@@ -4,7 +4,7 @@ Automated document-to-accessible HTML conversion using DART (Digital Accessibili
 
 ## Overview
 
-The DART Batch Processor orchestrates parallel conversion of PDF and Office documents to WCAG 2.1 AA compliant accessible HTML. It integrates with the Courseforge remediation pipeline to ensure 100% accessible course content.
+The DART Batch Processor orchestrates parallel conversion of PDF and Office documents to WCAG 2.2 AA compliant accessible HTML. It integrates with the Courseforge remediation pipeline to ensure 100% accessible course content.
 
 ## Features
 

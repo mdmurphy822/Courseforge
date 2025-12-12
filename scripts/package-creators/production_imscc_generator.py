@@ -13,7 +13,7 @@ CRITICAL DESIGN PRINCIPLES:
 4. Native Brightspace assessment integration
 5. IMS Common Cartridge 1.2.0 compliance
 6. Bootstrap 4.3.1 accordion functionality
-7. WCAG 2.1 AA accessibility compliance
+7. WCAG 2.2 AA accessibility compliance
 
 Author: Claude Code Assistant (Production System)
 Version: 1.0.0 (Production Edition)

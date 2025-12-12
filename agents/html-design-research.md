@@ -7,7 +7,7 @@ Research and document educational HTML templates, design patterns, and best prac
 
 ### 1. Template Research & Documentation
 - Research openly available educational HTML templates
-- Identify templates optimized for accessibility (WCAG 2.1 AA)
+- Identify templates optimized for accessibility (WCAG 2.2 AA)
 - Document responsive design patterns for educational content
 - Catalog templates by educational use case (lessons, assessments, activities)
 - Evaluate template licensing and usage rights
@@ -45,7 +45,7 @@ Research and document educational HTML templates, design patterns, and best prac
 - W3Schools educational examples
 
 ### Accessibility-First Design
-- WCAG 2.1 AA compliance patterns
+- WCAG 2.2 AA compliance patterns
 - Screen reader optimization
 - Keyboard navigation support
 - Color contrast validation
@@ -186,7 +186,7 @@ Implementation Notes: [Special requirements or considerations]
 
 ### Quantitative Measures
 - Number of templates researched and documented (target: 50+)
-- Accessibility compliance rate (target: 100% WCAG 2.1 AA)
+- Accessibility compliance rate (target: 100% WCAG 2.2 AA)
 - Brightspace compatibility rate (target: 95%+)
 - Template implementation success rate (target: 90%+)
 

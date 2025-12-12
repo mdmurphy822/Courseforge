@@ -9,7 +9,7 @@ The Brightspace Package Generator (`brightspace-packager`) is a specialized agen
 - **Transform**: Generated course materials into final production-ready Brightspace packages
 - **Integrate**: Native Brightspace assessment tools (QTI quizzes, D2L assignments, discussions)
 - **Enhance**: Content with interactive accordion-style learning objectives
-- **Validate**: Full WCAG 2.1 AA accessibility compliance and schema validation
+- **Validate**: Full WCAG 2.2 AA accessibility compliance and schema validation
 - **Export**: Complete packages to timestamped export directories
 
 ## Core Export Requirements
@@ -75,7 +75,7 @@ All generated packages MUST be saved to `/exports/YYYYMMDD_HHMMSS/` folders wher
 - **Paragraph Structure**: 50-300 words with 1.6 line height and proper CSS classes
 - **Key Terms**: Accordion containers for definitions with Bootstrap 4.3.1 framework
 - **Interactive Elements**: Expand/collapse functionality with Font Awesome icons
-- **Accessibility**: Full WCAG 2.1 AA compliance with keyboard navigation
+- **Accessibility**: Full WCAG 2.2 AA compliance with keyboard navigation
 
 ### 4. Native Assessment Integration
 - **QTI Quiz Generation**: Create `assessment_moduleXX.xml` with QTI 1.2 specification
@@ -145,7 +145,7 @@ def save_packages(export_path, course_name, imscc_content, d2l_content):
 - [ ] **Template Variable Resolution**: No unresolved template variables
 - [ ] **Assessment Object Generation**: QTI/D2L XML files with proper metadata
 - [ ] **Bootstrap Dependencies**: CSS/JS frameworks included with fallbacks
-- [ ] **WCAG 2.1 AA Compliance**: Full accessibility standards verified
+- [ ] **WCAG 2.2 AA Compliance**: Full accessibility standards verified
 - [ ] **Export Directory Creation**: Timestamped folder created with both package formats
 - [ ] **Content Accuracy**: Actual course content properly transferred from markdown
 - [ ] **Schema Compliance**: All content validates against `/schemas/` specifications
@@ -154,7 +154,7 @@ def save_packages(export_path, course_name, imscc_content, d2l_content):
 - **Import Success Rate**: Target 100% successful Brightspace imports
 - **Assessment Integration**: All assessments create native Brightspace tools
 - **Content Accuracy**: 100% of course content properly reflected in HTML
-- **Accessibility Compliance**: Full WCAG 2.1 AA standards met
+- **Accessibility Compliance**: Full WCAG 2.2 AA standards met
 - **Export Integrity**: Both IMSCC and D2L packages generated in timestamped directory
 
 ## Usage
@@ -191,7 +191,7 @@ invoke brightspace-packager --input /path/to/firstdraft --course-name "Course Ti
 - `/schemas/content-display/`: Page structure and presentation standards
 - `/schemas/imscc/`: IMS Common Cartridge specifications
 - `/schemas/assessment/`: Assessment integration schemas
-- `/schemas/accessibility/`: WCAG 2.1 AA compliance rules
+- `/schemas/accessibility/`: WCAG 2.2 AA compliance rules
 
 ### Framework Dependencies
 - **Bootstrap 4.3.1**: CSS framework for responsive design
@@ -248,7 +248,7 @@ Native Brightspace assessment tools (assignments, quizzes, discussions) must be 
 - Automatic `/exports/` directory creation
 - Dual package format support (IMSCC + D2L Export)
 - Bootstrap 4.3.1 accordion functionality
-- Full WCAG 2.1 AA accessibility compliance
+- Full WCAG 2.2 AA accessibility compliance
 - Native Brightspace assessment integration
 - Schema validation against `/schemas/` specifications
 

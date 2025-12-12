@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Accessibility Validator - WCAG 2.1 AA Compliance Checker
+Accessibility Validator - WCAG 2.2 AA Compliance Checker
 
-Comprehensive accessibility validation for HTML content ensuring WCAG 2.1 AA
+Comprehensive accessibility validation for HTML content ensuring WCAG 2.2 AA
 compliance with automated checking for images, headings, forms, contrast, and more.
 
 Features:
@@ -14,6 +14,10 @@ Features:
 - Form label association checking
 - Language declaration validation
 - Link text quality assessment
+- Focus appearance validation (WCAG 2.2)
+- Target size validation (WCAG 2.2)
+- Dragging movements detection (WCAG 2.2)
+- Accessible authentication checks (WCAG 2.2)
 
 Usage:
     python accessibility_validator.py --input file.html --output report.json
@@ -50,7 +54,7 @@ class IssueSeverity(Enum):
 
 
 class WCAGCriterion(Enum):
-    """WCAG 2.1 Success Criteria"""
+    """WCAG 2.2 Success Criteria"""
     # Level A
     SC_1_1_1 = "1.1.1"   # Non-text Content
     SC_1_3_1 = "1.3.1"   # Info and Relationships
@@ -61,12 +65,23 @@ class WCAGCriterion(Enum):
     SC_3_1_1 = "3.1.1"   # Language of Page
     SC_4_1_1 = "4.1.1"   # Parsing
     SC_4_1_2 = "4.1.2"   # Name, Role, Value
+    # Level A (NEW WCAG 2.2)
+    SC_2_4_11 = "2.4.11" # Focus Not Obscured (Minimum)
+    SC_3_2_6 = "3.2.6"   # Consistent Help
+    SC_3_3_7 = "3.3.7"   # Redundant Entry
     # Level AA
     SC_1_4_3 = "1.4.3"   # Contrast (Minimum)
     SC_1_4_4 = "1.4.4"   # Resize Text
     SC_2_4_6 = "2.4.6"   # Headings and Labels
     SC_2_4_7 = "2.4.7"   # Focus Visible
     SC_3_1_2 = "3.1.2"   # Language of Parts
+    # Level AA (NEW WCAG 2.2)
+    SC_2_4_12 = "2.4.12" # Focus Not Obscured (Enhanced)
+    SC_2_4_13 = "2.4.13" # Focus Appearance
+    SC_2_5_7 = "2.5.7"   # Dragging Movements
+    SC_2_5_8 = "2.5.8"   # Target Size (Minimum)
+    SC_3_3_8 = "3.3.8"   # Accessible Authentication (Minimum)
+    SC_3_3_9 = "3.3.9"   # Accessible Authentication (Enhanced)
 
 
 @dataclass
@@ -98,7 +113,7 @@ class ValidationReport:
 
 class AccessibilityValidator:
     """
-    WCAG 2.1 AA Accessibility Validator for HTML Content.
+    WCAG 2.2 AA Accessibility Validator for HTML Content.
 
     Performs comprehensive accessibility checks including:
     - Image alt text validation
@@ -109,6 +124,10 @@ class AccessibilityValidator:
     - Keyboard accessibility indicators
     - Language declarations
     - Link text quality
+    - Focus appearance (WCAG 2.2)
+    - Target size (WCAG 2.2)
+    - Dragging movements (WCAG 2.2)
+    - Accessible authentication (WCAG 2.2)
     """
 
     # Generic link text patterns to flag
@@ -172,6 +191,12 @@ class AccessibilityValidator:
         self._check_landmarks(soup)
         self._check_focus_indicators(soup, content)
         self._check_skip_links(soup)
+        # WCAG 2.2 specific checks
+        self._check_focus_not_obscured(soup, content)
+        self._check_focus_appearance(soup, content)
+        self._check_target_size(soup, content)
+        self._check_dragging_movements(soup, content)
+        self._check_accessible_authentication(soup, content)
 
         # Generate report
         report = self._generate_report(str(file_path))
@@ -562,6 +587,105 @@ class AccessibilityValidator:
                     suggestion='Add <a href="#main" class="skip-link">Skip to main content</a>'
                 ))
 
+    def _check_focus_not_obscured(self, soup: BeautifulSoup, content: str):
+        """Check for elements that might obscure focus (WCAG 2.4.11, 2.4.12)"""
+        # Check for sticky/fixed position elements that could obscure focus
+        if re.search(r'position\s*:\s*(fixed|sticky)', content, re.IGNORECASE):
+            self.issues.append(WCAGIssue(
+                criterion=WCAGCriterion.SC_2_4_11.value,
+                severity=IssueSeverity.MEDIUM,
+                element="<style>",
+                message="Fixed/sticky positioned elements detected - verify they don't obscure focus indicators",
+                suggestion="Ensure focused elements scroll into view and are not covered by fixed elements. Use scroll-margin-top/bottom."
+            ))
+
+    def _check_focus_appearance(self, soup: BeautifulSoup, content: str):
+        """Check focus indicator styling meets WCAG 2.2 requirements (WCAG 2.4.13)"""
+        # Check for focus styling that meets 2px minimum
+        focus_pattern = re.search(
+            r':focus[^{]*\{[^}]*outline\s*:\s*(\d+)px',
+            content, re.IGNORECASE
+        )
+        if focus_pattern:
+            outline_width = int(focus_pattern.group(1))
+            if outline_width < 2:
+                self.issues.append(WCAGIssue(
+                    criterion=WCAGCriterion.SC_2_4_13.value,
+                    severity=IssueSeverity.HIGH,
+                    element=":focus",
+                    message=f"Focus outline width ({outline_width}px) below 2px minimum",
+                    suggestion="Set focus outline to minimum 2px solid with 3:1 contrast ratio"
+                ))
+
+    def _check_target_size(self, soup: BeautifulSoup, content: str):
+        """Check interactive element target sizes (WCAG 2.5.8)"""
+        # Check for explicit small sizing on interactive elements
+        small_size_pattern = re.compile(
+            r'(button|\.btn|input\[type|a)[^{]*\{[^}]*(width|height)\s*:\s*(\d+)px',
+            re.IGNORECASE
+        )
+        for match in small_size_pattern.finditer(content):
+            size = int(match.group(3))
+            if size < 24 and size > 0:
+                self.issues.append(WCAGIssue(
+                    criterion=WCAGCriterion.SC_2_5_8.value,
+                    severity=IssueSeverity.HIGH,
+                    element=match.group(1),
+                    message=f"Interactive element size ({size}px) below 24px minimum",
+                    suggestion="Ensure interactive elements are at least 24x24 CSS pixels"
+                ))
+
+        # Check for btn-xs class which typically produces small targets
+        if 'btn-xs' in content.lower():
+            self.issues.append(WCAGIssue(
+                criterion=WCAGCriterion.SC_2_5_8.value,
+                severity=IssueSeverity.MEDIUM,
+                element=".btn-xs",
+                message="Extra-small button class may not meet 24px target size",
+                suggestion="Ensure clickable area is at least 24x24 CSS pixels or has adequate spacing"
+            ))
+
+    def _check_dragging_movements(self, soup: BeautifulSoup, content: str):
+        """Check for drag operations without alternatives (WCAG 2.5.7)"""
+        drag_patterns = ['draggable="true"', 'ondrag', 'ondragstart', 'ondrop', 'ondragover']
+        content_lower = content.lower()
+        for pattern in drag_patterns:
+            if pattern.lower() in content_lower:
+                self.issues.append(WCAGIssue(
+                    criterion=WCAGCriterion.SC_2_5_7.value,
+                    severity=IssueSeverity.MEDIUM,
+                    element="draggable element",
+                    message="Drag functionality detected - ensure single pointer alternative exists",
+                    suggestion="Add buttons or alternative controls for drag operations (e.g., up/down buttons for reordering)"
+                ))
+                break
+
+    def _check_accessible_authentication(self, soup: BeautifulSoup, content: str):
+        """Check for cognitive function tests in authentication (WCAG 3.3.8)"""
+        # Check for CAPTCHA indicators
+        captcha_patterns = ['captcha', 'recaptcha', 'hcaptcha', 'g-recaptcha', 'verify you are human', 'i am not a robot']
+        content_lower = content.lower()
+        for pattern in captcha_patterns:
+            if pattern in content_lower:
+                self.issues.append(WCAGIssue(
+                    criterion=WCAGCriterion.SC_3_3_8.value,
+                    severity=IssueSeverity.HIGH,
+                    element="authentication",
+                    message="CAPTCHA or cognitive test detected in form",
+                    suggestion="Provide alternative authentication methods that don't require cognitive function tests (e.g., email verification, biometrics)"
+                ))
+                break
+
+        # Check for password fields that block paste
+        if 'onpaste="return false"' in content_lower or 'onpaste="false"' in content_lower:
+            self.issues.append(WCAGIssue(
+                criterion=WCAGCriterion.SC_3_3_8.value,
+                severity=IssueSeverity.HIGH,
+                element="<input type='password'>",
+                message="Password field may block paste functionality",
+                suggestion="Allow copy-paste in password fields to support password managers"
+            ))
+
     def _generate_report(self, file_path: str) -> ValidationReport:
         """Generate validation report from collected issues"""
         report = ValidationReport(
@@ -613,7 +737,7 @@ class AccessibilityValidator:
         """Generate human-readable report"""
         lines = [
             "=" * 70,
-            "WCAG 2.1 AA ACCESSIBILITY VALIDATION REPORT",
+            "WCAG 2.2 AA ACCESSIBILITY VALIDATION REPORT",
             "=" * 70,
             f"File: {report.file_path}",
             f"Timestamp: {report.timestamp}",
@@ -624,7 +748,7 @@ class AccessibilityValidator:
             f"  Medium: {report.medium_count}",
             f"  Low: {report.low_count}",
             "-" * 70,
-            f"WCAG 2.1 AA Compliant: {'YES' if report.wcag_aa_compliant else 'NO'}",
+            f"WCAG 2.2 AA Compliant: {'YES' if report.wcag_aa_compliant else 'NO'}",
             "=" * 70,
         ]
 
@@ -647,7 +771,7 @@ class AccessibilityValidator:
 def main():
     """Main entry point for CLI usage"""
     parser = argparse.ArgumentParser(
-        description='Validate HTML content for WCAG 2.1 AA accessibility compliance'
+        description='Validate HTML content for WCAG 2.2 AA accessibility compliance'
     )
     parser.add_argument(
         '-i', '--input',

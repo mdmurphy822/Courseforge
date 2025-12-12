@@ -3,7 +3,7 @@
 
 """
 This module orchestrates batch conversion of PDF and Office documents
-to WCAG 2.1 AA compliant accessible HTML using DART (Digital Accessibility
+to WCAG 2.2 AA compliant accessible HTML using DART (Digital Accessibility
 Remediation Tool).
 """
 

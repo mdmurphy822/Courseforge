@@ -21,7 +21,7 @@
 - **Pattern Recognition**: Historical failure mode identification and prevention
 - **Content Analysis**: Educational depth, learning objective completeness, assessment alignment
 - **Technical Standards**: IMS Common Cartridge, D2L XML schemas, QTI assessment formats
-- **Accessibility Compliance**: WCAG 2.1 AA standards and universal design principles
+- **Accessibility Compliance**: WCAG 2.2 AA standards and universal design principles
 
 ## Pattern Prevention Matrix
 

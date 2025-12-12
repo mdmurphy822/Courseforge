@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{MODULE_TITLE}} - {{COURSE_NAME}}</title>
     <style>
-        /* Brightspace-compatible embedded styles - WCAG 2.1 AA compliant */
+        /* Brightspace-compatible embedded styles - WCAG 2.2 AA compliant */
         
         /* Enhanced color palette based on academic template research */
         :root {
@@ -434,6 +434,24 @@
         .nav-item:focus-visible {
             outline: 3px solid var(--focus-color);
             outline-offset: 2px;
+        }
+
+        /* WCAG 2.2 2.4.13 Focus Appearance - minimum 2px outline with 3:1 contrast */
+        :focus, :focus-visible {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+
+        /* WCAG 2.2 2.5.8 Target Size (Minimum) - 24x24 CSS pixels minimum */
+        button, a, input, select, textarea, summary, [role="button"], [tabindex="0"] {
+            min-height: 24px;
+            min-width: 24px;
+        }
+
+        /* WCAG 2.2 2.4.11/2.4.12 Focus Not Obscured - ensure focus is not hidden by sticky elements */
+        *:focus {
+            scroll-margin-top: 80px;
+            scroll-margin-bottom: 80px;
         }
         
         /* Mobile responsiveness */

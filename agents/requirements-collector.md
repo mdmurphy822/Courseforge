@@ -61,7 +61,7 @@ PROJECT_WORKSPACE/
   "selected_template": "Asynchronous Template 3.20.24",
   "selection_rationale": "Optimal for Security+ certification self-paced study",
   "template_features": {
-    "pre_built_compliance": ["OSCQR 1.1-6.50", "WCAG 2.1 AA", "Bootstrap 4.3.1"],
+    "pre_built_compliance": ["OSCQR 1.1-6.50", "WCAG 2.2 AA", "Bootstrap 4.3.1"],
     "assessment_framework": ["QTI 1.2", "D2L XML", "Discussion forums"],
     "navigation_structure": "16-module standard adaptable to course-specific structure",
     "uuid_system": "A510C2F2-92BA-40D2-9087-BA40803E1615 pattern"
@@ -93,7 +93,7 @@ PROJECT_WORKSPACE/
 
 **Template Compliance Advantages**:
 - **Pre-Built OSCQR Compliance**: Template already meets OSCQR standards 1.1-6.50
-- **Accessibility Pre-Configuration**: WCAG 2.1 AA compliance built into template structure
+- **Accessibility Pre-Configuration**: WCAG 2.2 AA compliance built into template structure
 - **Bootstrap Framework Integration**: Template includes Bootstrap 4.3.1 responsive design
 - **Assessment Standards**: QTI 1.2 and D2L XML assessment frameworks pre-configured
 
@@ -176,7 +176,7 @@ Templates provide immediate compliance with:
 ### **Technical Standards (Pre-Implemented)**
 Templates provide:
 - **Bootstrap 4.3.1 Framework** - Responsive design and accessibility compliance
-- **WCAG 2.1 AA Compliance** - Color contrast, navigation, semantic markup
+- **WCAG 2.2 AA Compliance** - Color contrast, navigation, semantic markup
 - **IMS CC 1.2.0 Structure** - Standard manifest organization and metadata
 - **D2L Integration** - Brightspace-specific tool and gradebook integration
 - **UUID System** - Consistent resource identification and cross-referencing
@@ -204,7 +204,7 @@ Templates include:
     "template_credit_hours": "Credit hours aligned with template standards"
   },
   "technical_specifications": {
-    "template_base_features": ["Bootstrap 4.3.1", "WCAG 2.1 AA", "IMS CC 1.2.0"],
+    "template_base_features": ["Bootstrap 4.3.1", "WCAG 2.2 AA", "IMS CC 1.2.0"],
     "additional_requirements": ["Security+ exam simulation tools", "Performance tracking"],
     "template_customizations": ["Certification-specific navigation", "Exam prep assessments"]
   },

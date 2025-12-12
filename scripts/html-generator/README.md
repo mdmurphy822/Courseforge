@@ -12,7 +12,7 @@ The HTML Generator transforms structured course content from the Course Content 
 
 - **Bootstrap 4.3.1 Framework**: Professional responsive design with CDN fallbacks
 - **Interactive Accordion Elements**: Key concepts with expand/collapse functionality
-- **WCAG 2.1 AA Compliance**: Full accessibility with keyboard navigation and screen readers
+- **WCAG 2.2 AA Compliance**: Full accessibility with keyboard navigation and screen readers
 - **Atomic Operations**: Single execution with complete success or failure validation
 - **Content Quality Assurance**: Validates substantial content in each generated page
 - **Professional Typography**: Consistent visual hierarchy and styling
@@ -61,7 +61,7 @@ For each week and sub-module combination:
 Each generated HTML page includes:
 - Bootstrap 4.3.1 CSS/JS framework with CDN fallbacks
 - Responsive design optimized for mobile and desktop
-- WCAG 2.1 AA accessibility features (ARIA labels, keyboard navigation)
+- WCAG 2.2 AA accessibility features (ARIA labels, keyboard navigation)
 - Professional typography with consistent styling
 - Interactive elements with smooth animations
 
@@ -82,7 +82,7 @@ Key concepts pages include interactive accordion containers:
 - **Visual Elements**: Charts, graphs, equations with alt-text descriptions
 
 ### Accessibility Compliance
-- **WCAG 2.1 AA Standards**: Full compliance across all generated content
+- **WCAG 2.2 AA Standards**: Full compliance across all generated content
 - **Keyboard Navigation**: Complete keyboard access for interactive elements
 - **Screen Reader Support**: Semantic markup and descriptive ARIA labels
 - **Focus Management**: Clear focus indicators and logical tab order
@@ -188,7 +188,7 @@ result = generator.generate_html_files('structured_course.json', 'output_directo
 - **Minimum Content Length**: Each HTML page must contain substantial academic content
 - **Template Variable Resolution**: Zero unresolved `{variable}` patterns in output
 - **Bootstrap Integration**: All interactive elements properly implement Bootstrap components
-- **Accessibility Validation**: Full WCAG 2.1 AA compliance verification
+- **Accessibility Validation**: Full WCAG 2.2 AA compliance verification
 
 ### File Generation Standards
 - **Exactly 7 HTML Files per Week**: One for each required sub-module type
@@ -257,7 +257,7 @@ python -m pytest tests/
 ### v1.0.0 (2025-08-05)
 - Initial implementation with Bootstrap 4.3.1 framework
 - Interactive accordion functionality for key concepts
-- WCAG 2.1 AA accessibility compliance
+- WCAG 2.2 AA accessibility compliance
 - Responsive design with mobile optimization
 - Comprehensive error handling and validation
 

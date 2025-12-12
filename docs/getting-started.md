@@ -40,7 +40,7 @@ Create a simple requirements document:
 - **Level**: Undergraduate
 - **Credits**: 3 credit hours
 - **Format**: Online asynchronous
-- **Special Requirements**: WCAG 2.1 AA accessibility compliance
+- **Special Requirements**: WCAG 2.2 AA accessibility compliance
 ```
 
 ### Step 3: Launch the Orchestrator
@@ -131,7 +131,7 @@ for i in range(0, len(content_files), 10):
         Task(
             subagent_type="content-generator",
             description=f"Create {file_name}",
-            prompt=f"Create comprehensive educational content for {file_name} with Pattern 22 prevention, authentic examples, and WCAG 2.1 AA compliance."
+            prompt=f"Create comprehensive educational content for {file_name} with Pattern 22 prevention, authentic examples, and WCAG 2.2 AA compliance."
         )
     
     # Wait for batch completion before proceeding
@@ -140,7 +140,7 @@ for i in range(0, len(content_files), 10):
 
 **What This Produces**:
 - Complete HTML content files for all modules
-- WCAG 2.1 AA accessible design
+- WCAG 2.2 AA accessible design
 - Comprehensive educational depth
 - Authentic, relevant examples
 - Progressive learning complexity
@@ -230,7 +230,7 @@ exports/20250820_143022_cybersecurity_intro_asynchronous/
 
 ### Quality Metrics You Can Expect
 - **🎯 OSCQR Score**: 45-50/50 (excellent quality)
-- **♿ Accessibility**: WCAG 2.1 AA compliant (100%)
+- **♿ Accessibility**: WCAG 2.2 AA compliant (100%)
 - **📚 Educational Depth**: Pattern 22 compliant (comprehensive content)
 - **🚀 Import Success**: 95%+ Brightspace compatibility
 - **⏱️ Generation Time**: 45-90 minutes for complete course (varies by scope)
@@ -254,9 +254,9 @@ Configure accessibility requirements:
 
 ```python
 accessibility_config = {
-    "standard": "WCAG 2.1 AA (recommended)",
-    "enhanced": "WCAG 2.1 AAA (maximum accessibility)",
-    "basic": "WCAG 2.0 AA (minimum compliance)"
+    "standard": "WCAG 2.2 AA (recommended)",
+    "enhanced": "WCAG 2.2 AAA (maximum accessibility)",
+    "basic": "WCAG 2.2 AA (minimum compliance)"
 }
 ```
 

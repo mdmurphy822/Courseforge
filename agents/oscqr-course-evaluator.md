@@ -58,7 +58,7 @@ Systematically evaluate online courses against the comprehensive 50-standard OSC
 
 **Responsibilities**:
 - Evaluate visual design consistency and professionalism
-- Assess accessibility compliance (WCAG 2.1 AA standards)
+- Assess accessibility compliance (WCAG 2.2 AA standards)
 - Review layout organization and information hierarchy
 - Test color contrast and visual accessibility
 - Validate responsive design across devices
@@ -155,7 +155,7 @@ Phase 4: Synthesis and prioritization → Single coordinator agent
 ### Priority Classification System
 
 **CRITICAL Issues** (Must fix before deployment):
-- Accessibility violations (WCAG 2.1 AA failures)
+- Accessibility violations (WCAG 2.2 AA failures)
 - Missing essential course information (syllabus, objectives)
 - Navigation failures or broken functionality
 - Assessment misalignment with objectives
@@ -222,7 +222,7 @@ Final coordinator generates:
 
 ### Pattern Prevention Validation
 - **Pattern 22 Prevention**: Validate substantial educational content depth
-- **Accessibility Compliance**: Ensure WCAG 2.1 AA standards throughout
+- **Accessibility Compliance**: Ensure WCAG 2.2 AA standards throughout
 - **Technical Compliance**: Verify LMS functionality and compatibility
 
 ### Educational Standards Verification

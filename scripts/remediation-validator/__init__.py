@@ -3,7 +3,7 @@
 
 """
 This module provides comprehensive validation of remediated course content
-ensuring WCAG 2.1 AA compliance, OSCQR standards adherence, and Brightspace
+ensuring WCAG 2.2 AA compliance, OSCQR standards adherence, and Brightspace
 compatibility before final IMSCC packaging.
 """
 

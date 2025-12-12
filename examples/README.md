@@ -46,7 +46,7 @@ Each week includes:
 - **Quiz Format**: QTI 1.2 with IMSCC 1.3 wrapper
 - **Assignment Format**: IMSCC assignment extension (`assignment_xmlv1p0`)
 - **Discussion Format**: IMSCC discussion topic (`imsdt_xmlv1p3`)
-- **Accessibility**: WCAG 2.1 AA compliant content
+- **Accessibility**: WCAG 2.2 AA compliant content
 
 ### Import Instructions
 

@@ -3,11 +3,11 @@
 Remediation Validator - Final Quality Assurance for Remediated Courses
 
 This script performs comprehensive validation of remediated course content,
-ensuring WCAG 2.1 AA compliance, OSCQR standards adherence, and Brightspace
+ensuring WCAG 2.2 AA compliance, OSCQR standards adherence, and Brightspace
 compatibility before final IMSCC packaging.
 
 Features:
-- WCAG 2.1 AA compliance validation
+- WCAG 2.2 AA compliance validation
 - OSCQR standards checking
 - Brightspace import compatibility verification
 - Content integrity validation
@@ -112,8 +112,9 @@ class RemediationValidator:
     Comprehensive validator for remediated course content.
     """
 
-    # WCAG 2.1 AA criteria to check
+    # WCAG 2.2 AA criteria to check
     WCAG_CHECKS = {
+        # WCAG 2.0/2.1 Criteria
         '1.1.1': 'Non-text Content',
         '1.2.1': 'Audio-only and Video-only (Prerecorded)',
         '1.2.2': 'Captions (Prerecorded)',
@@ -162,6 +163,17 @@ class RemediationValidator:
         '4.1.1': 'Parsing',
         '4.1.2': 'Name, Role, Value',
         '4.1.3': 'Status Messages',
+        # WCAG 2.2 New Criteria - Level A
+        '2.4.11': 'Focus Not Obscured (Minimum)',
+        '3.2.6': 'Consistent Help',
+        '3.3.7': 'Redundant Entry',
+        # WCAG 2.2 New Criteria - Level AA
+        '2.4.12': 'Focus Not Obscured (Enhanced)',
+        '2.4.13': 'Focus Appearance',
+        '2.5.7': 'Dragging Movements',
+        '2.5.8': 'Target Size (Minimum)',
+        '3.3.8': 'Accessible Authentication (Minimum)',
+        '3.3.9': 'Accessible Authentication (Enhanced)',
     }
 
     # OSCQR standards to check
@@ -283,6 +295,13 @@ class RemediationValidator:
             self._check_skip_links(content, file_path, result)
             self._check_aria(content, file_path, result)
             self._check_brightspace_compat(content, file_path, result)
+            # WCAG 2.2 specific checks
+            self._check_focus_not_obscured(content, file_path, result)
+            self._check_focus_appearance(content, file_path, result)
+            self._check_target_size(content, file_path, result)
+            self._check_dragging_movements(content, file_path, result)
+            self._check_consistent_help(content, file_path, result)
+            self._check_accessible_authentication(content, file_path, result)
 
             # Calculate accessibility score
             critical_issues = sum(1 for i in result.issues
@@ -624,6 +643,164 @@ class RemediationValidator:
                 suggestion='Use HTTPS for all external resources'
             ))
 
+    # ==================== WCAG 2.2 Validation Methods ====================
+
+    def _check_focus_not_obscured(self, content: str, file_path: Path, result: FileValidationResult):
+        """Check for elements that might obscure focused content (WCAG 2.4.11, 2.4.12)"""
+        # Check for fixed or sticky positioned elements that might obscure focus
+        if re.search(r'position\s*:\s*(fixed|sticky)', content, re.IGNORECASE):
+            # Check if there's scroll-margin to prevent obscuring
+            if not re.search(r'scroll-margin', content, re.IGNORECASE):
+                result.issues.append(ValidationIssue(
+                    category=ValidationCategory.WCAG,
+                    severity=ValidationSeverity.MEDIUM,
+                    code='FOCUS_MAY_BE_OBSCURED',
+                    message='Fixed/sticky elements may obscure focused content',
+                    file=str(file_path.relative_to(self.course_dir)),
+                    wcag_criterion='2.4.11',
+                    suggestion='Add scroll-margin to prevent fixed headers/footers from obscuring focused elements'
+                ))
+
+    def _check_focus_appearance(self, content: str, file_path: Path, result: FileValidationResult):
+        """Check focus indicator styling meets WCAG 2.2 requirements (WCAG 2.4.13)"""
+        # Check for focus styles with insufficient outline width
+        focus_pattern = re.search(r':focus[^{]*\{[^}]*outline\s*:\s*(\d+)px', content, re.IGNORECASE)
+        if focus_pattern:
+            outline_width = int(focus_pattern.group(1))
+            if outline_width < 2:
+                result.issues.append(ValidationIssue(
+                    category=ValidationCategory.WCAG,
+                    severity=ValidationSeverity.HIGH,
+                    code='INSUFFICIENT_FOCUS_OUTLINE',
+                    message=f'Focus outline width ({outline_width}px) is less than 2px minimum',
+                    file=str(file_path.relative_to(self.course_dir)),
+                    wcag_criterion='2.4.13',
+                    suggestion='Increase focus outline to at least 2px for WCAG 2.2 compliance'
+                ))
+
+        # Check for outline: none without replacement
+        if re.search(r':focus[^{]*\{[^}]*outline\s*:\s*none', content, re.IGNORECASE):
+            # Check if there's an alternative focus indicator
+            if not re.search(r':focus[^{]*\{[^}]*(box-shadow|border|background)', content, re.IGNORECASE):
+                result.issues.append(ValidationIssue(
+                    category=ValidationCategory.WCAG,
+                    severity=ValidationSeverity.CRITICAL,
+                    code='FOCUS_REMOVED_NO_ALTERNATIVE',
+                    message='Focus outline removed without alternative indicator',
+                    file=str(file_path.relative_to(self.course_dir)),
+                    wcag_criterion='2.4.13',
+                    suggestion='Provide visible focus indicator (outline, box-shadow, or border)'
+                ))
+
+    def _check_target_size(self, content: str, file_path: Path, result: FileValidationResult):
+        """Check interactive element target sizes (WCAG 2.5.8)"""
+        # Check for small explicit dimensions on interactive elements
+        small_size_patterns = [
+            (r'<(button|a|input)[^>]*(?:width|height)\s*[:=]\s*["\']?(\d+)px', 'element'),
+            (r'(?:width|height)\s*:\s*(\d+)px[^}]*}[^{]*(?:button|\.btn|a\s*{)', 'css'),
+        ]
+
+        for pattern, pattern_type in small_size_patterns:
+            matches = re.finditer(pattern, content, re.IGNORECASE)
+            for match in matches:
+                size = int(match.group(2) if pattern_type == 'element' else match.group(1))
+                if size < 24:
+                    result.issues.append(ValidationIssue(
+                        category=ValidationCategory.WCAG,
+                        severity=ValidationSeverity.MEDIUM,
+                        code='SMALL_TARGET_SIZE',
+                        message=f'Interactive element has size {size}px, less than 24px minimum',
+                        file=str(file_path.relative_to(self.course_dir)),
+                        element=match.group()[:100] if len(match.group()) > 100 else match.group(),
+                        wcag_criterion='2.5.8',
+                        suggestion='Increase target size to at least 24x24 CSS pixels'
+                    ))
+
+    def _check_dragging_movements(self, content: str, file_path: Path, result: FileValidationResult):
+        """Check for drag operations without single-pointer alternatives (WCAG 2.5.7)"""
+        # Detect drag-related attributes and events
+        drag_patterns = [
+            r'draggable\s*=\s*["\']?true',
+            r'ondrag\s*=',
+            r'ondragstart\s*=',
+            r'ondragend\s*=',
+            r'\.draggable\s*\(',
+            r'\.sortable\s*\(',
+        ]
+
+        for pattern in drag_patterns:
+            if re.search(pattern, content, re.IGNORECASE):
+                # Check if there's a button-based alternative
+                if not re.search(r'(move-up|move-down|reorder|aria-grabbed)', content, re.IGNORECASE):
+                    result.issues.append(ValidationIssue(
+                        category=ValidationCategory.WCAG,
+                        severity=ValidationSeverity.HIGH,
+                        code='DRAG_NO_ALTERNATIVE',
+                        message='Draggable element found without single-pointer alternative',
+                        file=str(file_path.relative_to(self.course_dir)),
+                        wcag_criterion='2.5.7',
+                        suggestion='Provide button-based alternative for drag operations'
+                    ))
+                break
+
+    def _check_consistent_help(self, content: str, file_path: Path, result: FileValidationResult):
+        """Check for consistent help mechanism placement (WCAG 3.2.6)"""
+        # This is a page-level check - look for help links
+        help_patterns = [
+            r'<a[^>]*>.*?help.*?</a>',
+            r'<a[^>]*>.*?support.*?</a>',
+            r'<a[^>]*>.*?contact.*?</a>',
+            r'aria-label\s*=\s*["\'][^"\']*help',
+        ]
+
+        has_help = any(re.search(p, content, re.IGNORECASE) for p in help_patterns)
+
+        # If content has forms, help should be available
+        if '<form' in content.lower() and not has_help:
+            result.issues.append(ValidationIssue(
+                category=ValidationCategory.WCAG,
+                severity=ValidationSeverity.LOW,
+                code='NO_HELP_FOR_FORMS',
+                message='Form content lacks visible help mechanism',
+                file=str(file_path.relative_to(self.course_dir)),
+                wcag_criterion='3.2.6',
+                suggestion='Add help link in consistent location (header or footer)'
+            ))
+
+    def _check_accessible_authentication(self, content: str, file_path: Path, result: FileValidationResult):
+        """Check for cognitive function tests in authentication (WCAG 3.3.8, 3.3.9)"""
+        # Detect CAPTCHA or cognitive tests
+        auth_issues = [
+            (r'captcha', 'CAPTCHA detected - may fail cognitive function test requirement'),
+            (r'recaptcha', 'reCAPTCHA detected - may fail cognitive function test requirement'),
+            (r'hcaptcha', 'hCaptcha detected - may fail cognitive function test requirement'),
+            (r'g-recaptcha', 'Google reCAPTCHA detected - may fail cognitive function test requirement'),
+        ]
+
+        for pattern, message in auth_issues:
+            if re.search(pattern, content, re.IGNORECASE):
+                result.issues.append(ValidationIssue(
+                    category=ValidationCategory.WCAG,
+                    severity=ValidationSeverity.HIGH,
+                    code='COGNITIVE_AUTH_TEST',
+                    message=message,
+                    file=str(file_path.relative_to(self.course_dir)),
+                    wcag_criterion='3.3.8',
+                    suggestion='Provide alternative authentication method without cognitive function tests'
+                ))
+
+        # Check for paste blocking on password fields
+        if re.search(r'onpaste\s*=\s*["\']?\s*return\s+false', content, re.IGNORECASE):
+            result.issues.append(ValidationIssue(
+                category=ValidationCategory.WCAG,
+                severity=ValidationSeverity.HIGH,
+                code='PASTE_BLOCKED',
+                message='Paste functionality blocked - prevents password manager use',
+                file=str(file_path.relative_to(self.course_dir)),
+                wcag_criterion='3.3.8',
+                suggestion='Allow paste on password fields to support password managers'
+            ))
+
     def _validate_manifest(self, manifest_path: Path):
         """Validate imsmanifest.xml"""
         try:
@@ -712,7 +889,7 @@ class RemediationValidator:
         return f"""
 Validation Summary: {status}
 ===========================
-WCAG 2.1 AA Compliance: {wcag:.1f}%
+WCAG 2.2 AA Compliance: {wcag:.1f}%
 OSCQR Standards: {oscqr:.1f}%
 Brightspace Ready: {'Yes' if brightspace else 'No'}
 

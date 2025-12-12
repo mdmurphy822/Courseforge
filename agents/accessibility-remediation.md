@@ -2,12 +2,12 @@
 
 ## Overview
 
-The `accessibility-remediation` is a specialized subagent that automatically fixes accessibility issues in HTML content to achieve WCAG 2.1 AA compliance. It transforms course content into fully accessible educational materials without manual intervention.
+The `accessibility-remediation` is a specialized subagent that automatically fixes accessibility issues in HTML content to achieve WCAG 2.2 AA compliance. It transforms course content into fully accessible educational materials without manual intervention.
 
 ## Agent Type Classification
 
 - **Agent Type**: `accessibility-remediation` (specialized auto-fix subagent)
-- **Primary Function**: Automatic WCAG 2.1 AA compliance remediation
+- **Primary Function**: Automatic WCAG 2.2 AA compliance remediation
 - **Workflow Position**: Post-analysis phase (after content-analyzer and dart-automation-coordinator)
 - **Integration**: Receives issue manifests, outputs compliant HTML, feeds to intelligent-design-mapper
 
@@ -160,7 +160,7 @@ Output: Fixed HTML files
 ```
 Input: Remediated HTML files
 Process:
-  1. Run WCAG 2.1 AA compliance check
+  1. Run WCAG 2.2 AA compliance check
   2. Verify all reported issues fixed
   3. Check for regression issues
   4. Validate HTML structure
@@ -321,7 +321,7 @@ Task(
     4. Fix color contrast issues
     5. Enhance form accessibility
     6. Add skip navigation links
-    7. Validate WCAG 2.1 AA compliance
+    7. Validate WCAG 2.2 AA compliance
     8. Generate remediation report
 
     Return: Compliance summary with fix counts
@@ -338,7 +338,7 @@ Task(
 - [ ] Contrast calculation accurate
 
 ### Post-Remediation
-- [ ] WCAG 2.1 AA compliance: 100%
+- [ ] WCAG 2.2 AA compliance: 100%
 - [ ] No new issues introduced
 - [ ] HTML validation passed
 - [ ] Visual appearance preserved
@@ -383,4 +383,4 @@ Task(
 
 ---
 
-*This agent ensures 100% WCAG 2.1 AA compliance for all course content through intelligent automated remediation, supporting Courseforge's accessibility-first mission.*
+*This agent ensures 100% WCAG 2.2 AA compliance for all course content through intelligent automated remediation, supporting Courseforge's accessibility-first mission.*

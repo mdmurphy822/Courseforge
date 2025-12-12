@@ -10,7 +10,7 @@ The Component Applier script analyzes HTML content and automatically applies app
 
 - **Pattern-based content detection** - Automatically identifies content types
 - **Bootstrap 4.3.1 compatible output** - Consistent styling framework
-- **WCAG 2.1 AA accessibility compliance** - All components include ARIA attributes
+- **WCAG 2.2 AA accessibility compliance** - All components include ARIA attributes
 - **Brightspace D2L compatibility** - Tested for LMS import
 - **AI-assisted recommendations** (optional) - Claude API for enhanced analysis
 
