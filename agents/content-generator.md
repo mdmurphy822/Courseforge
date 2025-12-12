@@ -157,10 +157,91 @@ PROJECT_WORKSPACE/
 <questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2
-    http://www.imsglobal.org/xsd/ims_qtiasiv1p2p1.xsd">
-  <!-- QTI content here -->
+    http://www.imsglobal.org/profile/cc/ccv1p3/ccv1p3_qtiasiv1p2p1_v1p0.xsd">
+  <assessment ident="quiz_week_XX" title="Week X Quiz: Topic Title">
+    <qtimetadata>
+      <!-- REQUIRED: Assessment profile for Brightspace -->
+      <qtimetadatafield>
+        <fieldlabel>cc_profile</fieldlabel>
+        <fieldentry>cc.exam.v0p1</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_assessmenttype</fieldlabel>
+        <fieldentry>Examination</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>cc_maxattempts</fieldlabel>
+        <fieldentry>2</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_timelimit</fieldlabel>
+        <fieldentry>1800</fieldentry>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="section_1">
+      <!-- Multiple Choice Question Template -->
+      <item ident="q1" title="Question 1: Title">
+        <itemmetadata>
+          <qtimetadata>
+            <!-- REQUIRED: Question profile for Brightspace -->
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+            <qtimetadatafield>
+              <fieldlabel>cc_weighting</fieldlabel>
+              <fieldentry>5</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html"><![CDATA[<p>Question text here</p>]]></mattext>
+          </material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="A">
+                <material><mattext texttype="text/html"><![CDATA[Option A]]></mattext></material>
+              </response_label>
+              <response_label ident="B">
+                <material><mattext texttype="text/html"><![CDATA[Option B]]></mattext></material>
+              </response_label>
+              <response_label ident="C">
+                <material><mattext texttype="text/html"><![CDATA[Option C]]></mattext></material>
+              </response_label>
+              <response_label ident="D">
+                <material><mattext texttype="text/html"><![CDATA[Option D]]></mattext></material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar varname="SCORE" vartype="Integer" minvalue="0" maxvalue="5"/>
+          </outcomes>
+          <respcondition>
+            <conditionvar>
+              <varequal respident="response1">A</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">5</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <!-- Add more questions following the same pattern -->
+    </section>
+  </assessment>
 </questestinterop>
 ```
+
+**CRITICAL Quiz Requirements for Brightspace**:
+1. Root element MUST include `xmlns:xsi` and `xsi:schemaLocation`
+2. Assessment MUST have `cc_profile` (cc.exam.v0p1 or cc.quiz.v0p1) and `qmd_assessmenttype`
+3. Each question MUST have `<itemmetadata>` with `cc_profile` identifying question type:
+   - Multiple Choice: `cc.multiple_choice.v0p1`
+   - True/False: `cc.true_false.v0p1`
+   - Fill in Blank: `cc.fib.v0p1`
+   - Essay: `cc.essay.v0p1`
+4. Each question MUST have `cc_weighting` specifying point value
 
 **Assignment XML (D2L Extension)**:
 ```xml

@@ -31,7 +31,7 @@ Before generating ANY IMSCC package:
 | 7 | Folder multiplication | Atomic single-file generation |
 | 10 | Empty ZIP files | Validate package size >100KB |
 | 14 | Mixed resource types | Standardize all resource declarations |
-| 15 | Invalid assessment XML | Use QTI 1.2 `<questestinterop>` format |
+| 15 | Invalid assessment XML / Quiz questions not loading | Use QTI 1.2 with cc_profile metadata (see Pattern 15 section) |
 | 17 | Empty organization | Include full item hierarchy |
 | 19 | Single-page consolidation | Maintain structure per course outline |
 | 20 | Version/namespace mismatch | Align schemaversion with namespace |
@@ -73,27 +73,73 @@ Before generating ANY IMSCC package:
 </quiz>
 ```
 
-**Correct (QTI 1.2):**
+**Correct (QTI 1.2 with CC metadata):**
 ```xml
-<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2">
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2
+    http://www.imsglobal.org/profile/cc/ccv1p3/ccv1p3_qtiasiv1p2p1_v1p0.xsd">
   <assessment ident="quiz_week_01" title="Week 1 Quiz">
+    <qtimetadata>
+      <!-- REQUIRED for Brightspace to recognize as quiz -->
+      <qtimetadatafield>
+        <fieldlabel>cc_profile</fieldlabel>
+        <fieldentry>cc.exam.v0p1</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_assessmenttype</fieldlabel>
+        <fieldentry>Examination</fieldentry>
+      </qtimetadatafield>
+    </qtimetadata>
     <section ident="root_section">
       <item ident="question_1">
+        <!-- REQUIRED for Brightspace to load questions -->
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+            <qtimetadatafield>
+              <fieldlabel>cc_weighting</fieldlabel>
+              <fieldentry>5</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
         <presentation>
-          <material><mattext>Question text</mattext></material>
+          <material><mattext texttype="text/html">Question text</mattext></material>
           <response_lid ident="response1" rcardinality="Single">
             <render_choice>
               <response_label ident="A">
-                <material><mattext>Option A</mattext></material>
+                <material><mattext texttype="text/html">Option A</mattext></material>
               </response_label>
             </render_choice>
           </response_lid>
         </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar varname="SCORE" vartype="Integer" minvalue="0" maxvalue="5"/>
+          </outcomes>
+          <respcondition>
+            <conditionvar>
+              <varequal respident="response1">A</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">5</setvar>
+          </respcondition>
+        </resprocessing>
       </item>
     </section>
   </assessment>
 </questestinterop>
 ```
+
+**Critical CC Metadata Requirements:**
+- `xmlns:xsi` and `xsi:schemaLocation` on root element
+- `cc_profile` at assessment level (cc.exam.v0p1 or cc.quiz.v0p1)
+- `itemmetadata` with `cc_profile` on each question item
+- Question types: `cc.multiple_choice.v0p1`, `cc.true_false.v0p1`, `cc.fib.v0p1`, `cc.essay.v0p1`
+
+**Fix Script**: `scripts/fix_quiz_metadata.py` can add missing metadata to existing packages
 
 ---
 

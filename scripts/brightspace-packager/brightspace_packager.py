@@ -1567,7 +1567,7 @@ This package was generated using the enhanced Brightspace Package Generator with
             xml_content: The assessment XML content
 
         Returns:
-            str: Assessment title or fallback to formatted ID
+            str: Assessment title extracted from XML, or formatted assessment_id as fallback
         """
         # Try to extract title from XML content
         title_match = re.search(r'<title>([^<]+)</title>', xml_content)
@@ -1575,23 +1575,12 @@ This package was generated using the enhanced Brightspace Package Generator with
             return title_match.group(1)
 
         # Fallback: Format the assessment_id as a readable title
-        if 'quiz' in assessment_id.lower():
-            # Try to extract week/module number for better title
-            num_match = re.search(r'(?:week|module)[_-]?(\d+)', assessment_id, re.IGNORECASE)
-            if num_match:
-                return f'Module {num_match.group(1)} Quiz'
-            return 'Quiz'
-        elif 'assignment' in assessment_id.lower():
-            num_match = re.search(r'(?:week|module)[_-]?(\d+)', assessment_id, re.IGNORECASE)
-            if num_match:
-                return f'Module {num_match.group(1)} Assignment'
-            return 'Assignment'
-        elif 'discussion' in assessment_id.lower():
-            num_match = re.search(r'(?:week|module)[_-]?(\d+)', assessment_id, re.IGNORECASE)
-            if num_match:
-                return f'Module {num_match.group(1)} Discussion'
-            return 'Discussion'
-        return assessment_id
+        # Preserve original terminology (Week vs Module) from the ID
+        formatted_title = assessment_id.replace('_', ' ').replace('-', ' ')
+        # Title case while preserving acronyms
+        words = formatted_title.split()
+        titled_words = [w.capitalize() if w.islower() else w for w in words]
+        return ' '.join(titled_words)
 
     def _get_content_sort_key(self, obj_id: str) -> tuple:
         """
