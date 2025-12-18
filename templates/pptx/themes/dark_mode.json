@@ -1,0 +1,41 @@
+{
+  "name": "Dark Mode",
+  "description": "Modern dark theme with high contrast for impactful presentations",
+  "aspect_ratio": "16:9",
+  "colors": {
+    "primary": "#00d4ff",
+    "secondary": "#ff00ff",
+    "accent": "#ffff00",
+    "background": "#1a1a1a",
+    "text_primary": "#f5f5f5",
+    "text_secondary": "#b0b0b0",
+    "success": "#00ff88",
+    "warning": "#ffaa00",
+    "error": "#ff4444"
+  },
+  "fonts": {
+    "heading": {
+      "family": "Arial",
+      "weight": "bold"
+    },
+    "body": {
+      "family": "Arial",
+      "weight": "normal"
+    }
+  },
+  "sizes": {
+    "title": 44,
+    "subtitle": 32,
+    "section_header": 40,
+    "slide_title": 32,
+    "body": 24,
+    "caption": 18
+  },
+  "spacing": {
+    "margin_top": 0.5,
+    "margin_bottom": 0.5,
+    "margin_left": 0.5,
+    "margin_right": 0.5,
+    "content_gap": 0.25
+  }
+}

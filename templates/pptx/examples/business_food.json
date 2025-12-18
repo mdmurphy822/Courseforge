@@ -1,0 +1,226 @@
+{
+  "metadata": {
+    "title": "FreshBite Foods",
+    "subtitle": "Revolutionizing Farm-to-Table Delivery",
+    "author": "Slideforge Examples",
+    "date": "2025",
+    "subject": "Business pitch deck for farm-to-table food delivery startup",
+    "keywords": ["business", "food", "startup", "pitch", "investment", "farm-to-table"]
+  },
+  "sections": [
+    {
+      "title": "Opportunity",
+      "slides": [
+        {
+          "type": "title",
+          "title": "FreshBite Foods",
+          "content": {
+            "subtitle": "Revolutionizing Farm-to-Table Delivery"
+          },
+          "notes": "Welcome, and thank you for your time today. FreshBite Foods is positioned to capture a significant share of the growing demand for fresh, locally-sourced food delivered directly to consumers."
+        },
+        {
+          "type": "content",
+          "title": "The Problem We Solve",
+          "content": {
+            "bullets": [
+              "40% of produce wasted in supply chain",
+              "Consumers lack fresh local options",
+              "Small farms struggle to reach customers",
+              "Complex logistics deter direct sales",
+              "Quality degrades during transport"
+            ]
+          },
+          "notes": "The traditional food supply chain is broken. Produce travels an average of 1,500 miles before reaching consumers, losing freshness and nutritional value while contributing to massive food waste."
+        },
+        {
+          "type": "stats_grid",
+          "title": "Market Opportunity",
+          "content": {
+            "stats": [
+              {
+                "value": "$800B",
+                "label": "US Food Market",
+                "trend": "up",
+                "highlight": true
+              },
+              {
+                "value": "35%",
+                "label": "YoY Online Growth",
+                "trend": "up",
+                "highlight": false
+              },
+              {
+                "value": "60%",
+                "label": "Want Local Food",
+                "trend": "up",
+                "highlight": false
+              },
+              {
+                "value": "42%",
+                "label": "Will Pay Premium",
+                "trend": "up",
+                "highlight": false
+              }
+            ],
+            "stats_layout": "2x2"
+          },
+          "notes": "The market opportunity is substantial. Consumer preferences have shifted dramatically toward local, sustainable food sources, and they're willing to pay for quality and convenience."
+        }
+      ]
+    },
+    {
+      "title": "Solution",
+      "slides": [
+        {
+          "type": "cards_grid",
+          "title": "Our Products",
+          "content": {
+            "cards": [
+              {
+                "title": "Fresh Boxes",
+                "items": [
+                  "Weekly produce delivery",
+                  "Seasonal variety",
+                  "Customizable contents"
+                ],
+                "color": "primary"
+              },
+              {
+                "title": "Chef Kits",
+                "items": [
+                  "Recipe-ready ingredients",
+                  "Farm-sourced proteins",
+                  "Step-by-step guides"
+                ],
+                "color": "secondary"
+              },
+              {
+                "title": "Local Market",
+                "items": [
+                  "Artisan products",
+                  "Specialty items",
+                  "Supporting small producers"
+                ],
+                "color": "accent"
+              }
+            ],
+            "cards_columns": 3
+          },
+          "notes": "Our three product lines serve different customer needs while maximizing farmer relationships. Fresh Boxes are our core offering, Chef Kits add value through convenience, and Local Market expands our product range."
+        },
+        {
+          "type": "comparison",
+          "title": "Pricing Strategy",
+          "content": {
+            "left_title": "Standard Plan - $99/mo",
+            "left": [
+              "Weekly produce box",
+              "10-12 seasonal items",
+              "Free delivery",
+              "Flexible scheduling"
+            ],
+            "right_title": "Premium Plan - $199/mo",
+            "right": [
+              "Produce plus proteins",
+              "2 Chef Kits included",
+              "Priority delivery slots",
+              "Exclusive artisan items"
+            ]
+          },
+          "notes": "Our pricing delivers clear value at each tier. Standard appeals to health-conscious families; Premium targets food enthusiasts who want the complete farm-to-table experience."
+        },
+        {
+          "type": "content",
+          "title": "Sales Approach",
+          "content": {
+            "bullets": [
+              "D2C online subscription platform",
+              "B2B corporate wellness programs",
+              "Strategic retail partnerships",
+              "Community pop-up events",
+              "Referral incentive program"
+            ]
+          },
+          "notes": "Our multi-channel approach diversifies revenue streams and builds brand awareness across customer segments. Corporate wellness represents a particularly high-margin opportunity."
+        }
+      ]
+    },
+    {
+      "title": "Financials",
+      "slides": [
+        {
+          "type": "data_viz",
+          "title": "Revenue Projections",
+          "content": {
+            "chart_type": "line_markers",
+            "chart_data": {
+              "categories": ["Q1 Y1", "Q2 Y1", "Q3 Y1", "Q4 Y1", "Q1 Y2", "Q2 Y2", "Q3 Y2", "Q4 Y2", "Q1 Y3", "Q2 Y3", "Q3 Y3", "Q4 Y3"],
+              "series": [
+                {
+                  "name": "Revenue ($K)",
+                  "values": [125, 180, 275, 420, 550, 720, 950, 1200, 1500, 1850, 2300, 2800]
+                }
+              ]
+            },
+            "chart_title": "Quarterly Revenue Growth",
+            "show_legend": true,
+            "show_data_labels": false
+          },
+          "notes": "Our projections show revenue growing from $500K in Year 1 to $2.8M by Q4 Year 3. These figures are based on conservative customer acquisition costs and retention rates validated in our pilot market."
+        },
+        {
+          "type": "two_content",
+          "title": "Competitive Advantage",
+          "content": {
+            "left": [
+              "Direct farmer relationships",
+              "Proprietary logistics platform",
+              "Sustainability commitment",
+              "Community-first brand"
+            ],
+            "right": [
+              "48-hour farm-to-door",
+              "Lower food waste costs",
+              "Higher farmer payouts",
+              "Customer loyalty premium"
+            ]
+          },
+          "notes": "Unlike big box retailers or generic meal kits, we've built infrastructure specifically for local food distribution. Our tech platform optimizes routes and reduces waste, creating margin advantage."
+        }
+      ]
+    },
+    {
+      "title": "Investment",
+      "slides": [
+        {
+          "type": "content",
+          "title": "The Ask",
+          "content": {
+            "bullets": [
+              "$2M seed round",
+              "18-month runway",
+              "Expand to 3 metro markets",
+              "Target: 50K subscribers",
+              "Path to profitability Y3"
+            ]
+          },
+          "notes": "We're seeking $2M to scale our proven model to three additional metro markets. Our unit economics are solid, and this capital will accelerate our path to market leadership."
+        },
+        {
+          "type": "content",
+          "title": "Next Steps",
+          "content": {
+            "bullets": [
+              "Schedule follow-up meeting",
+              "Review due diligence docs",
+              "Visit our distribution center",
+              "Meet our farmer partners"
+            ]
+          },
+          "notes": "Thank you for your attention. We'd love to show you our operations firsthand and introduce you to the farmers who make FreshBite possible. Contact: invest@freshbite.example.com"
+        }
+      ]
+    }
+  ]
+}

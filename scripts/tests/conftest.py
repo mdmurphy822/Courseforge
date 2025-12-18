@@ -1,5 +1,5 @@
 """
-Courseforge Test Fixtures
+Slideforge Test Fixtures
 Shared pytest fixtures for all test modules
 """
 
@@ -16,7 +16,6 @@ sys.path.insert(0, str(SCRIPTS_DIR))
 # Fixture directories
 FIXTURES_DIR = Path(__file__).parent / 'fixtures'
 SAMPLE_HTML_DIR = FIXTURES_DIR / 'sample_html'
-SAMPLE_IMSCC_DIR = FIXTURES_DIR / 'sample_imscc'
 
 
 # =============================================================================
@@ -83,45 +82,9 @@ def accessible_html_content():
                 <li>Second concept explanation</li>
             </ul>
         </section>
-        <section aria-labelledby="form-heading">
-            <h2 id="form-heading">Contact Form</h2>
-            <form action="/submit" method="post">
-                <div>
-                    <label for="name">Full Name:</label>
-                    <input type="text" id="name" name="name" required aria-required="true">
-                </div>
-                <div>
-                    <label for="email">Email Address:</label>
-                    <input type="email" id="email" name="email" required aria-required="true">
-                </div>
-                <button type="submit">Submit Form</button>
-            </form>
-        </section>
-        <section aria-labelledby="table-heading">
-            <h2 id="table-heading">Data Table</h2>
-            <table>
-                <caption>Quarterly Sales Data</caption>
-                <thead>
-                    <tr>
-                        <th scope="col">Quarter</th>
-                        <th scope="col">Revenue</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">Q1</th>
-                        <td>$10,000</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Q2</th>
-                        <td>$12,000</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
     </main>
     <footer role="contentinfo">
-        <p>&copy; 2025 Course Provider</p>
+        <p>&copy; 2025 Slideforge</p>
     </footer>
 </body>
 </html>'''
@@ -200,98 +163,45 @@ def forms_no_labels_html_content():
 
 
 # =============================================================================
-# IMSCC FIXTURES
+# PRESENTATION FIXTURES
 # =============================================================================
 
 @pytest.fixture
-def minimal_manifest_content():
-    """Returns minimal valid IMSCC manifest XML"""
-    return '''<?xml version="1.0" encoding="UTF-8"?>
-<manifest identifier="test_course_manifest"
-          xmlns="http://www.imsglobal.org/xsd/imsccv1p2/imscp_v1p1"
-          xmlns:lom="http://ltsc.ieee.org/xsd/imsccv1p2/LOM/resource"
-          xmlns:lomimscc="http://ltsc.ieee.org/xsd/imsccv1p2/LOM/manifest">
-    <metadata>
-        <schema>IMS Common Cartridge</schema>
-        <schemaversion>1.2.0</schemaversion>
-        <lomimscc:lom>
-            <lomimscc:general>
-                <lomimscc:title>
-                    <lomimscc:string language="en">Test Course</lomimscc:string>
-                </lomimscc:title>
-            </lomimscc:general>
-        </lomimscc:lom>
-    </metadata>
-    <organizations>
-        <organization identifier="org_1" structure="rooted-hierarchy">
-            <item identifier="root">
-                <item identifier="week1_item" identifierref="week1_resource">
-                    <title>Week 1: Introduction</title>
-                </item>
-            </item>
-        </organization>
-    </organizations>
-    <resources>
-        <resource identifier="week1_resource" type="webcontent" href="week_01/introduction.html">
-            <file href="week_01/introduction.html"/>
-        </resource>
-    </resources>
-</manifest>'''
-
-
-@pytest.fixture
-def qti_assessment_content():
-    """Returns minimal valid QTI 1.2 assessment XML"""
-    return '''<?xml version="1.0" encoding="UTF-8"?>
-<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2">
-    <assessment ident="test_quiz" title="Sample Quiz">
-        <qtimetadata>
-            <qtimetadatafield>
-                <fieldlabel>cc_profile</fieldlabel>
-                <fieldentry>cc.exam.v0p1</fieldentry>
-            </qtimetadatafield>
-            <qtimetadatafield>
-                <fieldlabel>qmd_assessmenttype</fieldlabel>
-                <fieldentry>Examination</fieldentry>
-            </qtimetadatafield>
-        </qtimetadata>
-        <section ident="section_1">
-            <item ident="question_1" title="Sample Question">
-                <itemmetadata>
-                    <qtimetadata>
-                        <qtimetadatafield>
-                            <fieldlabel>question_type</fieldlabel>
-                            <fieldentry>multiple_choice_question</fieldentry>
-                        </qtimetadatafield>
-                    </qtimetadata>
-                </itemmetadata>
-                <presentation>
-                    <material>
-                        <mattext texttype="text/html">What is 2 + 2?</mattext>
-                    </material>
-                    <response_lid ident="response_1" rcardinality="Single">
-                        <render_choice>
-                            <response_label ident="choice_1">
-                                <material><mattext>3</mattext></material>
-                            </response_label>
-                            <response_label ident="choice_2">
-                                <material><mattext>4</mattext></material>
-                            </response_label>
-                        </render_choice>
-                    </response_lid>
-                </presentation>
-                <resprocessing>
-                    <respcondition>
-                        <conditionvar>
-                            <varequal respident="response_1">choice_2</varequal>
-                        </conditionvar>
-                        <setvar action="Set">100</setvar>
-                    </respcondition>
-                </resprocessing>
-            </item>
-        </section>
-    </assessment>
-</questestinterop>'''
+def sample_presentation_json():
+    """Returns a sample presentation JSON structure"""
+    return {
+        "metadata": {
+            "title": "Test Presentation",
+            "subtitle": "A Test Subtitle",
+            "author": "Test Author",
+            "date": "2025-12-17"
+        },
+        "sections": [
+            {
+                "title": "Introduction",
+                "slides": [
+                    {
+                        "type": "title",
+                        "title": "Test Presentation",
+                        "content": {"subtitle": "A Test Subtitle"}
+                    }
+                ]
+            },
+            {
+                "title": "Main Content",
+                "slides": [
+                    {
+                        "type": "content",
+                        "title": "Key Points",
+                        "content": {
+                            "bullets": ["Point 1", "Point 2", "Point 3"]
+                        },
+                        "notes": "Speaker notes here"
+                    }
+                ]
+            }
+        ]
+    }
 
 
 # =============================================================================
@@ -308,53 +218,17 @@ def temp_output_dir(tmp_path):
 
 
 @pytest.fixture
-def temp_course_dir(tmp_path, accessible_html_content):
-    """Creates a mock course directory structure"""
-    course_dir = tmp_path / 'test_course'
-    course_dir.mkdir(parents=True, exist_ok=True)
+def temp_presentation_dir(tmp_path):
+    """Creates a mock presentation directory structure"""
+    pres_dir = tmp_path / 'test_presentation'
+    pres_dir.mkdir(parents=True, exist_ok=True)
 
-    # Create week directories
-    for week in range(1, 4):
-        week_dir = course_dir / f'week_{week:02d}'
-        week_dir.mkdir(parents=True, exist_ok=True)
+    # Create section directories
+    for section in range(1, 4):
+        section_dir = pres_dir / f'section_{section:02d}'
+        section_dir.mkdir(parents=True, exist_ok=True)
 
-        # Create module files
-        for module in range(1, 4):
-            module_file = week_dir / f'module_{module:02d}.html'
-            module_file.write_text(accessible_html_content)
-
-    yield course_dir
-
-
-@pytest.fixture
-def temp_imscc_package(tmp_path, minimal_manifest_content, accessible_html_content):
-    """Creates a minimal IMSCC package for testing extraction"""
-    import zipfile
-
-    package_dir = tmp_path / 'package_content'
-    package_dir.mkdir(parents=True, exist_ok=True)
-
-    # Create manifest
-    manifest_path = package_dir / 'imsmanifest.xml'
-    manifest_path.write_text(minimal_manifest_content)
-
-    # Create content directory
-    week_dir = package_dir / 'week_01'
-    week_dir.mkdir(parents=True, exist_ok=True)
-
-    # Create HTML content
-    html_path = week_dir / 'introduction.html'
-    html_path.write_text(accessible_html_content)
-
-    # Create IMSCC zip file
-    imscc_path = tmp_path / 'test_course.imscc'
-    with zipfile.ZipFile(imscc_path, 'w', zipfile.ZIP_DEFLATED) as zf:
-        for file_path in package_dir.rglob('*'):
-            if file_path.is_file():
-                arcname = file_path.relative_to(package_dir)
-                zf.write(file_path, arcname)
-
-    yield imscc_path
+    yield pres_dir
 
 
 # =============================================================================
@@ -372,8 +246,8 @@ def write_temp_html(tmp_path):
 
 
 @pytest.fixture
-def courseforge_path():
-    """Returns the path to the Courseforge project root"""
+def slideforge_path():
+    """Returns the path to the Slideforge project root"""
     return Path(__file__).parent.parent.parent
 
 
@@ -381,3 +255,61 @@ def courseforge_path():
 def scripts_path():
     """Returns the path to the scripts directory"""
     return Path(__file__).parent.parent
+
+
+# =============================================================================
+# PRESENTATION JSON FIXTURES
+# =============================================================================
+
+@pytest.fixture
+def minimal_presentation():
+    """Returns a minimal valid presentation with 5 slides"""
+    import json
+    fixture_path = FIXTURES_DIR / 'sample_presentations' / 'minimal_5_slides.json'
+    with open(fixture_path, 'r') as f:
+        return json.load(f)
+
+
+@pytest.fixture
+def all_slide_types_presentation():
+    """Returns a presentation demonstrating all 21+ slide types"""
+    import json
+    fixture_path = FIXTURES_DIR / 'sample_presentations' / 'all_slide_types.json'
+    with open(fixture_path, 'r') as f:
+        return json.load(f)
+
+
+@pytest.fixture
+def complex_presentation():
+    """Returns a large presentation with 50 slides across 5 sections"""
+    import json
+    fixture_path = FIXTURES_DIR / 'sample_presentations' / 'complex_50_slides.json'
+    with open(fixture_path, 'r') as f:
+        return json.load(f)
+
+
+@pytest.fixture
+def presentation_schema():
+    """Returns the presentation JSON schema for validation"""
+    import json
+    schema_path = Path(__file__).parent.parent.parent / 'schemas' / 'presentation' / 'presentation_schema.json'
+    with open(schema_path, 'r') as f:
+        return json.load(f)
+
+
+@pytest.fixture
+def minimal_presentation_path():
+    """Returns the path to the minimal presentation fixture file"""
+    return FIXTURES_DIR / 'sample_presentations' / 'minimal_5_slides.json'
+
+
+@pytest.fixture
+def all_slide_types_path():
+    """Returns the path to the all slide types fixture file"""
+    return FIXTURES_DIR / 'sample_presentations' / 'all_slide_types.json'
+
+
+@pytest.fixture
+def complex_presentation_path():
+    """Returns the path to the complex presentation fixture file"""
+    return FIXTURES_DIR / 'sample_presentations' / 'complex_50_slides.json'

@@ -1,246 +1,268 @@
-# Educational Template Schemas - Updated with Research Findings
+# Slideforge Schemas
 
-This directory contains comprehensive schemas for educational HTML templates, updated based on research findings from MIT OCW, Stanford Online, Bootstrap educational themes, and accessibility best practices.
+JSON schemas for presentation content validation and structure definition.
 
 ## Schema Directory Structure
 
 ```
 schemas/
-├── README.md                           # This file - schema overview
-├── template-integration/               # Template integration patterns
-│   └── educational_template_schema.json
-├── content-display/                    # Content display standards  
-│   ├── content-display-schema.json     # Original schema
-│   ├── enhanced-content-display-schema.json # Enhanced with research findings
-│   ├── accordion-schema.json
-│   └── page-title-standards.json
-├── framework-migration/                # Framework migration guides
-│   └── bootstrap5_migration_schema.json
-├── academic-metadata/                  # Course metadata structures
-│   └── course_metadata_schema.json
-├── accessibility/                      # Accessibility compliance
-│   └── wcag22_compliance_schema.json
-├── layouts/                           # Layout-specific schemas
-│   └── course_card_schema.json
-├── assessment/                        # Assessment schemas
-└── imscc/                            # IMSCC-specific schemas
+├── README.md                    # This file
+├── Claude.md                    # Schema development guidelines
+├── presentation/                # Core presentation schemas
+│   ├── presentation_schema.json # Main presentation structure
+│   ├── theme_schema.json        # Theme configuration
+│   ├── theme_catalog_schema.json # Theme registry
+│   └── defaults.json            # Default configuration settings
+└── accessibility/               # Accessibility compliance
+    └── wcag22_compliance_schema.json
 ```
 
-## New Schemas Created Based on Research
+## Core Schemas
 
-### 1. Educational Template Integration Schema
-**File**: `template-integration/educational_template_schema.json`
-**Purpose**: Defines integration patterns for educational templates based on research findings
-**Key Features**:
-- Template metadata from MIT OCW, Stanford Online, Bootstrap themes
-- Course card layouts with hover effects and responsive design
-- Hero sections with educational messaging
-- Navigation context (replaces internal linking for Brightspace compatibility)
-- Accessibility enhancements from academic templates
-- Performance optimization patterns
+### Presentation Schema
+**File**: `presentation/presentation_schema.json`
 
-### 2. Enhanced Content Display Schema
-**File**: `content-display/enhanced-content-display-schema.json`  
-**Purpose**: Updated content display standards incorporating research findings
-**Key Features**:
-- Enhanced visual elements (callout boxes, course cards, progress indicators)
-- Template type definitions (basic_lesson, hero_lesson, card_layout, academic_module)
-- Navigation context display for Brightspace compatibility
-- Improved typography and responsive design patterns
-- Self-assessment integration capabilities
+Defines the complete presentation structure:
 
-### 3. Bootstrap 5 Migration Schema
-**File**: `framework-migration/bootstrap5_migration_schema.json`
-**Purpose**: Comprehensive migration guide from Bootstrap 4.3.1 to Bootstrap 5
-**Key Features**:
-- Breaking changes analysis with educational template impact
-- Phase-based migration strategy (CSS → Components → Enhancements)
-- Brightspace compatibility testing requirements
-- Educational template-specific improvements in Bootstrap 5
-- Rollback plan for migration issues
-
-### 4. Academic Course Metadata Schema
-**File**: `academic-metadata/course_metadata_schema.json`
-**Purpose**: Structured course metadata based on MIT OCW course.json patterns
-**Key Features**:
-- Complete course identification (number, title, department, institution)
-- Learning outcomes with Bloom's taxonomy alignment
-- Instructional team information with roles and expertise
-- Course structure with modules and assessment framework
-- Resource management (textbooks, technology, supplementary materials)
-- Universal Design for Learning (UDL) integration
-
-### 5. WCAG 2.2 AA Compliance Schema
-**File**: `accessibility/wcag22_compliance_schema.json`
-**Purpose**: Comprehensive accessibility compliance based on WCAG 2.2 AA standards
-**Key Features**:
-- All four WCAG principles (Perceivable, Operable, Understandable, Robust)
-- Educational-specific accessibility considerations
-- Cognitive accessibility support for learning differences  
-- Assistive technology compatibility (screen readers, voice control)
-- Testing protocols (automated, manual, user testing)
-
-### 6. Course Card Layout Schema
-**File**: `layouts/course_card_schema.json`
-**Purpose**: Detailed course card layouts from Bootstrap educational themes
-**Key Features**:
-- Responsive grid systems for different screen sizes
-- Card structure (header, body, footer) with educational metadata
-- Interactive features (hover effects, progress tracking)
-- Accessibility compliance with ARIA labels and semantic structure
-- Brightspace compatibility (embedded CSS, no external links)
-
-## Integration with Existing Systems
-
-### Content Generator Agent Integration
-```javascript
-// Example integration with content-generator agent
-{
-  "templateType": "enhanced_lesson", 
-  "accessibilityLevel": "WCAG_2.2_AA",
-  "frameworkVersion": "Bootstrap_4.3.1",
-  "educationalFeatures": {
-    "courseCards": true,
-    "progressTracking": true,
-    "navigationContext": true
-  }
-}
-```
-
-### Brightspace Packaging Integration
-All schemas include Brightspace-specific requirements:
-- Embedded CSS only (no external stylesheets)
-- No internal page linking (navigation context instead)
-- Self-contained HTML files
-- Mobile responsiveness within Brightspace app
-- Print-friendly formatting
-
-### Quality Assurance Integration
-Schemas provide validation criteria for:
-- WCAG 2.2 AA accessibility compliance
-- Educational content depth and engagement
-- Cross-browser compatibility
-- Mobile responsiveness
-- Performance optimization
-
-## Schema Validation Examples
-
-### Template Integration Validation
 ```json
 {
-  "templateMetadata": {
-    "templateName": "Advanced Course Module",
-    "source": "MIT_OCW",
-    "frameworkVersion": "Bootstrap_4.3.1",
-    "accessibilityLevel": "WCAG_2.2_AA",
-    "brighspaceCompatible": true
+  "metadata": {
+    "title": "Presentation Title",
+    "subtitle": "Optional Subtitle",
+    "author": "Author Name",
+    "date": "2025-12-17",
+    "subject": "Topic description"
   },
-  "courseCardLayout": {
-    "enabled": true,
-    "gridSystem": "col-md-6",
-    "hoverEffects": {
-      "enabled": true,
-      "animation": "lift",
-      "duration": "0.2s"
+  "sections": [
+    {
+      "title": "Section Name",
+      "slides": [...]
     }
-  }
+  ]
 }
 ```
 
-### Accessibility Validation
+### Defaults Configuration
+**File**: `presentation/defaults.json`
+
+Global default configuration settings for presentation generation. See [Configuration System Documentation](../docs/configuration-system.md) for details.
+
 ```json
 {
-  "complianceLevel": {
-    "standard": "WCAG_2.2_AA",
-    "testing": {
-      "automated": ["axe-core", "WAVE", "Lighthouse"],
-      "manual": ["NVDA", "keyboard_testing"]
+  "quality_settings": {
+    "max_bullets_per_slide": 6,
+    "max_words_per_bullet": 6,
+    "accessibility_requirements": {
+      "alt_text_required": true,
+      "color_contrast_minimum": 4.5
     }
   },
-  "colorContrast": {
-    "minimumRatio": 4.5,
-    "largeTextRatio": 3.0,
-    "nonTextRatio": 3.0
+  "generation_settings": {
+    "default_theme": "corporate",
+    "default_template": "corporate.pptx"
   }
 }
 ```
 
-## Research Sources Integration
+### Theme Schema
+**File**: `presentation/theme_schema.json`
 
-### MIT OpenCourseWare Patterns
-- Modular course content architecture  
-- Metadata-driven content organization
-- Academic-quality accessibility standards
-- Multi-media content integration
+Defines theme configuration:
 
-### Stanford Online Patterns  
-- Clean academic presentation styles
-- Structured learning progression
-- Professional course information display
+```json
+{
+  "name": "Theme Name",
+  "description": "Theme description",
+  "aspect_ratio": "16:9",
+  "colors": {
+    "primary": "#2c5aa0",
+    "secondary": "#28a745",
+    "accent": "#ffc107",
+    "background": "#ffffff",
+    "text_primary": "#333333",
+    "text_secondary": "#666666"
+  },
+  "fonts": {
+    "heading": {"family": "Arial", "weight": "bold"},
+    "body": {"family": "Arial", "weight": "normal"}
+  },
+  "sizes": {
+    "title": 44,
+    "subtitle": 32,
+    "section_header": 40,
+    "slide_title": 32,
+    "body": 24,
+    "caption": 18
+  }
+}
+```
 
-### Bootstrap Educational Themes
-- Modern responsive card layouts
-- Interactive hover effects and animations
-- Professional color schemes and typography
-- Mobile-first responsive design
+## Slide Type Reference
 
-### Accessibility Research
-- WCAG 2.2 AA compliance requirements
-- Cognitive accessibility for learning differences
-- Screen reader optimization
-- Color contrast validation
+### Title Slide
+```json
+{
+  "type": "title",
+  "title": "Main Title",
+  "content": {
+    "subtitle": "Subtitle text"
+  },
+  "notes": "Speaker notes"
+}
+```
 
-## Implementation Priorities
+### Content Slide
+```json
+{
+  "type": "content",
+  "title": "Slide Title",
+  "content": {
+    "bullets": ["Point 1", "Point 2", "Point 3"]
+  },
+  "notes": "Speaker notes"
+}
+```
 
-### High Priority (Immediate Implementation)
-1. **Course Card Layouts**: Implement responsive card grids for better course presentation
-2. **Accessibility Enhancements**: Apply WCAG 2.2 AA standards across all templates  
-3. **Navigation Context**: Replace internal links with context displays
-4. **Enhanced Visual Elements**: Add callout boxes and progress indicators
+### Two-Content Slide
+```json
+{
+  "type": "two_content",
+  "title": "Two Columns",
+  "content": {
+    "left": ["Left item 1", "Left item 2"],
+    "right": ["Right item 1", "Right item 2"]
+  }
+}
+```
 
-### Medium Priority (Phase 2)
-1. **Bootstrap 5 Migration**: Plan and execute framework upgrade
-2. **Academic Metadata**: Implement comprehensive course information structure
-3. **Hero Sections**: Add engaging course introduction layouts
-4. **Self-Assessment Integration**: Include interactive self-check capabilities
+### Comparison Slide
+```json
+{
+  "type": "comparison",
+  "title": "Comparison",
+  "content": {
+    "left_title": "Option A",
+    "left": ["Feature 1", "Feature 2"],
+    "right_title": "Option B",
+    "right": ["Feature 1", "Feature 2"]
+  }
+}
+```
 
-### Low Priority (Future Enhancement)
-1. **Advanced Interactive Elements**: Modal windows, complex animations
-2. **Performance Optimization**: Advanced caching and loading strategies  
-3. **Multi-language Support**: Internationalization capabilities
-4. **Advanced Analytics**: Learning analytics integration
+### Quote Slide
+```json
+{
+  "type": "quote",
+  "title": "",
+  "content": {
+    "text": "The quote text",
+    "attribution": "Author Name"
+  }
+}
+```
 
-## Quality Assurance Checklist
+### Styled Content Slide
+```json
+{
+  "type": "styled_content",
+  "title": "Key Points",
+  "content": {
+    "bullets": ["Point 1", "Point 2"],
+    "step_number": 1,
+    "callout_text": "Important note",
+    "callout_type": "tip"
+  }
+}
+```
 
-When implementing these schemas, validate:
-- [ ] WCAG 2.2 AA accessibility compliance
-- [ ] Brightspace/D2L compatibility  
-- [ ] Mobile responsiveness across devices
-- [ ] Cross-browser compatibility
-- [ ] Print-friendly formatting
-- [ ] Educational content depth and engagement
-- [ ] Performance optimization
-- [ ] Schema validation against JSON Schema standards
+**Callout Types:**
+- `info` - Blue, informational
+- `success` - Green, positive
+- `warning` - Yellow, caution
+- `tip` - Purple, helpful hint
 
-## Maintenance and Updates
+## Schema Validation
 
-### Regular Review Schedule
-- **Monthly**: Accessibility standards updates
-- **Quarterly**: Framework compatibility testing
-- **Annually**: Comprehensive educational effectiveness review
+### Python Validation
+```python
+import json
+import jsonschema
 
-### Update Process
-1. Research new educational design patterns
-2. Test compatibility with latest Brightspace versions  
-3. Validate accessibility standards compliance
-4. Update schemas with community feedback
-5. Document breaking changes and migration paths
+# Load schema
+with open('schemas/presentation/presentation_schema.json') as f:
+    schema = json.load(f)
 
-## Support and Documentation
+# Load content
+with open('your_presentation.json') as f:
+    content = json.load(f)
 
-For implementation support:
-- See `/templates/` directory for working examples
-- Check `/docs/PATTERN_PREVENTION_GUIDE.md` for error prevention
-- Reference `/imscc-standards/brightspace-specific/` for LMS specifications
+# Validate
+jsonschema.validate(content, schema)
+print("Valid!")
+```
 
-These schemas provide a comprehensive foundation for creating accessible, engaging, and technically sound educational HTML templates based on proven academic and industry patterns.
+### CLI Validation
+```bash
+# Using jsonschema CLI
+jsonschema -i presentation.json schemas/presentation/presentation_schema.json
+```
+
+## Available Themes
+
+Themes are defined in `templates/pptx/masters/registry.json`:
+
+| Theme | Primary Color | Category |
+|-------|---------------|----------|
+| `corporate` | #2c5aa0 (Blue) | Business |
+| `dark_mode` | #6c63ff (Purple) | Modern |
+| `creative` | #ff6b35 (Orange) | Creative |
+| `minimal` | #2d3436 (Charcoal) | Minimal |
+| `educational` | #5c4d7d (Purple) | Education |
+
+## Best Practices
+
+### Content Guidelines
+- Maximum 6 bullets per slide
+- Maximum 6 words per bullet
+- Always include speaker notes
+- Use appropriate slide types for content
+
+### Theme Selection
+- `corporate` - Professional business presentations
+- `dark_mode` - Tech talks, modern audiences
+- `creative` - Pitches, creative content
+- `minimal` - Content-focused, distraction-free
+- `educational` - Training, learning materials
+
+## Integration
+
+### With PPTX Generator
+```bash
+python pptx_generator.py \
+  --input presentation.json \
+  --output output.pptx \
+  --theme corporate
+```
+
+### Programmatic Usage
+```python
+from pptx_generator import PPTXGenerator
+
+generator = PPTXGenerator(template_name="corporate")
+generator.create_from_structure(content)
+generator.save("output.pptx")
+```
+
+## Extending Schemas
+
+### Adding Custom Slide Types
+1. Add handler in `pptx_generator.py`
+2. Update `presentation_schema.json` if needed
+3. Document in this README
+
+### Creating Custom Themes
+1. Create `.pptx` master in `templates/pptx/custom/`
+2. Register in `registry.json`
+3. Define color scheme in registration
+
+See `templates/pptx/custom/README.md` for detailed instructions.

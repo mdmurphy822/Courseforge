@@ -1,5 +1,8 @@
-# Courseforge Scripts Dependencies
+# Slideforge Scripts Dependencies
 # Install with: pip install -r requirements.txt
+
+# PowerPoint Generation
+python-pptx>=0.6.21
 
 # HTML/XML Parsing
 beautifulsoup4>=4.9.0
@@ -29,6 +32,9 @@ flake8>=6.0.0
 
 # Accessibility Testing
 wcag-contrast-ratio>=0.9
+
+# CLI Framework
+click>=8.0.0
 
 # Progress Bars (for CLI tools)
 tqdm>=4.64.0

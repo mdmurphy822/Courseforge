@@ -1,0 +1,210 @@
+{
+  "metadata": {
+    "title": "Exploring Science: How We Discover the World",
+    "subtitle": "A Journey Through Scientific Discovery",
+    "author": "Slideforge Examples",
+    "date": "2025",
+    "subject": "High school science education covering scientific method and research concepts",
+    "keywords": ["science", "education", "high school", "scientific method", "research"]
+  },
+  "sections": [
+    {
+      "title": "Introduction",
+      "slides": [
+        {
+          "type": "title",
+          "title": "Exploring Science: How We Discover the World",
+          "content": {
+            "subtitle": "Understanding How Scientists Think and Work"
+          },
+          "notes": "Welcome to today's exploration of science. We'll discover not just what scientists know, but how they come to know it. Science is fundamentally about asking questions and finding evidence-based answers."
+        },
+        {
+          "type": "content",
+          "title": "What is Science?",
+          "content": {
+            "bullets": [
+              "Systematic study of nature",
+              "Based on evidence and data",
+              "Uses testable hypotheses",
+              "Builds on previous knowledge",
+              "Self-correcting through peer review"
+            ]
+          },
+          "notes": "Science is more than memorizing facts. It's a way of thinking critically about the world. Every scientific claim must be supported by evidence that others can verify and replicate."
+        }
+      ]
+    },
+    {
+      "title": "Core Concepts",
+      "slides": [
+        {
+          "type": "key_concept",
+          "title": "The Scientific Method",
+          "content": {
+            "concept_title": "Scientific Method",
+            "definition": "A systematic approach to investigating phenomena, acquiring new knowledge, and correcting previous errors through observation and experimentation.",
+            "details": [
+              "Observation: notice phenomena",
+              "Hypothesis: propose explanation",
+              "Experiment: test the hypothesis",
+              "Analysis: evaluate results",
+              "Conclusion: accept or revise"
+            ],
+            "concept_style": "boxed"
+          },
+          "notes": "The scientific method isn't always linear. Scientists often cycle back through steps as they refine their understanding. The key is that every step must be documented and reproducible."
+        },
+        {
+          "type": "comparison",
+          "title": "Types of Science",
+          "content": {
+            "left_title": "Life Sciences",
+            "left": [
+              "Biology: living organisms",
+              "Ecology: ecosystems",
+              "Medicine: human health",
+              "Genetics: heredity"
+            ],
+            "right_title": "Physical Sciences",
+            "right": [
+              "Physics: matter and energy",
+              "Chemistry: substances",
+              "Astronomy: space",
+              "Earth Science: our planet"
+            ]
+          },
+          "notes": "While we categorize sciences for convenience, modern research often crosses these boundaries. Climate science, for example, combines chemistry, physics, biology, and earth science."
+        },
+        {
+          "type": "content",
+          "title": "Why Science Matters",
+          "content": {
+            "bullets": [
+              "Solves real-world problems",
+              "Drives medical breakthroughs",
+              "Protects our environment",
+              "Powers technological innovation",
+              "Informs policy decisions"
+            ]
+          },
+          "notes": "From the vaccines protecting public health to the smartphones in your pocket, science shapes every aspect of modern life. Scientific literacy helps you make informed decisions as citizens and consumers."
+        }
+      ]
+    },
+    {
+      "title": "Discovery",
+      "slides": [
+        {
+          "type": "callout",
+          "title": "Thinking Like a Scientist",
+          "content": {
+            "callouts": [
+              {
+                "callout_type": "tip",
+                "heading": "Stay Curious",
+                "text": "Ask 'why' and 'how' about everything you observe in the world around you."
+              },
+              {
+                "callout_type": "info",
+                "heading": "Embrace Uncertainty",
+                "text": "Good scientists say 'I don't know yet' and see it as an opportunity to learn."
+              },
+              {
+                "callout_type": "warning",
+                "heading": "Avoid Bias",
+                "text": "Don't let what you expect to find influence what you actually observe."
+              }
+            ]
+          },
+          "notes": "Critical thinking is the foundation of scientific inquiry. Scientists must constantly question their assumptions and be willing to change their minds when evidence demands it."
+        },
+        {
+          "type": "two_content",
+          "title": "Famous Discoveries",
+          "content": {
+            "left": [
+              "Newton: laws of motion",
+              "Darwin: evolution",
+              "Curie: radioactivity",
+              "Einstein: relativity"
+            ],
+            "right": [
+              "Watson/Crick: DNA structure",
+              "Salk: polio vaccine",
+              "Hubble: expanding universe",
+              "CRISPR: gene editing"
+            ]
+          },
+          "notes": "These discoveries didn't happen overnight. Each required years of dedicated work, countless failures, and often collaboration across many scientists. Science is a cumulative, communal endeavor."
+        },
+        {
+          "type": "stats_grid",
+          "title": "Science by the Numbers",
+          "content": {
+            "stats": [
+              {
+                "value": "118",
+                "label": "Elements Discovered",
+                "trend": "none",
+                "highlight": false
+              },
+              {
+                "value": "37T",
+                "label": "Cells in Human Body",
+                "trend": "none",
+                "highlight": true
+              },
+              {
+                "value": "4.5B",
+                "label": "Years Earth's Age",
+                "trend": "none",
+                "highlight": false
+              },
+              {
+                "value": "8",
+                "label": "Planets in Solar System",
+                "trend": "none",
+                "highlight": false
+              }
+            ],
+            "stats_layout": "2x2"
+          },
+          "notes": "These numbers represent centuries of scientific investigation. Each fact was once unknown, discovered through careful observation and experimentation."
+        }
+      ]
+    },
+    {
+      "title": "Conclusion",
+      "slides": [
+        {
+          "type": "content",
+          "title": "Try It Yourself!",
+          "content": {
+            "bullets": [
+              "Design your own experiment",
+              "Keep a science journal",
+              "Research a phenomenon",
+              "Join a science club",
+              "Enter a science fair"
+            ]
+          },
+          "notes": "Science isn't something that only happens in laboratories. You can practice scientific thinking every day by observing, questioning, and testing your ideas about the world."
+        },
+        {
+          "type": "content",
+          "title": "Questions and Review",
+          "content": {
+            "bullets": [
+              "Science: evidence-based inquiry",
+              "Method: systematic investigation",
+              "Types: life and physical",
+              "Impact: shapes modern world"
+            ]
+          },
+          "notes": "Let's open the floor for questions. Think about how you might apply scientific thinking to something you're curious about in your own life."
+        }
+      ]
+    }
+  ]
+}

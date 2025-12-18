@@ -1,0 +1,43 @@
+{
+  "name": "Dark Stout",
+  "description": "Rich dark theme inspired by craft stout beers - deep browns with cream text",
+  "aspect_ratio": "16:9",
+  "colors": {
+    "primary": "#2C1810",
+    "secondary": "#5D4037",
+    "accent": "#D4A574",
+    "background": "#1A1210",
+    "surface": "#2C2420",
+    "text_primary": "#F5E6D3",
+    "text_secondary": "#B8A089",
+    "success": "#4E7C4E",
+    "warning": "#D4A574",
+    "error": "#8B3A3A",
+    "info": "#6B8E9C"
+  },
+  "fonts": {
+    "heading": {
+      "family": "Georgia",
+      "weight": "bold"
+    },
+    "body": {
+      "family": "Arial",
+      "weight": "normal"
+    }
+  },
+  "sizes": {
+    "title": 44,
+    "subtitle": 32,
+    "section_header": 40,
+    "slide_title": 32,
+    "body": 24,
+    "caption": 18
+  },
+  "spacing": {
+    "margin_top": 0.5,
+    "margin_bottom": 0.5,
+    "margin_left": 0.5,
+    "margin_right": 0.5,
+    "content_gap": 0.25
+  }
+}

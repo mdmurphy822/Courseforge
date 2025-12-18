@@ -1,0 +1,41 @@
+{
+  "name": "Creative",
+  "description": "Vibrant and energetic theme for dynamic, creative presentations",
+  "aspect_ratio": "16:9",
+  "colors": {
+    "primary": "#e91e63",
+    "secondary": "#9c27b0",
+    "accent": "#ff9800",
+    "background": "#ffffff",
+    "text_primary": "#212121",
+    "text_secondary": "#757575",
+    "success": "#4caf50",
+    "warning": "#ffc107",
+    "error": "#f44336"
+  },
+  "fonts": {
+    "heading": {
+      "family": "Arial",
+      "weight": "bold"
+    },
+    "body": {
+      "family": "Arial",
+      "weight": "normal"
+    }
+  },
+  "sizes": {
+    "title": 44,
+    "subtitle": 32,
+    "section_header": 40,
+    "slide_title": 32,
+    "body": 24,
+    "caption": 18
+  },
+  "spacing": {
+    "margin_top": 0.5,
+    "margin_bottom": 0.5,
+    "margin_left": 0.5,
+    "margin_right": 0.5,
+    "content_gap": 0.25
+  }
+}

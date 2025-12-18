@@ -1,6 +1,6 @@
 # Scripts Directory
 
-This directory contains all code used in the instructional design project, organized by functionality and purpose.
+This directory contains automation tools for converting structured content into PowerPoint presentations.
 
 ## Organization Guidelines
 
@@ -30,102 +30,39 @@ Each script folder MUST include a `README.md` file containing:
 5. **Changelog**: Version history with dates and changes made
 6. **Author/Maintainer**: Contact information for questions
 
-### Example README.md Template
-```markdown
-# [Script Name]
-
-## Description
-Brief description of what this script does.
-
-## Usage
-```bash
-python script.py [arguments]
-```
-
-## Dependencies
-- Python 3.8+
-- Required packages: numpy, pandas
-
-## Configuration
-- Set environment variable X
-- Configure file Y
-
-## Changelog
-### v1.0.0 - 2025-08-02
-- Initial version
-- Added feature X
-- Fixed bug Y
-
-## Author
-Name <email@example.com>
-```
-
 ## Current Scripts Directory Structure
 
-### `/package-creators/` - IMSCC Generation Tools
-Complete collection of tools for creating IMS Common Cartridge (.imscc) packages from course content for Brightspace LMS import. Contains both production-ready generators and emergency solutions for environment-specific ZIP packaging issues.
+### `/pptx-generator/` - Core PPTX Generation
+Main PowerPoint generation engine that converts structured JSON content into professional PPTX presentations.
 
 **Key Scripts:**
-- **`production_imscc_generator.py`** - Production-ready generator with zero-tolerance Pattern 7 prevention
-- **`imscc-master-generator.py`** - Master orchestration script coordinating all modular components
-- **`manual_imscc_creator.py`** - Emergency IMSCC creator for ZIP packaging failures (Pattern 10 solution)
-- **`final_imscc_creator.py`** - Production-ready IMSCC package generator with comprehensive validation
-- **`simple_imscc_generator.py`** - Simple generator without external dependencies
+- **`pptx_generator.py`** - Main generator with theme support and multiple slide types
+- **`template_loader.py`** - Theme template discovery and loading
 
-### `/course-content-parser/` - Content Processing
-Extracts and structures content from markdown course materials into JSON format for HTML generation.
+**Usage:**
+```bash
+python pptx_generator.py -i content.json -o presentation.pptx --theme corporate
+python pptx_generator.py --list-templates
+```
 
-### `/html-generator/` - Web Content Creation  
-Converts structured content JSON into HTML pages with Bootstrap framework and WCAG 2.2 AA accessibility compliance.
-
-### `/assessment-xml-generator/` - Assessment Tools
-Creates native Brightspace assessment objects (QTI, D2L XML) for assignments, quizzes, and discussions.
-
-### `/bulletproof-imscc-generator/` - Specialized Package Creation
-Bulletproof IMSCC generation with atomic operations and comprehensive validation protocols.
-
-### `/brightspace-packager/` - Enhanced Package Management
-Enhanced Brightspace Package Generator with export directory management - transforms structured markdown course content into production-ready IMS Common Cartridge packages with full Brightspace integration, native assessment tools, and interactive Bootstrap accordion components. Automatically saves all packages to `/exports/YYYYMMDD_HHMMSS/` timestamped directories.
-
-### `/test-utilities/` - Testing and Validation
-Collection of test scripts and validation utilities for IMSCC generation and Pattern 7 prevention testing.
+### `/semantic-structure-extractor/` - Content Parsing
+Extracts semantic structure from HTML documents for content analysis.
 
 **Key Scripts:**
-- **`test_compression.py`** - Tests ZIP compression functionality and capabilities
-- **`test_master_generator.py`** - Tests master generator orchestration functionality  
-- **`test_bulletproof.py`** - Bulletproof generator validation tests
-- **`execute_imscc_generation.py`** - IMSCC generation testing
+- **`semantic_structure_extractor.py`** - Main extraction module
+- **`heading_parser.py`** - Heading hierarchy parsing
+- **`content_block_classifier.py`** - Content classification
 
 ### `/utilities/` - Support Tools
-Helper scripts for file management, cleanup operations, and general support functions.
+Helper scripts for file management and general support functions.
 
-## **CRITICAL: Script Organization Compliance**
+### `/tests/` - Testing Infrastructure
+Test suite for presentation generation components.
 
-### **MANDATORY: All Scripts Must Be in `/scripts/` Directory**
-
-**REQUIRED STRUCTURE:**
-- **Location**: `/scripts/[project-name]/` (kebab-case directory names)
-- **Documentation**: Every script directory MUST include comprehensive `README.md`
-- **Configuration**: Config files in `config/` subdirectory within each script folder
-- **Examples**: Usage examples in `examples/` subdirectory where applicable
-
-**PROHIBITED LOCATIONS:**
-❌ **Project root directory**: No scripts in project root `/*.py`
-❌ **Export directories**: No scripts in `/exports/YYYYMMDD_HHMMSS/*.py`
-❌ **Content directories**: No scripts mixed with course materials
-
-### **Pattern 7 Prevention Protocol (ZERO TOLERANCE)**
-All IMSCC generation scripts implement bulletproof Pattern 7 prevention:
-- **Single Execution Rule**: Every script executes exactly once per invocation
-- **Atomic Operations**: Either complete success or complete failure with cleanup
-- **Pre-flight Validation**: Validate all inputs before making file system changes
-- **Output Verification**: Confirm exactly one output file per execution
-
-### **ZIP Packaging Crisis Resolution**
-Due to environment ZIP compression limitations (Pattern 10 - Empty ZIP files):
-- **Primary Solution**: `manual_imscc_creator.py` with comprehensive validation
-- **Fallback**: Manual packaging instructions provided for user execution
-- **Emergency Protocol**: All creators include user-executable packaging commands
+**Run tests:**
+```bash
+pytest scripts/tests/ -v
+```
 
 ## Best Practices
 
@@ -138,3 +75,20 @@ Due to environment ZIP compression limitations (Pattern 10 - Empty ZIP files):
 7. **Performance**: Optimize for the expected workload and use cases
 8. **Atomic Operations**: All scripts must implement single execution with fail-fast error handling
 9. **Comprehensive Validation**: Pre-flight and post-execution validation required
+
+## Dependencies
+
+See `requirements.txt` for Python dependencies:
+```
+python-pptx>=0.6.21
+Pillow>=9.0.0
+beautifulsoup4>=4.9.0
+jsonschema>=4.0.0
+```
+
+## Virtual Environment
+
+Activate the project virtual environment:
+```bash
+source scripts/venv/bin/activate
+```

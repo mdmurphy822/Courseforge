@@ -1,159 +1,155 @@
 # Agent Protocols and Coordination
 
-This file contains detailed protocols for agent behavior, scratchpad usage, and coordination strategies.
+This file contains protocols for Slideforge agent behavior, workspace usage, and coordination strategies.
 
-## **📝 MANDATORY AGENT SCRATCHPAD PROTOCOL**
+## Agent Scratchpad Protocol
 
-**All agents MUST use dedicated scratchpads for architectural and design decisions to avoid preset constraints and enable optimal educational design.**
+**All agents MUST use dedicated scratchpads for design decisions.**
 
-### **Scratchpad Usage Requirements**
+### Scratchpad Usage Requirements
 ```
 WHEN AGENTS SHOULD CREATE SCRATCHPADS:
-1. **Educational Architecture Decisions** - course duration, module structure, content organization
-2. **Pedagogical Framework Selection** - learning progression, assessment strategy, content types
-3. **Content Structure Planning** - optimal number of learning units, cognitive load distribution
-4. **Assessment Design** - formative/summative placement, certification preparation strategy
+1. **Presentation Architecture** - section structure, slide count, content flow
+2. **Layout Selection** - choosing appropriate slide types
+3. **Content Transformation** - converting input to slide format
+4. **Quality Decisions** - splitting content, organizing sections
 
-SCRATCHPAD ORGANIZATION PROTOCOL:
-- **ONE scratchpad per agent**: `agent_workspaces/{agent_type}_scratchpad.md`
-- **All agent work contained within single file**: analysis, decisions, todos, rationale
-- **Structured sections**: ## Analysis, ## Decisions, ## Updated Todos, ## Rationale
-- **No file proliferation**: Everything for that agent goes in their dedicated scratchpad
+SCRATCHPAD ORGANIZATION:
+- ONE scratchpad per agent: `agent_workspaces/{agent_type}_scratchpad.md`
+- All agent work in single file: analysis, decisions, todos, rationale
+- Structured sections: ## Analysis, ## Decisions, ## Updated Todos, ## Rationale
 ```
 
-## **Agent Autonomy and Responsibilities**
+## Agent Autonomy and Responsibilities
 
-### **Agent-to-Orchestrator Todo Integration**
+### Agent-to-Orchestrator Todo Integration
 ```
 AGENT TODO LIST PROTOCOL:
-  → All planning agents must provide detailed todo lists
+  → Planning agents provide detailed todo lists
   → Todo items must be specific, actionable tasks
   → Orchestrator loads agent todo lists into TodoWrite
-  → Orchestrator executes todo lists using appropriate agents
+  → Orchestrator executes via appropriate agents
 ```
 
-### **Enhanced Agent Autonomy**
+### Agent Responsibilities
 ```
-AGENTS NOW RESPONSIBLE FOR:
-  ✅ Analyzing user requirements and determining optimal approaches
-  ✅ Creating comprehensive todo lists for orchestrator execution
-  ✅ Determining pedagogical frameworks and content structures
+AGENTS ARE RESPONSIBLE FOR:
+  ✅ Analyzing content and determining optimal structure
+  ✅ Creating comprehensive todo lists
+  ✅ Determining slide layouts and content organization
   ✅ Recommending parallel batching strategies
-  ✅ Providing specific, actionable tasks for orchestrator coordination
+  ✅ Providing specific, actionable tasks
 ```
 
-## **Agent Coordination Strategies**
+## Agent Coordination Strategies
 
-### **High Volume Coordination (12+ weeks, 84+ files)**
+### Large Presentations (20+ slides)
 ```
-  → ORCHESTRATOR uses individual file agents (ONE AGENT PER FILE)
-  → PARALLEL execution of multiple agents simultaneously
-  → Each agent creates exactly ONE file
+  → ORCHESTRATOR uses individual section agents
+  → PARALLEL execution of multiple agents
+  → Each agent handles ONE section
   → Progress tracking via TodoWrite
-  → Quality validation at integration points
 ```
 
-### **Medium Volume Coordination (6-12 weeks, 40-80 files)**
+### Medium Presentations (10-20 slides)
 ```
-  → ORCHESTRATOR uses module-based agents
+  → ORCHESTRATOR uses section-based agents
   → Mixed sequential/parallel execution
-  → Module-level quality gates
-  → Integrated final validation
+  → Section-level quality gates
 ```
 
-### **Low Volume Coordination (<6 weeks, <40 files)**
+### Small Presentations (<10 slides)
 ```
-  → ORCHESTRATOR uses comprehensive agents
-  → Sequential execution with parallel validation
+  → Single agent can handle entire presentation
+  → Sequential execution
   → End-to-end quality assurance
-  → Streamlined packaging process
 ```
 
-## **Individual File Batching Protocol**
+## Individual Section Protocol
 
-### **CRITICAL EXECUTION PROTOCOLS**
+### CRITICAL EXECUTION RULES
 
-**BATCH SIZE LIMITATIONS:** ✅ **TESTED & CONFIRMED**
-- Maximum 5-10 simultaneous Task calls per execution block (SYSTEM LIMIT CONFIRMED)
-- For 84 files: Execute in 8-17 batches of 5-10 agents each
-- Wait for batch completion before starting next batch (MANDATORY)
-- This prevents system rejection while maintaining optimal parallelism
+**BATCH SIZE LIMITATIONS:**
+- Maximum 10 simultaneous Task calls per batch
+- Wait for batch completion before starting next batch
 
-**PARALLEL EXECUTION PATTERN:** ✅ **TESTED WORKFLOW**
+**PARALLEL EXECUTION PATTERN:**
 ```
-# BATCH 1 (5-10 agents simultaneously - TESTED SAFE LIMIT):
-Task(content-generator, "File 1", "Create week_01_file_1.html")
-Task(content-generator, "File 2", "Create week_01_file_2.html") 
-Task(content-generator, "File 3", "Create week_01_file_3.html")
-Task(content-generator, "File 4", "Create week_01_file_4.html")
-Task(content-generator, "File 5", "Create week_01_file_5.html")
-# OPTIONAL: Add up to 5 more (max 10 total per batch)
+# BATCH 1 (up to 10 agents):
+Task(slide-content-generator, "Section 1", "Create introduction slides")
+Task(slide-content-generator, "Section 2", "Create main content slides")
+# ... up to 10 total
 
-# MANDATORY: WAIT for batch completion verification
-# Check: file system monitoring, count completion, verify timestamps
-# Update TodoWrite with completed tasks
-# THEN execute BATCH 2 (next 5-10 agents)
-# Continue until all files created
+# WAIT for completion
+# Update TodoWrite
+# THEN execute BATCH 2
 ```
 
-### **CRITICAL ANTI-PATTERN ENFORCEMENT**
+### ANTI-PATTERNS TO AVOID
 ```
-❌ NEVER assign multiple files to one agent (e.g., "create all 7 Week 7 files")
-❌ NEVER use prompts like "create week_XX modules 1-7" 
-✅ ALWAYS use individual file assignments (e.g., "create week_07_module_04_scenario_analysis.html")
-✅ ALWAYS verify each Task call specifies exactly ONE file creation
-```
-
-## **Agent Workspace Containment Protocol**
-
-**MANDATORY for ALL specialized agents:**
-
-1. **Single Project Folder**: All agents MUST receive project folder path as primary workspace
-2. **Agent Subdirectories**: Each agent creates subdirectory within project folder (never outside)
-3. **No Scattered Files**: Agent outputs ONLY within assigned project folder structure
-4. **Folder Inheritance**: All agent workspaces contained within single timestamped project folder
-
-## **Individual File Agent Benefits**
-- **Single File Focus**: Each agent handles exactly one specific file creation task
-- **Reduced Context Load**: Each agent works with minimal, focused requirements  
-- **Parallel Execution**: All agents execute simultaneously for maximum efficiency
-- **Efficient Coordination**: File-level task distribution prevents context overflow
-- **Quality Maintenance**: Each file includes comprehensive educational content
-- **No Dependencies**: Each file self-contained with full pedagogical context
-
-## **Enhanced Template Integration for Content Agents**
-
-### **Template Resource Access**
-All content-generator agents must utilize templates from the `templates/` directory:
-```
-templates/
-├── lesson/                               # Lesson templates
-├── activity/                             # Activity templates
-├── assessment/                           # Assessment templates
-├── accessibility/                        # Accessibility templates
-└── examples/                             # Example implementations
+❌ NEVER assign multiple sections to one agent
+❌ NEVER use prompts like "create all sections"
+✅ ALWAYS use individual section assignments
+✅ ALWAYS verify each Task specifies ONE section
 ```
 
-### **Required Interactive Components**
-Content agents MUST incorporate these elements where pedagogically appropriate:
-- **Flip Cards**: For concept reveals and key takeaways
-- **Knowledge Checks**: Self-assessment questions with hidden answers
-- **Progress Indicators**: Visual progress bars and completion tracking
-- **Call-out Boxes**: Info, warning, success, danger variants
-- **Tabbed Content**: For organizing module sections
-- **Working Accordions**: With proper Bootstrap collapse attributes
-- **Activity Cards**: Visual representation of learning activities
-- **Timeline Layouts**: For sequential content presentation
+## Agent Workspace Containment
 
-### **Component Usage Guidelines**
+**MANDATORY for ALL agents:**
+
+1. **Single Project Folder**: All agents receive project folder path
+2. **Agent Subdirectories**: Each agent creates subdirectory within project folder
+3. **No Scattered Files**: Outputs ONLY within assigned project folder
+4. **Folder Inheritance**: All workspaces contained within timestamped project folder
+
+## Available Agents
+
+| Agent | Purpose | Output |
+|-------|---------|--------|
+| `content-analyzer` | Analyze input content | Structure plan |
+| `presentation-outliner` | Plan presentation | Section breakdown |
+| `slide-content-generator` | Create slide content | Section JSON |
+| `slide-layout-mapper` | Select layouts | Layout assignments |
+| `slide-validator` | Quality validation | Validation report |
+| `pptx-packager` | Final assembly | PPTX file |
+
+## Quality Standards
+
+### Slide Content Validation
 ```
-WHEN TO USE INTERACTIVE COMPONENTS:
-- Flip Cards → Key concepts, definitions, before/after scenarios
-- Knowledge Checks → End of section reviews, concept reinforcement
-- Progress Bars → Module/course completion tracking
-- Call-out Boxes → Important notices, tips, warnings, achievements
-- Tabs → Organizing resources, activities, assessments
-- Accordions → FAQ sections, expandable content, progressive disclosure
-- Activity Cards → Visual activity overviews with metadata
-- Timelines → Sequential processes, course schedules, workflows
+EVERY SLIDE MUST:
+  ✅ Have a clear, descriptive title
+  ✅ Follow 6x6 rule (max 6 bullets, 6 words each)
+  ✅ Focus on one main idea
+  ✅ Include speaker notes
+  ✅ Use appropriate slide type
+```
+
+### Section Validation
+```
+EVERY SECTION MUST:
+  ✅ Have logical flow from first to last slide
+  ✅ Include section header slide
+  ✅ Progress from introduction to conclusion
+  ✅ Use consistent styling
+```
+
+## Handoff Protocol
+
+### Content Analyzer → Presentation Outliner
+```
+Pass: Content analysis, key topics, suggested structure
+Receive: Section breakdown, slide count estimates
+```
+
+### Presentation Outliner → Slide Content Generator
+```
+Pass: Section outline, content requirements
+Receive: Slide JSON per section
+```
+
+### Slide Content Generator → PPTX Packager
+```
+Pass: Combined slide JSON, metadata, theme selection
+Receive: Final PPTX file
 ```

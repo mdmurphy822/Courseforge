@@ -1,14 +1,16 @@
 # Test Fixtures Package
-# Contains sample HTML and IMSCC files for testing
+# Contains sample files for testing
 
 """
 Fixture directories:
-- sample_html/: HTML files for accessibility and component testing
-- sample_imscc/: Minimal IMSCC manifests and packages for extraction testing
+- sample_html/: HTML files for accessibility and content testing
+- sample_presentations/: JSON presentation fixtures for PPTX generation
+- expected_outputs/: Expected output files for validation testing
 """
 
 from pathlib import Path
 
 FIXTURES_DIR = Path(__file__).parent
 SAMPLE_HTML_DIR = FIXTURES_DIR / 'sample_html'
-SAMPLE_IMSCC_DIR = FIXTURES_DIR / 'sample_imscc'
+SAMPLE_PRESENTATIONS_DIR = FIXTURES_DIR / 'sample_presentations'
+EXPECTED_OUTPUTS_DIR = FIXTURES_DIR / 'expected_outputs'

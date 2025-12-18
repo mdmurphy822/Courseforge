@@ -1,0 +1,54 @@
+{
+  "metadata": {
+    "title": "Minimal Example",
+    "subtitle": "A Simple Presentation",
+    "author": "Slideforge",
+    "date": "2025",
+    "subject": "Demonstrates minimal valid presentation structure"
+  },
+  "sections": [
+    {
+      "title": "Introduction",
+      "slides": [
+        {
+          "type": "title",
+          "title": "Minimal Example",
+          "content": {
+            "subtitle": "The simplest valid Slideforge presentation"
+          },
+          "notes": "Welcome slide - introduce the presentation topic"
+        },
+        {
+          "type": "content",
+          "title": "What This Demonstrates",
+          "content": {
+            "bullets": [
+              "Valid JSON structure",
+              "Required metadata fields",
+              "Basic slide types",
+              "Speaker notes usage"
+            ]
+          },
+          "notes": "This slide shows the core elements needed for a valid presentation."
+        }
+      ]
+    },
+    {
+      "title": "Conclusion",
+      "slides": [
+        {
+          "type": "content",
+          "title": "Key Takeaways",
+          "content": {
+            "bullets": [
+              "Keep it simple",
+              "Follow the schema",
+              "Add speaker notes"
+            ]
+          },
+          "notes": "Summarize the main points for the audience."
+        }
+      ]
+    }
+  ]
+}

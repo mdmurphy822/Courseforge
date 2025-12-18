@@ -1,0 +1,76 @@
+{
+  "metadata": {
+    "title": "Minimal Test Presentation",
+    "subtitle": "Five Slide Sample for Testing",
+    "author": "Slideforge Test Suite",
+    "date": "2025-12-17",
+    "subject": "Testing Infrastructure"
+  },
+  "sections": [
+    {
+      "title": "Introduction",
+      "slides": [
+        {
+          "type": "title",
+          "title": "Minimal Test Presentation",
+          "content": {
+            "subtitle": "Five Slide Sample for Testing"
+          },
+          "notes": "This is the title slide for the minimal test presentation. Used for basic functionality testing."
+        },
+        {
+          "type": "section_header",
+          "title": "Main Content",
+          "content": {
+            "subtitle": "Demonstrating Basic Slide Types"
+          },
+          "notes": "Section header introducing the main content area."
+        }
+      ]
+    },
+    {
+      "title": "Main Content",
+      "slides": [
+        {
+          "type": "content",
+          "title": "Key Points",
+          "content": {
+            "bullets": [
+              "First important point",
+              "Second key concept",
+              "Third critical idea"
+            ]
+          },
+          "notes": "Standard content slide with three bullet points demonstrating the content layout type."
+        },
+        {
+          "type": "two_content",
+          "title": "Comparison View",
+          "content": {
+            "left": [
+              "Left column item 1",
+              "Left column item 2"
+            ],
+            "right": [
+              "Right column item 1",
+              "Right column item 2"
+            ]
+          },
+          "notes": "Two-content slide showing side-by-side layout with left and right columns."
+        },
+        {
+          "type": "content",
+          "title": "Summary",
+          "content": {
+            "bullets": [
+              "Review of main points",
+              "Next steps",
+              "Thank you"
+            ]
+          },
+          "notes": "Closing slide summarizing the presentation and providing next steps."
+        }
+      ]
+    }
+  ]
+}

@@ -1,45 +1,62 @@
 # Schemas Directory
 
-This directory contains XML schemas, content structure definitions, and display format specifications for course generation and Brightspace package creation.
+This directory contains JSON schemas for presentation content validation and theme configuration.
 
 ## Directory Structure
 
-### `/content-display/`
-Schemas and specifications for how course content should be displayed on web pages, including:
-- Paragraph structure guidelines
-- Key term highlighting and accordion container specifications
-- Page title conventions
-- Interactive element definitions
-
-### `/imscc/`
-IMS Common Cartridge XML schema definitions and validation files:
-- IMS Common Cartridge 1.2.0 schema files
-- Brightspace-specific extensions and customizations
-- Manifest structure templates
-
-### `/assessment/`
-Assessment integration schemas for native Brightspace tools:
-- QTI 1.2 quiz schema definitions
-- D2L assignment XML structure
-- Discussion forum configuration schemas
-- Gradebook integration specifications
+### `/presentation/`
+Core presentation schemas:
+- `presentation_schema.json` - Main presentation structure
+- `theme_schema.json` - Theme configuration
+- `theme_catalog_schema.json` - Theme registry
+- `defaults.json` - Default configuration settings
 
 ### `/accessibility/`
-WCAG 2.2 AA compliance schemas and validation rules:
+WCAG 2.2 AA compliance schemas:
 - Accessibility markup requirements
 - Screen reader compatibility specifications
-- Keyboard navigation standards
+- Color contrast validation
 
 ## Usage Guidelines
 
-1. **Schema Validation**: All generated content must validate against appropriate schemas
+1. **Schema Validation**: All presentation content must validate against appropriate schemas
 2. **Version Control**: Maintain schema versions with backward compatibility
 3. **Documentation**: Each schema file includes comprehensive comments and examples
-4. **Testing**: Schema compliance validated during pre-deployment checks
+4. **Testing**: Schema compliance validated during generation
 
-## Schema Files
+## Key Schemas
 
-- `content-display-schema.json` - Defines content presentation standards
-- `imscc-manifest-schema.xsd` - IMS Common Cartridge manifest validation
-- `brightspace-extensions.xsd` - Brightspace-specific XML extensions
-- `assessment-integration.json` - Assessment tool configuration standards
+### Presentation Schema
+Defines complete presentation structure:
+- Metadata (title, author, date)
+- Sections array with slides
+- Theme configuration
+
+### Slide Schema
+Defines supported slide types:
+- `title` - Title slide
+- `section_header` - Section divider
+- `content` - Bullet points
+- `two_content` - Two columns
+- `comparison` - Labeled columns
+- `quote` - Quote display
+- `image` - Image slide
+- `styled_content` - Content with callouts
+
+### Theme Schema
+Defines theme configuration:
+- Color palette (primary, secondary, accent)
+- Font families and sizes
+- Spacing and margins
+
+## Validation
+
+```python
+import json
+import jsonschema
+
+with open('schemas/presentation/presentation_schema.json') as f:
+    schema = json.load(f)
+
+jsonschema.validate(content, schema)
+```

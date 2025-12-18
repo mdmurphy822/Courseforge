@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://slideforge.dev/schemas/theme_catalog.json",
+  "title": "Slideforge Theme Catalog Schema",
+  "description": "Schema for theme catalog index",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "Catalog schema version",
+      "default": "1.0.0"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when catalog was generated"
+    },
+    "themes": {
+      "type": "array",
+      "description": "Available themes",
+      "items": {
+        "$ref": "#/definitions/themeEntry"
+      }
+    }
+  },
+  "required": ["version", "themes"],
+  "definitions": {
+    "themeEntry": {
+      "type": "object",
+      "description": "A single theme entry in the catalog",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique theme identifier (slug)",
+          "pattern": "^[a-z][a-z0-9_-]*$"
+        },
+        "name": {
+          "type": "string",
+          "description": "Human-readable theme name"
+        },
+        "description": {
+          "type": "string",
+          "description": "Theme description"
+        },
+        "category": {
+          "type": "string",
+          "enum": ["business", "educational", "technical", "creative", "general"],
+          "description": "Theme category for filtering"
+        },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Tags for searchability"
+        },
+        "colors": {
+          "type": "object",
+          "description": "Primary colors preview",
+          "properties": {
+            "primary": { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$" },
+            "secondary": { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$" },
+            "accent": { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$" }
+          }
+        },
+        "aspect_ratio": {
+          "type": "string",
+          "enum": ["16:9", "4:3", "16:10"],
+          "default": "16:9"
+        },
+        "config_path": {
+          "type": "string",
+          "description": "Relative path to theme JSON config"
+        },
+        "template_path": {
+          "type": "string",
+          "description": "Relative path to PPTX template (if available)"
+        },
+        "preview_image": {
+          "type": "string",
+          "description": "Relative path to preview image"
+        }
+      },
+      "required": ["id", "name", "category", "config_path"]
+    }
+  }
+}

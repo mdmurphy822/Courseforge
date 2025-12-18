@@ -21,5 +21,92 @@
     "analyze": ["analyze", "differentiate", "examine", "distinguish", "organize"],
     "evaluate": ["evaluate", "assess", "critique", "justify", "judge", "argue", "defend"],
     "create": ["create", "design", "construct", "develop", "formulate", "compose", "plan"]
+  },
+  "content_profiling": {
+    "enabled": true,
+    "difficulty_weights": {
+      "vocabulary_complexity": 0.25,
+      "sentence_complexity": 0.25,
+      "concept_density": 0.25,
+      "bloom_level": 0.25
+    },
+    "difficulty_thresholds": {
+      "beginner": 0.33,
+      "intermediate": 0.66,
+      "advanced": 1.0
+    },
+    "readability_metric": "flesch_kincaid",
+    "technical_term_patterns": [
+      "\\b[A-Z][a-z]+[A-Z][a-zA-Z]*\\b",
+      "\\b[a-z]+_[a-z]+\\b",
+      "\\b[A-Z]{2,}\\b"
+    ]
+  },
+  "concept_extraction": {
+    "enabled": true,
+    "min_term_frequency": 2,
+    "max_concepts": 50,
+    "centrality_algorithm": "composite",
+    "centrality_weights": {
+      "frequency": 0.2,
+      "tfidf": 0.3,
+      "pagerank": 0.3,
+      "betweenness": 0.2
+    },
+    "top_concepts_count": 20,
+    "stopwords_extend": ["also", "however", "therefore", "thus", "hence"],
+    "concept_patterns": {
+      "noun_phrases": true,
+      "technical_terms": true,
+      "definitions": true
+    }
+  },
+  "slide_transformation": {
+    "max_bullets_per_slide": 6,
+    "max_words_per_bullet": 12,
+    "max_chars_per_bullet": 100,
+    "include_speaker_notes": true,
+    "generate_section_headers": true,
+    "importance_threshold": 0.3,
+    "split_long_content": true,
+    "block_to_slide_mapping": {
+      "paragraph": "content",
+      "list_ordered": "content",
+      "list_unordered": "content",
+      "definition_list": "two_content",
+      "blockquote": "quote",
+      "table": "table",
+      "figure": "image",
+      "code_block": "content",
+      "callout": "content"
+    }
+  },
+  "markdown_parsing": {
+    "enabled": true,
+    "yaml_frontmatter": true,
+    "gfm_tables": true,
+    "fenced_code_blocks": true,
+    "auto_detect_format": true
+  },
+  "pedagogical_patterns": {
+    "enabled": true,
+    "patterns": {
+      "problem_based": {
+        "indicators": ["problem", "challenge", "scenario", "case study", "solve"],
+        "structure": "problem_first"
+      },
+      "scaffolded": {
+        "indicators": ["build on", "prerequisite", "foundation", "before", "first"],
+        "structure": "progressive_complexity"
+      },
+      "spiral_review": {
+        "indicators": ["recall", "remember", "previously", "earlier", "review"],
+        "structure": "revisit_concepts"
+      },
+      "assessment_driven": {
+        "indicators": ["quiz", "test", "assessment", "check understanding", "practice"],
+        "structure": "interleaved_assessment"
+      }
+    }
   }
 }

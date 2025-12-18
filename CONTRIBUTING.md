@@ -1,6 +1,6 @@
-# Contributing to Courseforge
+# Contributing to Slideforge
 
-Thank you for your interest in contributing to Courseforge! This document provides guidelines for contributing to the project.
+Thank you for your interest in contributing to Slideforge! This document provides guidelines for contributing to the project.
 
 ## Getting Started
 
@@ -8,24 +8,24 @@ Thank you for your interest in contributing to Courseforge! This document provid
 
 - Python 3.8 or higher
 - Git
-- (Optional) DART installation for document accessibility conversion
+- python-pptx library
 
 ### Setup
 
 1. Fork the repository on GitHub
 2. Clone your fork:
    ```bash
-   git clone https://github.com/YOUR-USERNAME/Courseforge.git
-   cd Courseforge
+   git clone https://github.com/YOUR-USERNAME/Slideforge.git
+   cd Slideforge
    ```
-3. Install dependencies:
+3. Create and activate virtual environment:
+   ```bash
+   python -m venv scripts/venv
+   source scripts/venv/bin/activate
+   ```
+4. Install dependencies:
    ```bash
    pip install -r scripts/requirements.txt
-   ```
-4. Set environment variables (optional):
-   ```bash
-   export COURSEFORGE_PATH=/path/to/Courseforge
-   export DART_PATH=/path/to/DART  # If using DART integration
    ```
 
 ## Development Workflow
@@ -50,10 +50,10 @@ Thank you for your interest in contributing to Courseforge! This document provid
 ### Commit Messages
 
 Follow conventional commit format:
-- `feat: add new assessment template generator`
-- `fix: resolve manifest namespace issue`
+- `feat: add new slide layout type`
+- `fix: resolve theme loading issue`
 - `docs: update agent documentation`
-- `refactor: simplify IMSCC packaging logic`
+- `refactor: simplify presentation generator`
 
 ## Code Style
 
@@ -74,7 +74,7 @@ Follow conventional commit format:
 
 1. Ensure your code follows the project style guidelines
 2. Update documentation as needed
-3. Test your changes with sample course content
+3. Test your changes with sample presentation content
 4. Create a pull request with:
    - Clear title describing the change
    - Description of what changed and why
@@ -86,7 +86,7 @@ Follow conventional commit format:
 - [ ] Tests pass (if applicable)
 - [ ] Documentation updated
 - [ ] No hardcoded paths or credentials
-- [ ] IMSCC output validates correctly (for packager changes)
+- [ ] Generated PPTX files open correctly
 
 ## Agent Development
 
@@ -102,7 +102,27 @@ When modifying or creating agents:
 - One agent = one responsibility
 - Use environment variables for paths
 - Implement proper error handling
-- Follow the scratchpad protocol for design decisions
+- Follow the individual section protocol (one agent = one section)
+
+## Testing
+
+### Manual Testing
+
+```bash
+# Test presentation generation
+cd scripts/pptx-generator
+python pptx_generator.py -i ../../templates/pptx/examples/beekeeping_example.json -o test_output.pptx --theme corporate
+
+# List available themes
+python pptx_generator.py --list-templates
+```
+
+### Validation
+
+- Verify generated PPTX opens in PowerPoint/LibreOffice
+- Check that theme colors are applied correctly
+- Confirm speaker notes are present
+- Test all slide types used in the presentation
 
 ## Reporting Issues
 

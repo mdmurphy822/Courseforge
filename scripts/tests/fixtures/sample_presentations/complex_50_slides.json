@@ -1,0 +1,801 @@
+{
+  "metadata": {
+    "title": "Enterprise Software Architecture",
+    "subtitle": "Comprehensive System Design and Implementation",
+    "author": "Slideforge Test Suite",
+    "date": "2025-12-17",
+    "subject": "Software Architecture and Design Patterns",
+    "keywords": ["architecture", "software", "design patterns", "enterprise", "scalability"]
+  },
+  "theme": {
+    "colors": {
+      "primary": "#2c5aa0",
+      "secondary": "#28a745",
+      "accent": "#ffc107",
+      "background": "#ffffff",
+      "text_dark": "#333333",
+      "text_light": "#ffffff"
+    }
+  },
+  "sections": [
+    {
+      "title": "Introduction",
+      "slides": [
+        {
+          "type": "title",
+          "title": "Enterprise Software Architecture",
+          "content": {
+            "subtitle": "Comprehensive System Design and Implementation"
+          },
+          "notes": "Title slide for the comprehensive 50-slide presentation on enterprise software architecture."
+        },
+        {
+          "type": "agenda",
+          "title": "Agenda",
+          "content": {
+            "agenda_items": [
+              {"section": "Introduction", "description": "Overview and objectives", "status": "current"},
+              {"section": "Main Content A", "description": "Core architecture principles", "status": "upcoming"},
+              {"section": "Main Content B", "description": "Implementation patterns", "status": "upcoming"},
+              {"section": "Advanced Topics", "description": "Scaling and optimization", "status": "upcoming"},
+              {"section": "Conclusion", "description": "Summary and next steps", "status": "upcoming"}
+            ],
+            "agenda_style": "numbered",
+            "show_progress": true
+          },
+          "notes": "Presentation agenda outlining all five sections."
+        },
+        {
+          "type": "content",
+          "title": "About This Presentation",
+          "content": {
+            "bullets": [
+              "Comprehensive guide to enterprise architecture",
+              "50 slides covering theory and practice",
+              "Real-world examples and case studies",
+              "Best practices and anti-patterns",
+              "Actionable implementation strategies"
+            ]
+          },
+          "notes": "Introduction explaining the scope and purpose of the presentation."
+        },
+        {
+          "type": "key_concept",
+          "title": "What is Enterprise Architecture?",
+          "content": {
+            "concept_title": "Enterprise Architecture",
+            "definition": "A comprehensive framework that defines the structure and operation of an organization's IT infrastructure.",
+            "details": [
+              "Aligns IT strategy with business goals",
+              "Provides standardization and governance",
+              "Enables scalability and flexibility",
+              "Reduces complexity and costs"
+            ],
+            "concept_style": "boxed"
+          },
+          "notes": "Key concept defining enterprise architecture."
+        },
+        {
+          "type": "stats_grid",
+          "title": "Industry Statistics",
+          "content": {
+            "stats": [
+              {"value": "78%", "label": "Organizations using microservices", "trend": "up", "highlight": true},
+              {"value": "3.2x", "label": "Faster deployment with DevOps", "trend": "up", "highlight": false},
+              {"value": "45%", "label": "Cost reduction through automation", "trend": "up", "highlight": false},
+              {"value": "92%", "label": "Cloud adoption rate", "trend": "up", "highlight": true}
+            ],
+            "stats_layout": "2x2"
+          },
+          "notes": "Key industry statistics supporting the importance of enterprise architecture."
+        },
+        {
+          "type": "two_content",
+          "title": "Traditional vs Modern Architecture",
+          "content": {
+            "left": [
+              "Monolithic applications",
+              "Manual deployment",
+              "Single database",
+              "Vertical scaling",
+              "Long release cycles"
+            ],
+            "right": [
+              "Microservices architecture",
+              "Automated CI/CD",
+              "Database per service",
+              "Horizontal scaling",
+              "Continuous delivery"
+            ]
+          },
+          "notes": "Comparison of traditional and modern architecture approaches."
+        },
+        {
+          "type": "quote",
+          "title": "Architectural Philosophy",
+          "content": {
+            "text": "Architecture is about the important stuff. Whatever that is.",
+            "attribution": "Martin Fowler"
+          },
+          "notes": "Inspirational quote from Martin Fowler on software architecture."
+        },
+        {
+          "type": "content",
+          "title": "Learning Objectives",
+          "content": {
+            "bullets": [
+              "Understand core architectural patterns",
+              "Learn design principles and best practices",
+              "Explore implementation strategies",
+              "Master scaling and optimization techniques",
+              "Apply knowledge to real-world scenarios"
+            ]
+          },
+          "notes": "Clear learning objectives for the presentation."
+        },
+        {
+          "type": "timeline",
+          "title": "Architecture Evolution",
+          "content": {
+            "events": [
+              {"date": "1990s", "label": "Monolithic Era", "description": "Single-tier applications"},
+              {"date": "2000s", "label": "SOA Introduction", "description": "Service-oriented architecture"},
+              {"date": "2010s", "label": "Microservices", "description": "Fine-grained services"},
+              {"date": "2020s", "label": "Cloud Native", "description": "Containerized deployments"}
+            ]
+          },
+          "notes": "Timeline showing the evolution of software architecture."
+        },
+        {
+          "type": "divider",
+          "title": "Core Principles",
+          "content": {
+            "section_number": "01",
+            "divider_style": "numbered",
+            "accent_color": "primary"
+          },
+          "notes": "Section divider transitioning to main content."
+        }
+      ]
+    },
+    {
+      "title": "Main Content A: Core Architecture Principles",
+      "slides": [
+        {
+          "type": "section_header",
+          "title": "Core Architecture Principles",
+          "content": {
+            "subtitle": "Foundation for scalable systems"
+          },
+          "notes": "Section header for core architecture principles."
+        },
+        {
+          "type": "content",
+          "title": "SOLID Principles",
+          "content": {
+            "bullets": [
+              "Single Responsibility Principle",
+              "Open/Closed Principle",
+              "Liskov Substitution Principle",
+              "Interface Segregation Principle",
+              "Dependency Inversion Principle"
+            ]
+          },
+          "notes": "Introduction to SOLID principles of object-oriented design."
+        },
+        {
+          "type": "key_concept",
+          "title": "Single Responsibility",
+          "content": {
+            "concept_title": "Single Responsibility Principle",
+            "definition": "A class should have only one reason to change, meaning it should have only one job or responsibility.",
+            "details": [
+              "Improves code maintainability",
+              "Reduces coupling between components",
+              "Makes testing easier",
+              "Enhances code reusability"
+            ],
+            "concept_style": "boxed"
+          },
+          "notes": "Deep dive into Single Responsibility Principle."
+        },
+        {
+          "type": "comparison",
+          "title": "Monolithic vs Microservices",
+          "content": {
+            "left_title": "Monolithic",
+            "right_title": "Microservices",
+            "left": [
+              "Single deployment unit",
+              "Shared database",
+              "Tight coupling",
+              "Simple to develop initially"
+            ],
+            "right": [
+              "Independent services",
+              "Database per service",
+              "Loose coupling",
+              "Complex but scalable"
+            ]
+          },
+          "notes": "Detailed comparison of monolithic and microservices architectures."
+        },
+        {
+          "type": "process_flow",
+          "title": "Design Process",
+          "content": {
+            "steps": [
+              {"label": "Requirements", "description": "Gather functional and non-functional requirements"},
+              {"label": "Design", "description": "Create architectural blueprints"},
+              {"label": "Review", "description": "Peer review and validation"},
+              {"label": "Implement", "description": "Build according to design"},
+              {"label": "Evaluate", "description": "Measure against requirements"}
+            ],
+            "flow_style": "horizontal"
+          },
+          "notes": "Architectural design process flow."
+        },
+        {
+          "type": "cards_grid",
+          "title": "Architectural Concerns",
+          "content": {
+            "cards": [
+              {
+                "title": "Performance",
+                "items": ["Response time", "Throughput", "Resource usage"],
+                "color": "primary"
+              },
+              {
+                "title": "Security",
+                "items": ["Authentication", "Authorization", "Encryption"],
+                "color": "secondary"
+              },
+              {
+                "title": "Reliability",
+                "items": ["Availability", "Fault tolerance", "Recovery"],
+                "color": "accent"
+              }
+            ],
+            "cards_columns": 3
+          },
+          "notes": "Key architectural concerns to address in system design."
+        },
+        {
+          "type": "table",
+          "title": "Architecture Characteristics",
+          "content": {
+            "headers": ["Characteristic", "Importance", "Measurable", "Tradoffs"],
+            "rows": [
+              ["Scalability", "High", "Yes", "Cost, Complexity"],
+              ["Security", "Critical", "Yes", "Usability, Performance"],
+              ["Maintainability", "High", "Partial", "Development Speed"],
+              ["Performance", "High", "Yes", "Cost, Simplicity"]
+            ]
+          },
+          "notes": "Table showing various architectural characteristics and their attributes."
+        },
+        {
+          "type": "callout",
+          "title": "Best Practices",
+          "content": {
+            "callouts": [
+              {
+                "callout_type": "tip",
+                "heading": "Design Pattern",
+                "text": "Use established patterns to solve common problems."
+              },
+              {
+                "callout_type": "warning",
+                "heading": "Premature Optimization",
+                "text": "Avoid optimizing before identifying actual bottlenecks."
+              }
+            ]
+          },
+          "notes": "Important best practices and warnings for architects."
+        },
+        {
+          "type": "data_viz",
+          "title": "System Complexity Growth",
+          "content": {
+            "chart_type": "line_markers",
+            "chart_data": {
+              "categories": ["Year 1", "Year 2", "Year 3", "Year 4", "Year 5"],
+              "series": [
+                {"name": "With Good Architecture", "values": [20, 35, 45, 50, 55]},
+                {"name": "Without Architecture", "values": [15, 45, 85, 140, 220]}
+              ]
+            },
+            "chart_title": "Complexity Over Time",
+            "show_legend": true,
+            "show_data_labels": false
+          },
+          "notes": "Chart showing how good architecture controls complexity growth over time."
+        },
+        {
+          "type": "content",
+          "title": "Key Takeaways: Core Principles",
+          "content": {
+            "bullets": [
+              "Apply SOLID principles consistently",
+              "Choose architecture based on requirements",
+              "Consider all quality attributes early",
+              "Document architectural decisions",
+              "Review and iterate regularly"
+            ]
+          },
+          "notes": "Summary of key takeaways from core principles section."
+        }
+      ]
+    },
+    {
+      "title": "Main Content B: Implementation Patterns",
+      "slides": [
+        {
+          "type": "section_header",
+          "title": "Implementation Patterns",
+          "content": {
+            "subtitle": "Proven solutions for common challenges"
+          },
+          "notes": "Section header for implementation patterns."
+        },
+        {
+          "type": "content",
+          "title": "Common Design Patterns",
+          "content": {
+            "bullets": [
+              "Singleton: Ensure single instance",
+              "Factory: Create objects without specifying class",
+              "Observer: Define one-to-many dependency",
+              "Strategy: Define family of algorithms",
+              "Adapter: Interface compatibility"
+            ]
+          },
+          "notes": "Overview of common design patterns."
+        },
+        {
+          "type": "key_concept",
+          "title": "The Singleton Pattern",
+          "content": {
+            "concept_title": "Singleton Pattern",
+            "definition": "Ensures a class has only one instance and provides a global point of access to it.",
+            "details": [
+              "Controls access to shared resources",
+              "Lazy initialization possible",
+              "Thread-safety considerations needed",
+              "Use sparingly to avoid hidden dependencies"
+            ],
+            "concept_style": "boxed"
+          },
+          "notes": "Detailed explanation of the Singleton pattern."
+        },
+        {
+          "type": "comparison_matrix",
+          "title": "Pattern Selection",
+          "content": {
+            "options": ["Singleton", "Factory", "Builder"],
+            "criteria": [
+              {"name": "Complexity", "values": ["Low", "Medium", "High"]},
+              {"name": "Flexibility", "values": ["Low", "High", "Very High"]},
+              {"name": "Use Case", "values": ["Single instance", "Object creation", "Complex objects"]}
+            ],
+            "highlight_option": "Factory"
+          },
+          "notes": "Comparison matrix for selecting appropriate design patterns."
+        },
+        {
+          "type": "process_flow",
+          "title": "Request Processing Flow",
+          "content": {
+            "steps": [
+              {"label": "Receive", "description": "API Gateway receives request"},
+              {"label": "Authenticate", "description": "Verify user credentials"},
+              {"label": "Route", "description": "Direct to appropriate service"},
+              {"label": "Process", "description": "Execute business logic"},
+              {"label": "Respond", "description": "Return result to client"}
+            ],
+            "flow_style": "horizontal"
+          },
+          "notes": "Typical request processing flow in microservices architecture."
+        },
+        {
+          "type": "two_content",
+          "title": "Synchronous vs Asynchronous",
+          "content": {
+            "left": [
+              "Direct communication",
+              "Immediate response",
+              "Simple error handling",
+              "Tight coupling",
+              "Blocked waiting"
+            ],
+            "right": [
+              "Message-based communication",
+              "Eventual consistency",
+              "Complex error handling",
+              "Loose coupling",
+              "Non-blocking"
+            ]
+          },
+          "notes": "Comparison of synchronous and asynchronous communication patterns."
+        },
+        {
+          "type": "key_value",
+          "title": "API Design Principles",
+          "content": {
+            "pairs": [
+              {"key": "RESTful", "value": "Resource-based URLs"},
+              {"key": "Versioning", "value": "URL or header-based"},
+              {"key": "Authentication", "value": "OAuth 2.0 / JWT"},
+              {"key": "Rate Limiting", "value": "Prevent abuse"},
+              {"key": "Documentation", "value": "OpenAPI / Swagger"}
+            ]
+          },
+          "notes": "Key principles for designing robust APIs."
+        },
+        {
+          "type": "table",
+          "title": "Message Queue Comparison",
+          "content": {
+            "headers": ["Feature", "RabbitMQ", "Kafka", "SQS"],
+            "rows": [
+              ["Protocol", "AMQP", "Custom", "HTTP"],
+              ["Ordering", "Per Queue", "Per Partition", "FIFO Queue"],
+              ["Retention", "Until Consumed", "Time-based", "4-14 days"],
+              ["Throughput", "20K msg/s", "1M msg/s", "Varies"]
+            ]
+          },
+          "notes": "Comparison of popular message queue technologies."
+        },
+        {
+          "type": "callout",
+          "title": "Implementation Tips",
+          "content": {
+            "callouts": [
+              {
+                "callout_type": "tip",
+                "heading": "Circuit Breaker",
+                "text": "Implement circuit breakers to prevent cascading failures."
+              },
+              {
+                "callout_type": "info",
+                "heading": "Retry Logic",
+                "text": "Use exponential backoff for retry attempts."
+              },
+              {
+                "callout_type": "warning",
+                "heading": "Distributed Transactions",
+                "text": "Avoid distributed transactions when possible. Use saga pattern."
+              }
+            ]
+          },
+          "notes": "Practical implementation tips for resilient systems."
+        },
+        {
+          "type": "content",
+          "title": "Key Takeaways: Implementation",
+          "content": {
+            "bullets": [
+              "Choose patterns based on specific needs",
+              "Consider communication trade-offs",
+              "Design APIs for long-term use",
+              "Implement resilience patterns",
+              "Plan for failure scenarios"
+            ]
+          },
+          "notes": "Summary of implementation patterns section."
+        }
+      ]
+    },
+    {
+      "title": "Advanced Topics: Scaling and Optimization",
+      "slides": [
+        {
+          "type": "section_header",
+          "title": "Scaling and Optimization",
+          "content": {
+            "subtitle": "Building systems that grow"
+          },
+          "notes": "Section header for advanced scaling topics."
+        },
+        {
+          "type": "content",
+          "title": "Scaling Strategies",
+          "content": {
+            "bullets": [
+              "Horizontal scaling: Add more instances",
+              "Vertical scaling: Increase instance resources",
+              "Database sharding: Partition data",
+              "Caching: Reduce database load",
+              "CDN: Distribute static content"
+            ]
+          },
+          "notes": "Overview of various scaling strategies."
+        },
+        {
+          "type": "comparison",
+          "title": "Scaling Approaches",
+          "content": {
+            "left_title": "Horizontal Scaling",
+            "right_title": "Vertical Scaling",
+            "left": [
+              "Add more machines",
+              "Better fault tolerance",
+              "More complex architecture",
+              "Linear cost increase"
+            ],
+            "right": [
+              "Upgrade existing machine",
+              "Simpler architecture",
+              "Single point of failure",
+              "Hardware limits"
+            ]
+          },
+          "notes": "Comparison of horizontal and vertical scaling approaches."
+        },
+        {
+          "type": "data_viz",
+          "title": "Performance Improvement",
+          "content": {
+            "chart_type": "column_clustered",
+            "chart_data": {
+              "categories": ["No Cache", "Local Cache", "Distributed Cache", "CDN"],
+              "series": [
+                {"name": "Response Time (ms)", "values": [450, 120, 85, 25]},
+                {"name": "Database Load (%)", "values": [95, 45, 20, 5]}
+              ]
+            },
+            "chart_title": "Caching Strategy Impact",
+            "show_legend": true,
+            "show_data_labels": true
+          },
+          "notes": "Chart showing performance improvements with different caching strategies."
+        },
+        {
+          "type": "key_concept",
+          "title": "Database Sharding",
+          "content": {
+            "concept_title": "Database Sharding",
+            "definition": "Partitioning data across multiple database instances to distribute load and improve performance.",
+            "details": [
+              "Horizontal partitioning of data",
+              "Each shard contains subset of data",
+              "Improves read/write throughput",
+              "Adds complexity to queries"
+            ],
+            "concept_style": "boxed"
+          },
+          "notes": "Explanation of database sharding strategy."
+        },
+        {
+          "type": "table",
+          "title": "Caching Strategies",
+          "content": {
+            "headers": ["Strategy", "Use Case", "TTL", "Invalidation"],
+            "rows": [
+              ["Cache-Aside", "Read-heavy", "Long", "Manual"],
+              ["Write-Through", "Data consistency", "N/A", "Automatic"],
+              ["Write-Behind", "Write-heavy", "Short", "Delayed"],
+              ["Refresh-Ahead", "Predictable access", "Medium", "Proactive"]
+            ]
+          },
+          "notes": "Comparison of different caching strategies."
+        },
+        {
+          "type": "process_flow",
+          "title": "Load Balancing Flow",
+          "content": {
+            "steps": [
+              {"label": "Client Request", "description": "User initiates request"},
+              {"label": "DNS Resolution", "description": "Resolve load balancer IP"},
+              {"label": "Load Balancer", "description": "Select healthy instance"},
+              {"label": "Service Instance", "description": "Process request"},
+              {"label": "Response", "description": "Return to client"}
+            ],
+            "flow_style": "horizontal"
+          },
+          "notes": "Flow diagram showing load balancing process."
+        },
+        {
+          "type": "stats_grid",
+          "title": "Performance Metrics",
+          "content": {
+            "stats": [
+              {"value": "99.99%", "label": "Uptime SLA", "trend": "up", "highlight": true},
+              {"value": "< 100ms", "label": "P95 Response Time", "trend": "down", "highlight": true},
+              {"value": "10K rps", "label": "Request Capacity", "trend": "up", "highlight": false},
+              {"value": "3 Regions", "label": "Geographic Distribution", "trend": "neutral", "highlight": false}
+            ],
+            "stats_layout": "2x2"
+          },
+          "notes": "Key performance metrics for the system."
+        },
+        {
+          "type": "callout",
+          "title": "Optimization Guidelines",
+          "content": {
+            "callouts": [
+              {
+                "callout_type": "tip",
+                "heading": "Profile First",
+                "text": "Always profile before optimizing. Measure, don't guess."
+              },
+              {
+                "callout_type": "info",
+                "heading": "CDN Benefits",
+                "text": "CDNs reduce latency by 60-80% for static content."
+              },
+              {
+                "callout_type": "warning",
+                "heading": "Over-optimization",
+                "text": "Premature optimization is the root of all evil."
+              }
+            ]
+          },
+          "notes": "Important guidelines for system optimization."
+        },
+        {
+          "type": "content",
+          "title": "Key Takeaways: Scaling",
+          "content": {
+            "bullets": [
+              "Plan for scale from the beginning",
+              "Use horizontal scaling for flexibility",
+              "Implement caching at multiple levels",
+              "Monitor and measure continuously",
+              "Optimize based on data, not assumptions"
+            ]
+          },
+          "notes": "Summary of scaling and optimization section."
+        }
+      ]
+    },
+    {
+      "title": "Conclusion",
+      "slides": [
+        {
+          "type": "section_header",
+          "title": "Conclusion",
+          "content": {
+            "subtitle": "Bringing it all together"
+          },
+          "notes": "Section header for conclusion."
+        },
+        {
+          "type": "content",
+          "title": "Recap: Core Principles",
+          "content": {
+            "bullets": [
+              "SOLID principles for maintainable code",
+              "Separation of concerns",
+              "Design for change",
+              "Consider all quality attributes",
+              "Document architectural decisions"
+            ]
+          },
+          "notes": "Recap of core architectural principles."
+        },
+        {
+          "type": "content",
+          "title": "Recap: Implementation",
+          "content": {
+            "bullets": [
+              "Use proven design patterns",
+              "Choose appropriate communication styles",
+              "Design resilient APIs",
+              "Implement circuit breakers and retries",
+              "Plan for distributed systems challenges"
+            ]
+          },
+          "notes": "Recap of implementation patterns."
+        },
+        {
+          "type": "content",
+          "title": "Recap: Scaling",
+          "content": {
+            "bullets": [
+              "Horizontal scaling for flexibility",
+              "Multi-level caching strategy",
+              "Database sharding for large datasets",
+              "Load balancing and health checks",
+              "Geographic distribution with CDN"
+            ]
+          },
+          "notes": "Recap of scaling and optimization strategies."
+        },
+        {
+          "type": "timeline",
+          "title": "Implementation Roadmap",
+          "content": {
+            "events": [
+              {"date": "Phase 1", "label": "Foundation", "description": "Core architecture and patterns"},
+              {"date": "Phase 2", "label": "Services", "description": "Microservices implementation"},
+              {"date": "Phase 3", "label": "Scale", "description": "Caching and load balancing"},
+              {"date": "Phase 4", "label": "Optimize", "description": "Performance tuning"}
+            ]
+          },
+          "notes": "Roadmap for implementing enterprise architecture."
+        },
+        {
+          "type": "cards_grid",
+          "title": "Resources",
+          "content": {
+            "cards": [
+              {
+                "title": "Books",
+                "items": ["Clean Architecture", "Microservices Patterns", "Site Reliability Engineering"],
+                "color": "primary"
+              },
+              {
+                "title": "Tools",
+                "items": ["Docker", "Kubernetes", "Terraform"],
+                "color": "secondary"
+              },
+              {
+                "title": "Communities",
+                "items": ["Stack Overflow", "GitHub", "Architecture Forums"],
+                "color": "accent"
+              }
+            ],
+            "cards_columns": 3
+          },
+          "notes": "Recommended resources for continued learning."
+        },
+        {
+          "type": "callout",
+          "title": "Final Thoughts",
+          "content": {
+            "callouts": [
+              {
+                "callout_type": "success",
+                "heading": "You're Ready",
+                "text": "You now have the knowledge to design enterprise systems."
+              },
+              {
+                "callout_type": "tip",
+                "heading": "Keep Learning",
+                "text": "Architecture is a journey, not a destination."
+              }
+            ]
+          },
+          "notes": "Encouraging final thoughts for the audience."
+        },
+        {
+          "type": "quote",
+          "title": "Inspiration",
+          "content": {
+            "text": "Any fool can write code that a computer can understand. Good programmers write code that humans can understand.",
+            "attribution": "Martin Fowler"
+          },
+          "notes": "Inspirational quote about code quality and architecture."
+        },
+        {
+          "type": "key_value",
+          "title": "Contact Information",
+          "content": {
+            "pairs": [
+              {"key": "Email", "value": "architecture@example.com"},
+              {"key": "Website", "value": "www.enterprise-arch.dev"},
+              {"key": "Documentation", "value": "docs.enterprise-arch.dev"},
+              {"key": "Support", "value": "support@example.com"}
+            ]
+          },
+          "notes": "Contact information for follow-up questions."
+        },
+        {
+          "type": "content",
+          "title": "Thank You",
+          "content": {
+            "bullets": [
+              "Questions?",
+              "Connect with us on LinkedIn",
+              "Visit our documentation portal",
+              "Join our community forum",
+              "Schedule a consultation"
+            ]
+          },
+          "notes": "Closing slide with call to action."
+        }
+      ]
+    }
+  ]
+}

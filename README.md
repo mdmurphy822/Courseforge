@@ -1,210 +1,170 @@
-# Courseforge
+# Slideforge
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
-[![WCAG 2.2 AA](https://img.shields.io/badge/WCAG-2.2%20AA-green.svg)](https://www.w3.org/WAI/WCAG22/quickref/)
 
-**Education Reimagined. Access for All.**
+**Transform structured content into professional PowerPoint presentations.**
 
-AI-powered course generation and remediation system that creates and improves accessible, LMS-ready IMSCC packages.
+AI-powered presentation generator that converts markdown outlines, JSON structures, and documents into well-designed PPTX files.
 
 ## Overview
 
-Courseforge uses a multi-agent orchestration system to create high-quality online courses compatible with Brightspace/D2L and other learning management systems. It also provides comprehensive intake and remediation capabilities for existing courses.
+Slideforge uses intelligent content transformation to create high-quality presentations from various input formats. Built for educators, business professionals, and anyone who needs to create presentations efficiently.
 
 ### Key Features
 
-**Course Creation**
-- **Simplified Pipeline**: Exam objectives + textbooks → IMSCC package
-- **DART Integration**: Accessibility-first textbook processing
-- **Multi-Agent System**: Specialized agents for each phase of development
-- **WCAG 2.2 AA**: Built-in accessibility compliance
-- **OSCQR Standards**: Educational quality validation
-- **Pattern Prevention**: 22+ error patterns identified and prevented
-
-**Course Intake & Remediation (NEW)**
-- **Universal IMSCC Import**: Canvas, Blackboard, Moodle, Brightspace, Sakai
-- **Automated DART Conversion**: PDFs and Office docs → accessible HTML
-- **AI-Powered Accessibility Fixes**: Alt text, heading structure, contrast
-- **Intelligent Component Styling**: AI-selected interactive elements
-- **100% WCAG 2.2 AA Compliance**: Guaranteed accessibility output
-
-## Example Package
-
-See [`examples/intro_python.imscc`](examples/) for a complete 12-week Introduction to Python course demonstrating:
-- Proper IMSCC 1.3 structure
-- QTI 1.2 quizzes with Brightspace compatibility
-- Native assignment integration (`assignment_xmlv1p0`)
-- Discussion topics
-- WCAG 2.2 AA compliant content
+- **Multiple Input Formats**: Markdown, JSON outlines, plain text documents
+- **Smart Content Transformation**: Automatically structures content for slides
+- **Template Support**: Apply custom themes and corporate branding
+- **Speaker Notes**: Detailed presenter notes generated automatically
+- **Best Practices Built-in**: 6x6 rule, visual hierarchy, consistent styling
+- **Slide Type Variety**: Title, content, comparison, image, quote slides
 
 ## Quick Start
 
-### Mode 1: Course Creation
-1. Place exam objectives in `inputs/exam-objectives/`
-2. (Optional) Process textbooks through DART and place in `inputs/textbooks/`
-3. Invoke: `exam-research → course-outliner → content-generator → brightspace-packager`
-4. Output: IMSCC file in `exports/YYYYMMDD_HHMMSS_coursename/`
+### Installation
 
-### Mode 2: Course Remediation (NEW)
-1. Place existing IMSCC in `inputs/existing-packages/`
-2. Invoke: `imscc-intake-parser → content-analyzer → remediation agents → brightspace-packager`
-3. Output: Improved IMSCC with 100% accessibility compliance
+```bash
+cd scripts
+pip install -r requirements.txt
+```
+
+### Basic Usage
+
+**From JSON:**
+```bash
+cd scripts/pptx-generator
+python pptx_generator.py --input content.json --output presentation.pptx
+```
+
+**With Theme:**
+```bash
+python pptx_generator.py -i content.json -o output.pptx -t themes/corporate.pptx
+```
+
+### Python API
+
+```python
+from pptx_generator import PPTXGenerator
+
+# Create presentation
+generator = PPTXGenerator()
+generator.add_title_slide("My Presentation", "Subtitle here")
+generator.add_content_slide("Key Points", [
+    "First important point",
+    "Second important point",
+    "Third important point"
+])
+generator.save("output.pptx")
+```
+
+## Input Formats
+
+### Markdown
+
+```markdown
+# Presentation Title
+
+## Introduction
+
+### Overview
+- First key point
+- Second key point
+- Third key point
+
+## Main Content
+
+### Details
+- Supporting information
+- Additional context
+```
+
+### JSON
+
+```json
+{
+  "metadata": {
+    "title": "Presentation Title",
+    "author": "Your Name",
+    "date": "2024-01-01"
+  },
+  "sections": [
+    {
+      "title": "Introduction",
+      "slides": [
+        {
+          "type": "content",
+          "title": "Overview",
+          "content": {
+            "bullets": ["Point 1", "Point 2", "Point 3"]
+          },
+          "notes": "Speaker notes here..."
+        }
+      ]
+    }
+  ]
+}
+```
+
+## Slide Types
+
+| Type | Description |
+|------|-------------|
+| `title` | Opening slide with title and subtitle |
+| `section_header` | Section transition slide |
+| `content` | Standard bullet point slide |
+| `two_content` | Two-column layout |
+| `comparison` | Side-by-side comparison with headers |
+| `image` | Image-focused slide |
+| `quote` | Quote with attribution |
+| `blank` | Empty slide for custom content |
 
 ## Project Structure
 
 ```
-Courseforge/
-├── CLAUDE.md              # Orchestration instructions
-├── README.md              # This file
-├── docs/                  # Documentation
-│   ├── troubleshooting.md
-│   ├── workflow-reference.md
-│   └── getting-started.md
-├── agents/                # Agent specifications
-├── inputs/                # Input files
-│   ├── exam-objectives/
-│   ├── textbooks/
-│   └── existing-packages/ # IMSCC for intake (NEW)
-├── scripts/               # Automation scripts (NEW)
-│   ├── imscc-extractor/
-│   ├── dart-batch-processor/
-│   ├── component-applier/
-│   └── remediation-validator/
-├── templates/             # HTML templates
-├── schemas/               # IMSCC schemas
-├── imscc-standards/       # Technical specs
-├── exports/               # Generated packages
-└── runtime/               # Agent workspaces
+/Slideforge/
+├── CLAUDE.md           # AI orchestration guide
+├── README.md           # This file
+├── agents/             # AI agent specifications
+├── scripts/
+│   └── pptx-generator/ # Core generation module
+├── schemas/
+│   └── presentation/   # JSON schemas
+├── templates/
+│   └── pptx/          # Theme templates
+├── inputs/            # Source content
+└── exports/           # Generated presentations
 ```
 
-## Available Agents
+## Design Principles
 
-### Course Creation
-| Agent | Purpose |
-|-------|---------|
-| `exam-research` | Certification objective analysis |
-| `requirements-collector` | Course specification gathering |
-| `course-outliner` | Structure and learning objectives |
-| `content-generator` | Educational content creation |
-| `educational-standards` | Pedagogical compliance |
-| `quality-assurance` | Pattern prevention |
-| `oscqr-course-evaluator` | Quality assessment |
-| `brightspace-packager` | IMSCC packaging |
+Slideforge follows presentation best practices:
 
-### Intake & Remediation (NEW)
-| Agent | Purpose |
-|-------|---------|
-| `imscc-intake-parser` | Universal IMSCC import |
-| `content-analyzer` | Accessibility/quality gap detection |
-| `dart-automation-coordinator` | Automated document conversion |
-| `accessibility-remediation` | WCAG 2.2 AA fixes |
-| `content-quality-remediation` | Educational depth enhancement |
-| `intelligent-design-mapper` | AI component selection |
-
-## Workflow
-
-```
-USER REQUEST →
-  exam-research (analyze objectives) →
-  course-outliner (create structure) →
-  content-generator (create content, 10 agents/batch) →
-  quality-assurance + oscqr-course-evaluator (validate) →
-  brightspace-packager (package) →
-  IMSCC OUTPUT
-```
-
-## Textbook Processing
-
-Textbooks must be processed through DART before use:
-
-```bash
-# Set DART_PATH to your DART installation directory
-cd $DART_PATH
-python convert.py textbook.pdf -o /path/to/courseforge/inputs/textbooks/
-```
-
-DART produces WCAG 2.2 AA accessible HTML with:
-- Semantic structure
-- Alt text for images
-- MathML for equations
-- Proper heading hierarchy
-
-## Quality Standards
-
-### OSCQR Thresholds
-- Pre-development: 70%
-- Pre-production: 90%
-- Accessibility: 100%
-
-### Pattern Prevention
-Critical patterns addressed:
-- Schema/namespace consistency
-- Assessment XML format (QTI 1.2)
-- Content completeness
-- Organization hierarchy
-
-See `docs/troubleshooting.md` for complete pattern list.
+- **6x6 Rule**: Maximum 6 bullet points per slide, 6 words per bullet
+- **One Idea Per Slide**: Focus on a single concept
+- **Visual Hierarchy**: Clear titles and logical flow
+- **Speaker Notes**: Detailed notes for presenters
+- **Consistent Styling**: Uniform layouts throughout
 
 ## Documentation
 
-| Document | Purpose |
-|----------|---------|
-| `CLAUDE.md` | Main orchestration instructions |
-| `docs/troubleshooting.md` | Error patterns and solutions |
-| `docs/workflow-reference.md` | Execution protocols |
-| `docs/getting-started.md` | Quick start guide |
-| `agents/*.md` | Individual agent specs |
+- [Getting Started](docs/getting-started.md) - Quick start guide
+- [Workflow Reference](docs/workflow-reference.md) - Detailed protocols
+- [Slide Design Guide](docs/slide-design-guide.md) - Design best practices
 
-## Technical Requirements
+## Dependencies
 
-- Python 3.8+
-- Claude Code access
-- Brightspace/D2L for import testing
-
-## DART Setup (Optional)
-
-DART (Digital Accessibility Remediation Tool) is a separate tool used for converting PDFs and Office documents to accessible HTML. It's **optional** but recommended for textbook processing.
-
-### Installation
-
-DART is available as a separate project. Once installed, configure the environment variable:
-
-```bash
-# Add to your shell profile (.bashrc, .zshrc, etc.)
-export DART_PATH=/path/to/your/DART/installation
+```
+python-pptx>=0.6.21
+Pillow>=9.0.0
+beautifulsoup4>=4.9.0
+jsonschema>=4.0.0
 ```
 
-### Usage with Courseforge
+## License
 
-Once `DART_PATH` is set, Courseforge scripts will automatically detect and use DART for:
-- PDF textbook conversion
-- Office document (Word, PowerPoint) conversion
-- Batch document processing via `scripts/dart-batch-processor/`
+MIT License - See LICENSE file for details.
 
-### Without DART
+## Contributing
 
-Courseforge works without DART for:
-- Course creation from exam objectives
-- IMSCC package generation
-- Course remediation (accessibility fixes to existing HTML)
-
-Only textbook PDF/Office conversion requires DART.
-
-## Compatibility
-
-- Brightspace/D2L
-- Canvas
-- Blackboard
-- Moodle
-- Any LMS supporting IMSCC 1.1+
-
----
-
-**Version**: 1.0.0
-**License**: MIT
-**Last Updated**: December 2025
-
----
-
-*Love and be loved, live and be free.*
+Contributions welcome! Please read our contributing guidelines before submitting PRs.
