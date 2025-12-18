@@ -10,11 +10,14 @@ venv/
 .venv/
 
 # Generated outputs
+*.imscc
+*.zip
 exports/*
 !exports/.gitkeep
 
 # Keep examples
 !examples/
+!examples/*.imscc
 
 # Archive contents (keep structure)
 archive/debug-logs/*
@@ -27,7 +30,10 @@ runtime/agent_workspaces/downloads/*
 !runtime/agent_workspaces/downloads/.gitkeep
 
 # Input materials (user-provided)
-inputs/source-content/*
+inputs/textbooks/*
+inputs/design-books/*
+inputs/exam-objectives/*
+inputs/existing-packages/*
 !inputs/**/.gitkeep
 
 # Local config
@@ -45,9 +51,3 @@ Thumbs.db
 
 # Logs
 *.log
-
-# Additional Python
-scripts/venv/
-.pytest_cache/
-.coverage
-htmlcov/

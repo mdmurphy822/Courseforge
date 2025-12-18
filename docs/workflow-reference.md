@@ -1,17 +1,20 @@
-# Slideforge Workflow Reference
+# Courseforge Workflow Reference
 
-Complete workflow phases, execution protocols, and best practices for presentation generation.
+Complete workflow phases, execution protocols, and pattern prevention.
 
 ---
 
-## Simplified Pipeline
+## Simplified Courseforge Pipeline
 
 ```
 INPUT                         PROCESSING                              OUTPUT
 ─────                         ──────────                              ──────
-Structured Content    content-to-slide    presentation    slide-content    slide-layout    pptx
-(Markdown/JSON/   ──►    analyzer     ──►   outliner   ──►  generator  ──►   mapper    ──►  packager  ──►  .PPTX
- Outline/Text)
+Exam Objectives ──┐
+(PDF/text)        │
+                  ├──► exam-research ──► course-outliner ──► content-generator ──► brightspace-packager ──► IMSCC
+Textbooks ────────┘         │                │                    │
+(DART HTML)           requirements-      oscqr-            quality-assurance
+                      collector          evaluator              (per batch)
 ```
 
 ---
@@ -19,57 +22,54 @@ Structured Content    content-to-slide    presentation    slide-content    slide
 ## Phase 1: Input Analysis & Planning
 
 **Orchestrator Actions:**
-1. Create timestamped project folder: `exports/YYYYMMDD_HHMMSS_presentationname/`
-2. Invoke planning agent to analyze content structure
-3. Planning agent returns structured todo list (NO EXECUTION)
+1. Create timestamped project folder: `exports/YYYYMMDD_HHMMSS_coursename/`
+2. Invoke planning agent based on input type:
+   - Exam objectives → `exam-research` agent
+   - New course → `requirements-collector` agent
+3. Planning agent analyzes input and returns todo list (NO EXECUTION)
 4. Orchestrator loads todo list into TodoWrite
 
 **Key Principle:** Planning agents provide structured todo lists. They do NOT execute tasks.
 
 ---
 
-## Phase 2: Presentation Structure
+## Phase 2: Course Framework Development
 
 **Orchestrator Actions:**
-1. Invoke `presentation-outliner` agent
-2. Agent determines optimal slide progression based on:
-   - Content logical flow
-   - Audience engagement patterns
-   - Visual variety requirements
-3. Agent creates presentation structure
-4. Validation triggers automatically after outline completion
+1. Invoke `course-outliner` agent
+2. Agent determines optimal learning progression based on:
+   - Knowledge prerequisites
+   - Cognitive relationships
+   - Assessment alignment
+3. Agent creates course structure files
+4. OSCQR evaluation triggers automatically after outline completion
 
-**Structure Guidelines:**
-- Title slide first
-- Section headers for major topics
-- Content slides grouped by theme
-- Quote or summary slides for emphasis
+**Timeline-Free Design:** Structure based on learning progression, not arbitrary week counts.
 
 ---
 
-## Phase 3: Slide Content Generation
+## Phase 3: Content Generation
 
 **Execution Protocol:**
 1. Review content generation tasks from todo list
-2. Execute slide-content-generator agents in parallel batches
+2. Execute content-generator agents in parallel batches
 
 **Critical Batch Constraints:**
-- Maximum: 10 agents per batch
-- Each agent creates exactly ONE section
+- Maximum: 10 agents per batch (proven optimal limit)
+- Each agent creates exactly ONE file
 - Wait for batch completion before next batch
 - Update TodoWrite after each batch
 
 **Anti-Patterns (NEVER DO):**
-- Assign multiple sections to one agent
-- Use prompts like "create all slides"
-- Exceed 10 simultaneous Task calls
+- ❌ Assign multiple files to one agent
+- ❌ Use prompts like "create Week X content"
+- ❌ Exceed 10 simultaneous Task calls
 
 **Correct Pattern:**
 ```python
 # BATCH 1 (10 agents max)
-Task(slide-content-generator, "Create introduction section")
-Task(slide-content-generator, "Create background section")
-Task(slide-content-generator, "Create main content section")
+Task(content-generator, "week_01_module_01_introduction.html")
+Task(content-generator, "week_01_module_02_concepts.html")
 # ... up to 10 total
 
 # WAIT for completion, update todos, then BATCH 2
@@ -77,40 +77,15 @@ Task(slide-content-generator, "Create main content section")
 
 ---
 
-## Phase 4: Layout Mapping
+## Phase 4: Quality Validation & Packaging
 
 **Orchestrator Actions:**
-1. Invoke `slide-layout-mapper` agent
-2. Agent assigns optimal layouts based on content type:
-   - Bullet lists → Content layout
-   - Comparisons → Two-column or comparison layout
-   - Key quotes → Quote layout
-   - Transitions → Section header layout
-
-**Layout Selection Guide:**
-
-| Content Type | Recommended Layout |
-|--------------|-------------------|
-| Opening | Title slide |
-| Topic transition | Section header |
-| Key points | Content |
-| Side-by-side info | Two content |
-| Pros/cons | Comparison |
-| Key message | Quote |
-| Visual focus | Image |
-
----
-
-## Phase 5: Validation & Packaging
-
-**Orchestrator Actions:**
-1. Invoke `slide-validator` agent:
-   - Check content completeness
-   - Verify slide type appropriateness
-   - Validate speaker notes presence
+1. Invoke validation agents in parallel:
+   - `quality-assurance` agent (pattern prevention)
+   - `oscqr-course-evaluator` agent (educational quality)
 2. If issues found: reinvoke agents to fix
-3. When validation complete: invoke `pptx-packager`
-4. Output: Single PPTX file
+3. When validation complete: invoke `brightspace-packager`
+4. Output: Single IMSCC file
 
 ---
 
@@ -128,112 +103,77 @@ Task(slide-content-generator, "Create main content section")
 
 ---
 
-## Agent Reference
+## Pattern Prevention Reference
 
-| Agent | Purpose | Input | Output |
-|-------|---------|-------|--------|
-| `presentation-outliner` | Structure planning | Source content | Section outline |
-| `slide-content-generator` | Content creation | Section spec | Slide content JSON |
-| `slide-layout-mapper` | Layout selection | Content analysis | Layout assignments |
-| `slide-validator` | Quality validation | Full presentation | Validation report |
-| `pptx-packager` | PPTX assembly | Validated content | .pptx file |
+### Orchestration Patterns
+
+| Pattern | Issue | Prevention |
+|---------|-------|------------|
+| O1 | Orchestrator making pedagogical decisions | Delegate to specialized agents |
+| O5 | Multi-file agent batching | ONE AGENT = ONE FILE always |
+| O6 | Incorrect parallel execution | Exactly 10 Task calls per batch |
+| O7 | Queue saturation | Never exceed 10 simultaneous calls |
+
+### Content Patterns
+
+| Pattern | Issue | Prevention |
+|---------|-------|------------|
+| 16 | Post-import quality issues | Pre-packaging validation |
+| 19 | Single-page consolidation | Maintain module structure |
+| 21 | Incomplete content | Validate all weeks before packaging |
+| 22 | Superficial content | Ensure educational depth |
 
 ---
 
 ## File Naming Convention
 
-Presentation files:
+Content files must follow this pattern:
 ```
-YYYYMMDD_HHMMSS_presentationname.pptx
-```
-
-Content files:
-```
-section_XX_description.json
+week_XX_module_YY_description.html
 ```
 
 Examples:
-- `section_01_introduction.json`
-- `section_02_main_content.json`
-- `section_03_conclusion.json`
+- `week_01_module_01_introduction.html`
+- `week_01_module_02_core_concepts.html`
+- `week_01_module_03_applications.html`
 
 ---
 
 ## Project Folder Structure
 
 ```
-exports/YYYYMMDD_HHMMSS_presentationname/
-├── 01_content_analysis/
-├── 02_slide_content/
-│   ├── section_01/
-│   ├── section_02/
-│   └── section_XX/
-├── 03_final_output/
-│   └── presentation.pptx
+exports/YYYYMMDD_HHMMSS_coursename/
+├── 00_template_analysis/
+├── 01_learning_objectives/
+├── 02_course_planning/
+├── 03_content_development/
+│   ├── week_01/
+│   ├── week_02/
+│   └── ...
+├── 04_quality_validation/
+├── 05_final_package/
 ├── agent_workspaces/
-└── project_log.md
+├── project_log.md
+└── coursename.imscc
 ```
 
 ---
 
-## Quality Standards
-
-### Slide Design Rules
-- **6x6 Rule**: Maximum 6 bullets, 6 words per bullet
-- **One Idea Per Slide**: Focus on single concept
-- **Visual Hierarchy**: Clear title, supporting points
-- **Consistent Styling**: Same layouts for similar content
-
-### Validation Checklist
+## Validation Checklist
 
 **Before Content Generation:**
 - [ ] Planning agent has provided todo list
 - [ ] Orchestrator has loaded todos into TodoWrite
-- [ ] Individual section assignments prepared
+- [ ] Individual file assignments prepared (not multi-file)
 - [ ] Batch size ≤10 confirmed
 
 **Before Packaging:**
-- [ ] All slides created
+- [ ] All content files created
 - [ ] Quality validation passed
-- [ ] Speaker notes included
-- [ ] No placeholder content
+- [ ] OSCQR evaluation completed
+- [ ] No placeholder content detected
 
 **After Packaging:**
-- [ ] Single PPTX file generated
-- [ ] File opens correctly
-- [ ] Theme applied consistently
-- [ ] All sections present
-
----
-
-## Execution Commands
-
-### Generate from JSON
-```bash
-cd scripts/pptx-generator
-python pptx_generator.py -i content.json -o presentation.pptx
-```
-
-### With Theme
-```bash
-python pptx_generator.py -i content.json -o presentation.pptx --theme corporate
-```
-
-### List Available Themes
-```bash
-python pptx_generator.py --list-templates
-```
-
----
-
-## Troubleshooting Quick Reference
-
-| Issue | Solution |
-|-------|----------|
-| Empty slides | Check JSON content structure |
-| Theme not applied | Verify theme name with --list-templates |
-| Layout wrong | Use correct slide type |
-| Missing notes | Add "notes" field to slides |
-| Generation fails | Validate JSON syntax |
-
-For detailed troubleshooting, see [troubleshooting.md](troubleshooting.md).
+- [ ] Single IMSCC file generated
+- [ ] Package size >100KB
+- [ ] Test import in Brightspace

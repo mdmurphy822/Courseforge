@@ -1,6 +1,6 @@
 ---
 name: Bug Report
-about: Report a bug or issue with Slideforge
+about: Report a bug or issue with Courseforge
 title: '[BUG] '
 labels: bug
 assignees: ''
@@ -23,12 +23,12 @@ What actually happened.
 ## Environment
 - OS: [e.g., Ubuntu 22.04, macOS 14]
 - Python version: [e.g., 3.11]
-- Slideforge version/commit: [e.g., latest main]
+- Courseforge version/commit: [e.g., latest main]
 
-## Presentation Details (if applicable)
-- Theme used: [e.g., corporate, dark_mode]
-- Slide types: [e.g., content, comparison, quote]
-- Number of slides: [e.g., 15]
+## IMSCC Package Details (if applicable)
+- Target LMS: [e.g., Brightspace, Canvas]
+- Course structure: [e.g., 12 weeks, single module]
+- Content types: [e.g., HTML, QTI quizzes, assignments]
 
 ## Error Messages
 ```

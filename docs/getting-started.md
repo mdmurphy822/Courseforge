@@ -1,305 +1,401 @@
 # Getting Started Guide
 
-## Welcome to Slideforge
+## Welcome to Courseforge
 
-This guide walks you through creating your first professional PowerPoint presentation using Slideforge's AI-powered multi-agent system.
+This guide will walk you through creating your first high-quality, accessible online course using our AI-powered multi-agent orchestration system.
 
-## Prerequisites
+## 📋 Prerequisites
+
+### Required Access
+- **Claude Code Access**: You need access to claude.ai/code
+- **Basic Knowledge**: Understanding of instructional design principles helpful but not required
+- **Course Materials**: Source content, objectives, or certification requirements
 
 ### Technical Requirements
-- **Python 3.8+**: Required for running the PPTX generator
-- **Claude Code Access**: For AI-powered content generation
-- **Virtual Environment**: Recommended for dependency management
+- **File System Access**: Ability to create and manage files/directories
+- **Course Content**: Raw materials in text, PDF, or document format
+- **LMS Access**: Brightspace, Canvas, or other IMSCC-compatible system (for testing)
 
-### Dependencies
-```bash
-# Activate the project virtual environment
-source scripts/venv/bin/activate
+## 🎯 Quick Start (15 minutes)
 
-# Or install dependencies manually
-pip install python-pptx Pillow jsonschema
+### Step 1: Prepare Your Course Materials
+Place your course content in the `inputs/` directory:
+
+```
+inputs/
+├── exam-objectives/               # Certification exam objectives (PDF/text)
+│   └── your_exam_objectives.pdf
+├── textbooks/                     # DART-processed accessible HTML textbooks
+│   └── chapter_accessible.html
+└── existing-packages/             # IMSCC packages for intake/remediation
 ```
 
-## Quick Start (5 minutes)
-
-### Step 1: Prepare Your Content
-
-Create a JSON file with your presentation structure:
-
-```json
-{
-  "metadata": {
-    "title": "My Presentation",
-    "subtitle": "A Brief Overview",
-    "author": "Your Name",
-    "date": "2025-12-17"
-  },
-  "sections": [
-    {
-      "title": "Introduction",
-      "slides": [
-        {
-          "type": "title",
-          "title": "My Presentation",
-          "content": {"subtitle": "A Brief Overview"}
-        }
-      ]
-    },
-    {
-      "title": "Main Content",
-      "slides": [
-        {
-          "type": "content",
-          "title": "Key Points",
-          "content": {
-            "bullets": [
-              "First important point",
-              "Second important point",
-              "Third important point"
-            ]
-          },
-          "notes": "Speaker notes go here"
-        }
-      ]
-    }
-  ]
-}
-```
-
-### Step 2: Generate Your Presentation
-
-```bash
-cd scripts/pptx-generator
-
-# Basic generation
-python pptx_generator.py \
-  --input your_content.json \
-  --output presentation.pptx
-
-# With a theme
-python pptx_generator.py \
-  --input your_content.json \
-  --output presentation.pptx \
-  --theme corporate
-```
-
-### Step 3: Open and Review
-
-Open `presentation.pptx` in PowerPoint, LibreOffice Impress, or Google Slides.
-
-## Available Themes
-
-List available themes:
-```bash
-python pptx_generator.py --list-templates
-```
-
-| Theme | Description | Best For |
-|-------|-------------|----------|
-| `corporate` | Professional blue (#2c5aa0) | Business presentations |
-| `dark_mode` | Dark with vibrant accents | Tech, modern audiences |
-| `creative` | Bold orange/navy | Creative pitches |
-| `minimal` | Clean charcoal | Content-focused |
-| `educational` | Warm purple/brown | Training, learning |
-
-## Input Formats
-
-### JSON Structure
-The recommended format for full control:
-
-```json
-{
-  "metadata": {
-    "title": "Presentation Title",
-    "subtitle": "Optional Subtitle",
-    "author": "Author Name",
-    "date": "2025-12-17",
-    "subject": "Topic description"
-  },
-  "sections": [
-    {
-      "title": "Section Name",
-      "slides": [...]
-    }
-  ]
-}
-```
-
-### Markdown (Simple)
-For quick presentations:
+### Step 2: Define Your Course Requirements
+Create a simple requirements document:
 
 ```markdown
-# Presentation Title
-
-## Section 1: Introduction
-
-### First Slide
-- Bullet point one
-- Bullet point two
-
-### Second Slide
-- More content
-- Additional points
+# Course Requirements
+- **Course Title**: Introduction to Cybersecurity
+- **Duration**: 12 weeks
+- **Level**: Undergraduate
+- **Credits**: 3 credit hours
+- **Format**: Online asynchronous
+- **Special Requirements**: WCAG 2.2 AA accessibility compliance
 ```
 
-## Slide Types
+### Step 3: Launch the Orchestrator
+Use the main orchestration workflow:
 
-### Title Slide
-```json
-{
-  "type": "title",
-  "title": "Main Title",
-  "content": {"subtitle": "Subtitle text"}
+```python
+# Initialize project with timestamp
+import datetime
+timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
+project_name = f"{timestamp}_cybersecurity_intro_asynchronous"
+
+# Create project structure
+create_project_structure(f"exports/{project_name}")
+```
+
+### Step 4: Let the Agents Work
+The system will automatically:
+1. ✅ Analyze your requirements
+2. ✅ Design course structure
+3. ✅ Generate comprehensive content
+4. ✅ Validate quality and accessibility
+5. ✅ Package for LMS deployment
+
+### Step 5: Deploy to Your LMS
+Import the generated `.imscc` file into your learning management system.
+
+## 🏗️ Detailed Workflow
+
+### Phase 1: Project Planning (5-10 minutes)
+
+#### 1.1 Requirements Collection
+The system will gather comprehensive specifications:
+
+```python
+# Invoke requirements-collector agent
+Task(
+    subagent_type="requirements-collector",
+    description="Gather course specifications",
+    prompt="Collect comprehensive requirements for undergraduate cybersecurity course including academic standards, technical requirements, and assessment frameworks."
+)
+```
+
+**What This Produces**:
+- Academic standards identification
+- Technical requirement analysis  
+- Assessment framework recommendations
+- Accessibility compliance requirements
+
+#### 1.2 Course Structure Design
+Create pedagogically-optimal course architecture:
+
+```python  
+# Invoke course-outliner agent
+Task(
+    subagent_type="course-outliner", 
+    description="Design course architecture",
+    prompt="Create timeline-free learning architecture for cybersecurity fundamentals with OSCQR compliance and UDL principles."
+)
+```
+
+**What This Produces**:
+- Learning progression sequences
+- Module organization structure
+- Assessment distribution plan
+- Accessibility integration framework
+
+### Phase 2: Content Generation (30-60 minutes)
+
+#### 2.1 Parallel Content Creation
+Generate all course materials simultaneously:
+
+```python
+# Example: Generate Week 1 content (individual file protocol)
+content_files = [
+    "week_01_module_01_introduction.html",
+    "week_01_module_02_key_concepts.html", 
+    "week_01_module_03_practical_applications.html",
+    "week_01_module_04_case_studies.html",
+    "week_01_module_05_assessment_preparation.html"
+]
+
+# Execute in batches of 10 (proven optimal)
+for i in range(0, len(content_files), 10):
+    batch = content_files[i:i+10]
+    
+    # Create parallel Task calls for batch
+    for file_name in batch:
+        Task(
+            subagent_type="content-generator",
+            description=f"Create {file_name}",
+            prompt=f"Create comprehensive educational content for {file_name} with Pattern 22 prevention, authentic examples, and WCAG 2.2 AA compliance."
+        )
+    
+    # Wait for batch completion before proceeding
+    verify_batch_completion(batch)
+```
+
+**What This Produces**:
+- Complete HTML content files for all modules
+- WCAG 2.2 AA accessible design
+- Comprehensive educational depth
+- Authentic, relevant examples
+- Progressive learning complexity
+
+#### 2.2 Assessment Integration
+Generate assessments aligned with learning objectives:
+
+```python
+# Create assessments for each learning unit (dynamic based on course outline)
+assessment_types = ["assignments", "quizzes", "discussions"]
+
+for unit in course_outline.get_learning_units():  # Dynamic unit count
+    for assessment in assessment_types:
+        Task(
+            subagent_type="content-generator",
+            description=f"{unit.name} {assessment}",
+            prompt=f"Create {unit.id}_{assessment}.xml with D2L compatibility and authentic assessment scenarios."
+        )
+```
+
+### Phase 3: Quality Validation (10-15 minutes)
+
+#### 3.1 Educational Standards Compliance
+```python
+# Validate against educational standards
+Task(
+    subagent_type="educational-standards",
+    description="UDL compliance validation", 
+    prompt="Validate all generated content against UDL principles, ADDIE methodology, and Bloom's taxonomy alignment."
+)
+```
+
+#### 3.2 OSCQR Assessment  
+```python
+# Comprehensive quality evaluation
+Task(
+    subagent_type="oscqr-course-evaluator",
+    description="OSCQR evaluation",
+    prompt="Conduct systematic OSCQR evaluation across all 6 domains with detailed recommendations for any gaps."
+)
+```
+
+#### 3.3 Pattern Prevention Verification
+```python
+# Ensure all 22+ patterns prevented
+Task(
+    subagent_type="quality-assurance", 
+    description="Pattern prevention check",
+    prompt="Validate prevention of all identified failure patterns, especially Pattern 22 comprehensive content requirements."
+)
+```
+
+### Phase 4: Final Packaging (5 minutes)
+
+```python
+# Create deployment-ready IMSCC package
+Task(
+    subagent_type="brightspace-packager",
+    description="IMSCC packaging",
+    prompt="Create IMS CC 1.1 compliant package with D2L-specific optimizations and complete manifest structure."
+)
+```
+
+## 📊 What You'll Get
+
+### Generated Course Structure
+```
+exports/20250820_143022_cybersecurity_intro_asynchronous/
+├── 📄 course_information.html        # Course overview
+├── 📄 syllabus.html                  # Detailed syllabus  
+├── 📁 week_01/                       # Week 1 content
+│   ├── week_01_module_01_introduction.html
+│   ├── week_01_module_02_key_concepts.html
+│   ├── week_01_module_03_applications.html
+│   ├── week_01_module_04_case_studies.html
+│   └── week_01_module_05_assessment_prep.html
+├── 📁 week_02/                       # Week 2 content
+│   └── [similar structure]
+├── 📁 assessments/                   # All assessments
+│   ├── assignment_week_01.xml
+│   ├── quiz_week_01.xml  
+│   ├── discussion_week_01.xml
+│   └── [continuing for all weeks]
+├── 📄 imsmanifest.xml               # Package manifest
+└── 🎁 cybersecurity_intro.imscc     # Final package
+```
+
+### Quality Metrics You Can Expect
+- **🎯 OSCQR Score**: 45-50/50 (excellent quality)
+- **♿ Accessibility**: WCAG 2.2 AA compliant (100%)
+- **📚 Educational Depth**: Pattern 22 compliant (comprehensive content)
+- **🚀 Import Success**: 95%+ Brightspace compatibility
+- **⏱️ Generation Time**: 45-90 minutes for complete course (varies by scope)
+
+## 🎨 Customization Options
+
+### Template Selection
+Choose from multiple course templates:
+
+```python
+template_options = {
+    "asynchronous": "Self-paced online learning",
+    "synchronous": "Live online instruction", 
+    "hybrid": "Blended online/in-person",
+    "simple_structure": "Minimal navigation complexity"
 }
 ```
 
-### Content Slide
-```json
-{
-  "type": "content",
-  "title": "Slide Title",
-  "content": {
-    "bullets": ["Point 1", "Point 2", "Point 3"]
-  },
-  "notes": "Speaker notes"
+### Accessibility Levels
+Configure accessibility requirements:
+
+```python
+accessibility_config = {
+    "standard": "WCAG 2.2 AA (recommended)",
+    "enhanced": "WCAG 2.2 AAA (maximum accessibility)",
+    "basic": "WCAG 2.2 AA (minimum compliance)"
 }
 ```
 
-### Two-Column Layout
-```json
-{
-  "type": "two_content",
-  "title": "Comparison",
-  "content": {
-    "left": ["Left item 1", "Left item 2"],
-    "right": ["Right item 1", "Right item 2"]
-  }
+### Assessment Frameworks
+Select assessment distribution:
+
+```python
+assessment_frameworks = {
+    "traditional": "Exams 60%, Assignments 30%, Participation 10%",
+    "project_based": "Projects 50%, Assignments 30%, Discussions 20%", 
+    "continuous": "Weekly Assessments 80%, Final Project 20%"
 }
 ```
 
-### Comparison Slide
-```json
-{
-  "type": "comparison",
-  "title": "Before vs After",
-  "content": {
-    "left_title": "Before",
-    "left": ["Old way 1", "Old way 2"],
-    "right_title": "After",
-    "right": ["New way 1", "New way 2"]
-  }
-}
+## 🛠️ Advanced Configuration
+
+### For Certification Courses
+```python
+# Use exam-research agent for certification alignment
+Task(
+    subagent_type="exam-research",
+    description="CompTIA Security+ alignment",
+    prompt="Analyze CompTIA Security+ SY0-701 objectives and create comprehensive course framework with exam preparation strategies."
+)
 ```
 
-### Quote Slide
-```json
-{
-  "type": "quote",
-  "title": "",
-  "content": {
-    "text": "The quote text goes here.",
-    "attribution": "Author Name"
-  }
-}
+### For Academic Courses
+```python
+# Use educational-standards agent for academic rigor
+Task(
+    subagent_type="educational-standards",
+    description="Academic standards application", 
+    prompt="Apply ADDIE methodology and ensure alignment with undergraduate computer science curriculum standards."
+)
 ```
 
-### Styled Content (with callouts)
-```json
-{
-  "type": "styled_content",
-  "title": "Key Information",
-  "content": {
-    "bullets": ["Point 1", "Point 2"],
-    "step_number": 1,
-    "callout_text": "Important tip here",
-    "callout_type": "tip"
-  }
-}
+### For Accessibility-First Design
+```python
+# Emphasize accessibility throughout process
+accessibility_prompt = """
+Create content with enhanced accessibility features:
+- Dyslexia-friendly fonts and spacing
+- Color-blind accessible color schemes  
+- Clear cognitive navigation aids
+- Multiple learning style accommodations
+"""
 ```
 
-Callout types: `info`, `success`, `warning`, `tip`
+## 🚨 Common Beginner Mistakes to Avoid
 
-## Using AI Agents
+### ❌ Don't Do This
+```python
+# Wrong: Multiple files per agent
+Task(subagent_type="content-generator",
+     description="Create all Week 1 content",
+     prompt="Create all files for Week 1")
 
-For complex presentations, use the orchestrated agent workflow:
-
-### 1. Content Analysis
-The system analyzes your source content and creates a structured outline.
-
-### 2. Slide Generation
-Individual agents generate content for each section in parallel batches.
-
-### 3. Layout Mapping
-Optimal slide layouts are selected based on content type.
-
-### 4. Validation
-Quality checks ensure consistency and completeness.
-
-### 5. Packaging
-Final PPTX is assembled with your chosen theme.
-
-## Best Practices
-
-### Content Guidelines
-- **6x6 Rule**: Maximum 6 bullets, 6 words per bullet
-- **One Idea Per Slide**: Focus each slide on a single concept
-- **Visual Hierarchy**: Use clear titles and supporting points
-
-### Speaker Notes
-Always include speaker notes for context:
-```json
-{
-  "type": "content",
-  "title": "Slide Title",
-  "content": {"bullets": [...]},
-  "notes": "Key talking points and additional context for the presenter."
-}
+# Wrong: Exceeding batch size limits
+for i in range(20):  # Too many simultaneous calls
+    Task(subagent_type="content-generator", ...)
 ```
 
-## Project Structure
+### ✅ Do This Instead  
+```python
+# Correct: Individual file protocol
+Task(subagent_type="content-generator",
+     description="Create week_01_module_01.html", 
+     prompt="Create exactly one file: week_01_module_01_introduction.html")
 
-```
-Slideforge/
-├── scripts/pptx-generator/     # Core generation scripts
-│   ├── pptx_generator.py       # Main generator
-│   └── template_loader.py      # Theme management
-├── templates/pptx/             # PPTX templates
-│   ├── masters/                # Theme master files
-│   ├── themes/                 # Theme configurations
-│   └── examples/               # Example presentations
-├── schemas/presentation/       # JSON schemas
-├── exports/                    # Generated output
-└── examples/                   # Example files
+# Correct: Optimal batch size
+batch_size = 10  # Proven optimal limit
 ```
 
-## Troubleshooting
+## 🔍 Monitoring Progress
 
-### Common Issues
-
-**Module not found: pptx**
-```bash
-source scripts/venv/bin/activate
-# or
-pip install python-pptx
+### Real-Time Progress Tracking
+```python
+# Monitor generation progress
+def track_progress():
+    completed_files = count_generated_files()
+    total_files = calculate_total_required()
+    progress = (completed_files / total_files) * 100
+    print(f"Course Generation: {progress:.1f}% complete")
 ```
 
-**Theme not loading**
-- Verify theme name with `--list-templates`
-- Check that master PPTX files exist in `templates/pptx/masters/`
+### Quality Validation Checkpoints
+- ✅ **After Planning**: Course structure approved
+- ✅ **During Generation**: Content depth validation
+- ✅ **Before Packaging**: Accessibility compliance  
+- ✅ **Final Validation**: Import readiness confirmation
 
-**Empty slides**
-- Ensure JSON structure follows the schema
-- Verify `content` object contains appropriate fields for slide type
+## 🎯 Success Indicators
 
-## Next Steps
+### You'll Know It's Working When:
+1. **Project Structure Created**: Timestamped folder with organized subdirectories
+2. **Content Generation Progress**: HTML files appearing with substantial content
+3. **Assessment Integration**: XML files created with proper D2L formatting
+4. **Quality Validation Passing**: OSCQR scores 45+/50
+5. **Package Creation Success**: Valid IMSCC file generated
+6. **LMS Import Success**: Course imports without errors
 
-1. **Explore Examples**: Check `examples/` for sample presentations
-2. **Customize Themes**: Create custom themes in `templates/pptx/custom/`
-3. **Read Design Guide**: See `docs/slide-design-guide.md` for best practices
-4. **Check Schemas**: Review `schemas/presentation/` for full JSON structure
+### Troubleshooting Quick Checks
+- **Files Not Generated**: Check individual file protocol compliance
+- **Import Failures**: Validate IMSCC structure and schema version
+- **Accessibility Issues**: Run WAVE validation on generated HTML
+- **Content Too Shallow**: Verify Pattern 22 prevention protocols
 
-## Getting Help
+## 📚 Next Steps
 
-- **Documentation**: `docs/` directory
-- **Troubleshooting**: `docs/troubleshooting.md`
-- **Examples**: `examples/` and `templates/pptx/examples/`
+### After Your First Course
+1. **Review Generated Content**: Customize and refine as needed
+2. **Test in LMS**: Import and navigate through student view
+3. **Gather Feedback**: Test with sample users for usability
+4. **Iterate and Improve**: Use feedback for next course generation
+
+### Scaling Up
+1. **Create Course Series**: Generate related courses with consistency
+2. **Develop Templates**: Create custom templates for your institution
+3. **Automation Integration**: Integrate with your content management workflows
+4. **Quality Assurance**: Establish regular validation procedures
+
+## 🆘 Getting Help
+
+### If You Get Stuck
+1. **Check Troubleshooting Guide**: [troubleshooting.md](troubleshooting.md)
+2. **Review Pattern Documentation**: [PATTERN_PREVENTION_GUIDE.md](PATTERN_PREVENTION_GUIDE.md)
+3. **Validate Against Schemas**: [schemas/README.md](schemas/README.md)
+4. **Test with Minimal Example**: Create simple 2-week course first
+
+### Resources
+- 📖 [Agent Specifications](../agents/)
+- 🔧 [Scripts and Tools](../scripts/README.md)
+- 🎨 [Template Library](../templates/)
+- 📊 [Pattern Prevention Guide](PATTERN_PREVENTION_GUIDE.md)
+
+---
+
+**🎉 Ready to Create Your First Course?**
+
+Follow the Quick Start section above, and you'll have a complete, accessible, high-quality online course ready for deployment in under 90 minutes!
+
+**Remember**: The system is designed to handle the technical complexity while you focus on educational quality and student success.

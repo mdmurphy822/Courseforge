@@ -1,83 +1,130 @@
-# Slideforge
+# Courseforge
 
-AI-powered presentation generator that transforms structured content into professional PowerPoint presentations.
+AI-powered instructional design system that creates and remediates accessible, LMS-ready IMSCC course packages.
 
 ---
 
 ## Quick Start
 
-**Input**: Structured content (Markdown, JSON outline, documents)
-**Output**: Single PPTX file ready for presentation
+### Course Creation Mode
+**Input**: Exam objectives (PDF/text) + optional DART-processed textbooks (HTML)
+**Output**: Single IMSCC file ready for Brightspace import
+
+### Course Intake/Remediation Mode (NEW)
+**Input**: Any IMSCC package (Canvas, Blackboard, Moodle, Brightspace, etc.)
+**Output**: Fully accessible, enhanced IMSCC with 100% WCAG 2.2 AA compliance
 
 ---
 
-## Workflow Pipeline
+## Workflow Pipelines
 
+### Pipeline 1: Course Creation
 ```
 INPUT                         PROCESSING                              OUTPUT
 ─────                         ──────────                              ──────
-Structured Content    content-to-slide    presentation    slide-content    slide-layout    pptx
-(Markdown/JSON/   ──►    analyzer     ──►   outliner   ──►  generator  ──►   mapper    ──►  packager  ──►  .PPTX
- Outline/Text)
+Exam Objectives ──┐
+(PDF/text)        │
+                  ├──► exam-research ──► course-outliner ──► content-generator ──► brightspace-packager ──► IMSCC
+Textbooks ────────┘         │                │                    │
+(DART HTML)           requirements-      oscqr-            quality-assurance
+                      collector          evaluator              (per batch)
+```
+
+### Pipeline 2: Intake & Remediation (NEW)
+```
+INPUT                         PROCESSING                                    OUTPUT
+─────                         ──────────                                    ──────
+Any IMSCC Package ──► imscc-intake-parser ──► content-analyzer ──┬──► dart-automation-coordinator
+(Canvas, Blackboard,          │                   │               │           (PDF/Office → HTML)
+ Moodle, Brightspace)         │                   │               │
+                              │                   │               ├──► accessibility-remediation
+                              ▼                   │               │           (WCAG fixes)
+                     LMS Detection                │               │
+                     Version Detection            │               ├──► content-quality-remediation
+                     Content Inventory            │               │           (Educational depth)
+                                                  │               │
+                                                  │               ├──► intelligent-design-mapper
+                                                  │               │           (Component styling)
+                                                  │               │
+                                                  │               └──► remediation-validator ──► brightspace-packager ──► Improved IMSCC
+                                                  │                           (Final QA)
+                                                  ▼
+                                         Remediation Queue
 ```
 
 ---
 
 ## Orchestrator Protocol
 
-**The orchestrator is a lightweight task manager. Specialized agents handle content transformation and slide generation.**
+**The orchestrator is a lightweight task manager. Specialized agents determine frameworks and content structure.**
 
 ### Orchestrator Responsibilities
 1. Create timestamped project folder in `exports/`
-2. Invoke planning agent to analyze content and create structure
+2. Invoke planning agent → receive todo list (NO EXECUTION)
 3. Load todo list into TodoWrite (single source of truth)
 4. Execute todos via specialized agents in parallel batches
-5. Coordinate slide quality validation
-6. Invoke final PPTX packaging
+5. Coordinate quality validation
+6. Invoke final packaging
 
 ### Workflow Steps
 ```
 USER REQUEST →
-  STEP 1: Content analyzer examines input, returns structure plan (NO execution) →
-  STEP 2: Orchestrator loads plan into TodoWrite →
-  STEP 3: Orchestrator executes via slide agents (agents do NOT modify TodoWrite) →
-  STEP 4: Quality validation (slide-validator) →
-  STEP 5: Package generation (pptx-packager) →
-  OUTPUT: Single PPTX file
+  STEP 1: Planning agent analyzes request, returns todo list (NO execution) →
+  STEP 2: Orchestrator loads todo list into TodoWrite →
+  STEP 3: Orchestrator executes todos via agents (agents do NOT modify TodoWrite) →
+  STEP 4: Quality validation (oscqr-course-evaluator + quality-assurance) →
+  STEP 5: Package generation (brightspace-packager) →
+  OUTPUT: Single IMSCC file
 ```
 
 ---
 
 ## Available Agents
 
+### Course Creation Agents
 | Agent | Purpose | When to Use |
 |-------|---------|-------------|
-| `content-analyzer` | Analyze input and plan structure | Initial content processing |
-| `presentation-outliner` | Plan presentation structure | Creating slide framework |
-| `slide-content-generator` | Create slide content | Content development (JSON output) |
-| `slide-layout-mapper` | Select optimal layouts | Layout assignment |
-| `slide-validator` | Quality validation | Before packaging |
-| `pptx-packager` | PPTX file generation | Final assembly |
+| `exam-research` | Certification objective analysis | Analyzing exam/certification objectives |
+| `requirements-collector` | Course specification gathering | New course projects |
+| `course-outliner` | Course structure and learning objectives | Creating course framework |
+| `content-generator` | Educational content creation | Content development (1 file per agent) |
+| `educational-standards` | Pedagogical framework compliance | UDL, ADDIE, Bloom's alignment |
+| `quality-assurance` | Pattern prevention and validation | Quality gates |
+| `oscqr-course-evaluator` | Educational quality assessment | OSCQR evaluation |
+| `brightspace-packager` | IMSCC package generation | Final deployment |
+| `html-design-research` | HTML/CSS design pattern research | Template and design validation |
+| `objective-synthesizer` | Learning objective synthesis | Combining objectives from textbooks |
+| `textbook-ingestor` | Textbook content processing | Entry point for textbook materials |
+
+### Intake & Remediation Agents (NEW)
+| Agent | Purpose | When to Use |
+|-------|---------|-------------|
+| `imscc-intake-parser` | Universal IMSCC package parsing | Importing existing courses |
+| `content-analyzer` | Accessibility/quality gap detection | Analyzing imported content |
+| `dart-automation-coordinator` | Automated DART conversion orchestration | Converting PDFs/Office docs to accessible HTML |
+| `accessibility-remediation` | Automatic WCAG fixes | Fixing accessibility issues |
+| `content-quality-remediation` | Educational depth enhancement | Improving thin content |
+| `intelligent-design-mapper` | AI-driven component selection | Applying interactive styling |
 
 ---
 
 ## Critical Execution Protocols
 
-### Individual Section Protocol (MANDATORY)
-- ONE agent = ONE section (never multiple sections per agent)
+### Individual File Protocol (MANDATORY)
+- ONE agent = ONE file (never multiple files per agent)
 - Maximum 10 simultaneous Task calls per batch
 - Wait for batch completion before next batch
 
 **Correct:**
 ```python
-Task(slide-content-generator, "Create introduction section slides")
-Task(slide-content-generator, "Create main content section slides")
+Task(content-generator, "Create week_01_module_01_introduction.html")
+Task(content-generator, "Create week_01_module_02_concepts.html")
 # ... up to 10 per batch
 ```
 
 **Wrong:**
 ```python
-Task(slide-content-generator, "Create all presentation slides")  # NEVER DO THIS
+Task(content-generator, "Create all Week 1 content")  # NEVER DO THIS
 ```
 
 ---
@@ -85,94 +132,79 @@ Task(slide-content-generator, "Create all presentation slides")  # NEVER DO THIS
 ## Project Structure
 
 ```
-/Slideforge/
+/Courseforge/
 ├── CLAUDE.md                    # This file
 ├── README.md                    # Project overview
 ├── docs/                        # Documentation
-│   ├── getting-started.md       # Quick start guide
+│   ├── troubleshooting.md       # Error patterns and solutions
 │   ├── workflow-reference.md    # Detailed workflow protocols
-│   └── slide-design-guide.md    # Slide design best practices
+│   └── getting-started.md       # Quick start guide
 ├── agents/                      # Agent specifications
 ├── inputs/                      # Input files
-│   └── source-content/          # Markdown, outlines, documents
-├── templates/                   # PPTX templates and themes
-│   └── pptx/
-│       ├── themes/              # Theme PPTX files
-│       └── examples/            # Example presentations
-├── schemas/                     # JSON schemas
-│   └── presentation/            # Presentation and slide schemas
+│   ├── exam-objectives/         # Certification exam PDFs/docs
+│   ├── textbooks/               # DART-processed HTML textbooks
+│   ├── existing-packages/       # IMSCC packages for intake (NEW)
+│   └── design-books/            # Design reference materials
+├── templates/                   # HTML templates and components
+├── schemas/                     # IMSCC and content schemas
+├── imscc-standards/             # Brightspace/IMSCC technical specs
 ├── scripts/                     # Automation scripts
-│   ├── pptx-generator/          # Core PPTX generation
-│   ├── semantic-structure-extractor/  # Content parsing
-│   └── utilities/               # Helper utilities
-├── exports/                     # Generated presentations
+│   ├── imscc-extractor/         # Universal IMSCC extraction (NEW)
+│   ├── dart-batch-processor/    # Automated DART conversion (NEW)
+│   ├── component-applier/       # Interactive component application (NEW)
+│   └── remediation-validator/   # Final quality validation (NEW)
+├── exports/                     # Generated course packages
 │   └── YYYYMMDD_HHMMSS_name/    # Timestamped project folders
 └── runtime/                     # Agent workspaces
 ```
 
 ### Export Project Structure
 ```
-exports/YYYYMMDD_HHMMSS_presentationname/
-├── 01_content_analysis/
-├── 02_slide_content/
-│   ├── section_01/
-│   └── section_XX/
-├── 03_final_output/
-│   └── presentation.pptx         # Final deliverable
+exports/YYYYMMDD_HHMMSS_coursename/
+├── 00_template_analysis/
+├── 01_learning_objectives/
+├── 02_course_planning/
+├── 03_content_development/
+│   ├── week_01/
+│   └── week_XX/
+├── 04_quality_validation/
+├── 05_final_package/
 ├── agent_workspaces/
-└── project_log.md
+├── project_log.md
+└── coursename.imscc              # Final deliverable
 ```
 
 ---
 
-## Input Formats
+## Textbook Integration
 
-### Markdown
-```markdown
-# Presentation Title
+Textbooks must be pre-processed through DART before use:
 
-## Section 1: Introduction
-
-### Overview
-- First key point
-- Second key point
-
-### Details
-- Supporting information
-```
-
-### JSON Outline
-```json
-{
-  "metadata": {
-    "title": "Presentation Title",
-    "author": "Author Name"
-  },
-  "sections": [
-    {
-      "title": "Introduction",
-      "slides": [...]
-    }
-  ]
-}
-```
+1. Run textbook PDF through DART (set `DART_PATH` environment variable):
+   ```bash
+   cd $DART_PATH
+   python convert.py textbook.pdf -o /path/to/courseforge/inputs/textbooks/
+   ```
+2. DART produces WCAG 2.2 AA accessible HTML
+3. Place output in `inputs/textbooks/`
+4. Reference in course generation
 
 ---
 
 ## Quality Standards
 
-### Slide Design Rules
-- **6x6 Rule**: Maximum 6 bullets, 6 words per bullet
-- **One Idea Per Slide**: Focus on single concept
-- **Visual Hierarchy**: Clear title, supporting points
-- **Consistent Styling**: Same layouts for similar content
+### Pattern Prevention
+See `docs/troubleshooting.md` for complete pattern list. Critical patterns:
+- Schema/namespace consistency (IMS CC 1.1)
+- Assessment XML format (QTI 1.2)
+- Content completeness (all weeks substantive)
+- Organization hierarchy (no empty structures)
 
-### Validation Checklist
-- [ ] All slides have descriptive titles
-- [ ] No bullet lists exceed 6 items
-- [ ] Content is concise and scannable
-- [ ] Sections flow logically
-- [ ] Speaker notes provide context
+### OSCQR Evaluation
+Automatic quality assessment after course outline completion:
+- 70% threshold for pre-development
+- 90% threshold for pre-production
+- 100% accessibility compliance required
 
 ---
 
@@ -180,100 +212,91 @@ exports/YYYYMMDD_HHMMSS_presentationname/
 
 | Document | Location | Purpose |
 |----------|----------|---------|
+| Troubleshooting | `docs/troubleshooting.md` | Error patterns and solutions |
+| Workflow Reference | `docs/workflow-reference.md` | Detailed execution protocols |
 | Getting Started | `docs/getting-started.md` | Quick start guide |
-| Workflow Reference | `docs/workflow-reference.md` | Detailed protocols |
-| Slide Design Guide | `docs/slide-design-guide.md` | Design best practices |
+| Pattern Prevention | `docs/PATTERN_PREVENTION_GUIDE.md` | Comprehensive pattern catalog |
 | Agent Specs | `agents/*.md` | Individual agent protocols |
 
 ---
 
-## Color Palettes (WCAG 2.2 AA Compliant)
+## CSS Color Palette (for content generation)
 
-### Corporate Template
-*Trust + Stability + Success*
 ```css
-Primary Navy: #1B4F72
-Steel Gray: #5D6D7E
-Emerald Accent: #1E8449
-Text Primary: #1C2833
-```
-
-### Educational Template
-*Trust + Growth + Optimism*
-```css
-Deep Blue: #1A5276
-Teal-Green: #148F77
-Gold Accent: #D4AC0D
-Background: #FEF9E7
-Text Primary: #1C2833
-```
-
-### Creative Template
-*Creativity + Sophistication + Passion*
-```css
-Rich Purple: #6C3483
-Teal: #17A2B8
-Coral Accent: #E74C3C
-Background: #F4ECF7
-Text Primary: #2C2C54
-```
-
-### Minimal Template
-*Clarity + Action*
-```css
-Charcoal: #212529
-Cool Gray: #6C757D
-Electric Blue: #007BFF
-Background: #FFFFFF
-```
-
-### Color Psychology Reference
-| Color | Association | Best For |
-|-------|-------------|----------|
-| Blue | Trust, stability | Corporate, educational |
-| Green | Growth, success | Finance, health |
-| Purple | Creativity, luxury | Creative, premium |
-| Teal | Sophistication | Modern, tech |
-
----
-
-## Slide Types
-
-Content generators should use these slide types appropriately:
-
-| Type | Use Case | Content |
-|------|----------|---------|
-| Title | Opening slide | Title + subtitle |
-| Section Header | Section transitions | Section name |
-| Content | Main slides | Title + bullets |
-| Two Content | Side-by-side | Two columns |
-| Comparison | Pros/cons, before/after | Labeled columns |
-| Image | Visual focus | Title + image |
-| Quote | Key messages | Quote + attribution |
-| Blank | Custom content | Empty canvas |
-
----
-
-## Script Usage
-
-### Generate from JSON
-```bash
-cd scripts/pptx-generator
-python pptx_generator.py --input content.json --output presentation.pptx
-```
-
-### With Theme Template
-```bash
-python pptx_generator.py -i content.json -o output.pptx -t themes/corporate.pptx
+Primary Blue: #2c5aa0
+Success Green: #28a745
+Warning Yellow: #ffc107
+Danger Red: #dc3545
+Light Gray: #f8f9fa
+Border Gray: #e0e0e0
 ```
 
 ---
 
-## Dependencies
+## Template Components
 
+Content generators should incorporate these Bootstrap 4.3.1 components:
+- Flip Cards (concept reveals)
+- Knowledge Checks (self-assessment)
+- Accordions (progressive disclosure)
+- Call-out Boxes (info, warning, success, danger)
+- Tabbed Content (section organization)
+- Activity Cards (learning activities)
+
+Templates located in: `templates/`
+
+---
+
+## Intake & Remediation Workflow (NEW)
+
+### Supported IMSCC Sources
+Courseforge can import and remediate IMSCC packages from:
+- **Brightspace/D2L** - Detected via `d2l_2p0` namespace
+- **Canvas** - Detected via `canvas.instructure` namespace
+- **Blackboard** - Detected via `blackboard.com` namespace
+- **Moodle** - Detected via `moodle.org` namespace
+- **Sakai** - Detected via `sakaiproject.org` namespace
+- **Generic IMSCC** - Standard IMS CC 1.1/1.2/1.3
+
+### Intake Workflow Steps
 ```
-python-pptx>=0.6.21
-Pillow>=9.0.0
-beautifulsoup4>=4.9.0
-jsonschema>=4.0.0
+1. Place IMSCC package in: inputs/existing-packages/
+2. Invoke imscc-intake-parser agent
+3. Agent extracts, detects source LMS, inventories content
+4. content-analyzer identifies remediation needs
+5. Parallel remediation:
+   - dart-automation-coordinator: PDFs/Office → accessible HTML
+   - accessibility-remediation: WCAG 2.2 AA fixes
+   - content-quality-remediation: Educational enhancements
+   - intelligent-design-mapper: Interactive component styling
+6. remediation-validator: Final quality validation
+7. brightspace-packager: Generate improved IMSCC
 ```
+
+### Remediation Capabilities
+| Capability | Target |
+|------------|--------|
+| PDF Conversion | 100% to accessible HTML via DART |
+| Office Documents | 100% to accessible HTML via DART |
+| Alt Text | AI-generated for all images |
+| Heading Structure | Automatic hierarchy correction |
+| Color Contrast | WCAG AA (4.5:1 minimum) |
+| Keyboard Navigation | Full accessibility |
+| Component Styling | AI-selected interactive elements |
+| Quality Enhancement | Learning objectives, summaries, checks |
+
+### Scripts for Intake
+| Script | Location | Purpose |
+|--------|----------|---------|
+| `imscc_extractor.py` | `scripts/imscc-extractor/` | Universal IMSCC parsing |
+| `dart_batch_processor.py` | `scripts/dart-batch-processor/` | Parallel DART conversion |
+| `component_applier.py` | `scripts/component-applier/` | Interactive component application |
+| `remediation_validator.py` | `scripts/remediation-validator/` | Final quality validation |
+
+### Success Metrics
+| Metric | Target |
+|--------|--------|
+| IMSCC import success | 95%+ (any source LMS) |
+| WCAG compliance | 100% Level AA |
+| DART conversion | 98%+ for PDFs |
+| Component accuracy | 90%+ appropriate selections |

@@ -6,7 +6,7 @@ We take security vulnerabilities seriously. If you discover a security issue, pl
 
 ### How to Report
 
-1. **GitHub Security Advisories (Preferred)**: Use GitHub's private vulnerability reporting to submit a report directly.
+1. **GitHub Security Advisories (Preferred)**: Use [GitHub's private vulnerability reporting](https://github.com/[your-org]/courseforge/security/advisories/new) to submit a report directly.
 
 2. **Email**: If you prefer email, contact the maintainers directly (see repository for contact information).
 
@@ -31,18 +31,18 @@ We take security vulnerabilities seriously. If you discover a security issue, pl
 
 ## Security Considerations
 
-When using Slideforge, be aware of the following security considerations:
+When using Courseforge, be aware of the following security considerations:
 
 ### File Processing
 
-- **Input Files**: Slideforge processes JSON and markdown files. Always validate input from untrusted sources.
-- **Output Files**: Generated PPTX files are standard Office Open XML format.
-- **File Paths**: Ensure output directories have appropriate access controls.
+- **IMSCC Packages**: Courseforge processes IMSCC packages which may contain HTML, XML, and embedded files. Always validate packages from untrusted sources.
+- **XML Parsing**: The system uses secure XML parsing with external entity (XXE) protection enabled.
+- **File Uploads**: Input files should be validated before processing through the intake pipeline.
 
 ### Environment Configuration
 
-- **Output Directories**: The `exports/` directory contains generated presentations. Ensure appropriate access controls in production environments.
-- **Virtual Environment**: Use the project's virtual environment to isolate dependencies.
+- **Environment Variables**: Sensitive paths like `DART_PATH` should be set via environment variables, never hardcoded.
+- **Output Directories**: The `exports/` directory contains generated content. Ensure appropriate access controls in production environments.
 
 ### Dependencies
 

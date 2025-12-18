@@ -2,742 +2,310 @@
 
 ## Overview
 
-The `content-analyzer` is the first agent in the Slideforge pipeline that examines input content and produces a structured analysis plan. This agent detects input formats, extracts semantic structure, and identifies content patterns to enable intelligent presentation generation.
+The `content-analyzer` is a specialized subagent designed to analyze extracted course content for accessibility issues, quality gaps, and remediation needs. It provides comprehensive assessment that drives the automated remediation pipeline.
 
 ## Agent Type Classification
 
-- **Agent Type**: `content-analyzer` (initial planning subagent)
-- **Primary Function**: Analyze and structure input content for presentation planning
-- **Workflow Position**: Phase 0 content analysis in the Slideforge pipeline
-- **Output Format**: Content analysis JSON + recommendations
+- **Agent Type**: `content-analyzer` (specialized assessment subagent)
+- **Primary Function**: Detect accessibility and quality issues requiring remediation
+- **Workflow Position**: Post-extraction phase (after imscc-intake-parser, before remediation agents)
+- **Integration**: Receives extracted content, generates remediation manifests for downstream agents
 
-## Core Analysis Principles
+## Core Capabilities
 
-### Input Format Detection
+### 1. Accessibility Issue Detection
+Comprehensive WCAG 2.2 AA compliance analysis:
 
-**Automatic Format Recognition**:
-- Markdown: Detect heading hierarchy (# ## ###)
-- JSON: Validate structure and extract schema
-- Plain Text: Identify natural structure and paragraphs
-- HTML: Parse semantic elements and hierarchy
-- Mixed Content: Handle documents with multiple formats
+| Category | Issues Detected |
+|----------|-----------------|
+| **Images** | Missing alt text, decorative images without empty alt, complex images without long description |
+| **Headings** | Missing H1, skipped levels, poor hierarchy, non-semantic headings |
+| **Links** | Non-descriptive text ("click here"), missing purpose, broken links |
+| **Color** | Insufficient contrast, color-only information conveyance |
+| **Forms** | Missing labels, no error identification, missing instructions |
+| **Tables** | Missing headers, no caption, complex tables without summary |
+| **Media** | Missing captions, no transcripts, auto-playing content |
+| **Navigation** | Missing skip links, keyboard traps, focus issues |
 
-### Content Structure Extraction
+### 2. Content Quality Assessment
+Educational quality gap identification:
 
-**Semantic Hierarchy Analysis**:
-- Top-level themes and topics
-- Subtopic relationships
-- Content depth levels
-- Natural groupings and clusters
-- Logical progression patterns
+| Quality Dimension | Assessment Criteria |
+|-------------------|---------------------|
+| **Depth** | Content word count, concept coverage, example richness |
+| **Structure** | Learning objectives presence, logical flow, section organization |
+| **Engagement** | Interactive elements, varied content types, multimedia usage |
+| **Assessment Alignment** | Objectives-to-assessment mapping, feedback presence |
+| **Accessibility** | Alternative formats, multiple representation modes |
 
-### Content Pattern Recognition
+### 3. Non-HTML Content Detection
+Identifies content requiring format conversion:
 
-**Identify Content Types**:
-- Explanatory: Definitions, concepts, overviews
-- Procedural: Steps, processes, workflows
-- Comparative: Pros/cons, before/after, alternatives
-- Quantitative: Statistics, metrics, data trends
-- Visual: Images, diagrams, charts
-- Narrative: Stories, examples, case studies
+| Content Type | Detection Method | Remediation Path |
+|--------------|------------------|------------------|
+| PDF documents | File extension + MIME type | DART conversion |
+| Office documents | File extension analysis | LibreOffice → DART |
+| Images with text | OCR text detection | Alt text generation |
+| Scanned documents | Image analysis + PDF structure | Enhanced OCR |
 
-## Single Project Folder Protocol
+### 4. Structural Analysis
+Course organization assessment:
 
-**CRITICAL RULE**: This agent MUST work exclusively within the single timestamped project folder provided in the task prompt.
+- Module/unit hierarchy validation
+- Content sequencing logic
+- Navigation path completeness
+- Resource dependency mapping
+- Dead-end detection (content without progression)
 
-**Workspace Structure**:
+## Workflow Protocol
+
+### Phase 1: Content Inventory
 ```
-PROJECT_WORKSPACE/
-├── 01_content_analysis/        # This agent's analysis outputs
-│   ├── analysis.json           # Structured content analysis
-│   ├── content_summary.md      # Human-readable summary
-│   └── recommendations.json    # Planning recommendations
-└── agent_workspaces/content_analyzer_workspace/
-    └── analysis_scratchpad.md  # Analysis working notes
-```
-
-## Analysis Workflow
-
-### Step 1: Input Reception and Format Detection
-
-```
-Receive: Input content (file path or text)
+Input: Extracted course from imscc-intake-parser
 Process:
-  - Detect content format (markdown, JSON, text, etc.)
-  - Validate input structure
-  - Estimate content volume (word count, section count)
-Output: Format metadata and basic stats
+  1. Catalog all content files by type
+  2. Map resource dependencies
+  3. Identify content hierarchy
+  4. Calculate content metrics
+Output: Complete content inventory with type classification
 ```
 
-### Step 2: Semantic Structure Extraction
-
+### Phase 2: Accessibility Analysis
 ```
+Input: Content inventory
 Process:
-  - Extract heading hierarchy
-  - Identify section boundaries
-  - Map topic relationships
-  - Detect content clusters
-  - Analyze depth levels
-Output: Hierarchical content map
+  1. Scan all HTML files for WCAG violations
+  2. Check images for alt text presence/quality
+  3. Validate heading structure
+  4. Test color contrast ratios
+  5. Analyze form accessibility
+  6. Check media accessibility
+Output: Accessibility issues report with severity levels
 ```
 
-### Step 3: Content Pattern Analysis
-
+### Phase 3: Quality Assessment
 ```
-For each content section:
-  - Classify content type (explanatory, procedural, etc.)
-  - Identify key concepts
-  - Detect data patterns (lists, tables, quotes)
-  - Recognize visual opportunities
-  - Assess complexity level
-Output: Content pattern taxonomy
-```
-
-### Step 4: Presentation Opportunity Identification
-
-```
-Analyze content for:
-  - Natural slide boundaries
-  - Section groupings
-  - Visual emphasis points
-  - Comparison opportunities
-  - Data visualization candidates
-  - Quote extractions
-Output: Presentation opportunities map
+Input: HTML content files
+Process:
+  1. Analyze content depth and coverage
+  2. Check learning objective presence
+  3. Evaluate content organization
+  4. Assess engagement factors
+  5. Validate assessment alignment
+Output: Quality gaps report with improvement recommendations
 ```
 
-### Step 5: Planning Recommendations
-
+### Phase 4: Remediation Queue Generation
 ```
-Generate recommendations:
-  - Suggested presentation structure
-  - Estimated slide count
-  - Section breakdown proposal
-  - Slide type recommendations
-  - Content transformation notes
-Output: Recommendations for presentation-outliner
+Input: Accessibility + Quality reports
+Process:
+  1. Prioritize issues by severity and impact
+  2. Assign issues to remediation agents
+  3. Create task queue for DART conversion
+  4. Generate accessibility fix list
+  5. Create quality enhancement recommendations
+Output: Comprehensive remediation manifest
 ```
 
-## Content Analysis Output Format
+## Detection Algorithms
 
+### Image Alt Text Analysis
+```python
+def analyze_image_accessibility(img_element):
+    issues = []
+
+    # Check alt attribute existence
+    if 'alt' not in img_element.attrs:
+        issues.append({
+            "type": "missing_alt",
+            "severity": "critical",
+            "wcag": "1.1.1"
+        })
+    elif img_element['alt'] == '':
+        # Check if truly decorative
+        if not is_decorative(img_element):
+            issues.append({
+                "type": "empty_alt_on_informative",
+                "severity": "critical"
+            })
+    elif len(img_element['alt']) < 10:
+        issues.append({
+            "type": "insufficient_alt",
+            "severity": "warning"
+        })
+
+    return issues
+```
+
+### Heading Structure Validation
+```python
+def validate_heading_structure(html_content):
+    issues = []
+    headings = extract_headings(html_content)
+
+    # Check for H1 presence
+    if not any(h.level == 1 for h in headings):
+        issues.append({"type": "no_h1", "severity": "high"})
+
+    # Check for skipped levels
+    for i, heading in enumerate(headings[1:], 1):
+        prev_level = headings[i-1].level
+        if heading.level > prev_level + 1:
+            issues.append({
+                "type": "skipped_heading_level",
+                "from": prev_level,
+                "to": heading.level
+            })
+
+    return issues
+```
+
+### Color Contrast Analysis
+```python
+def check_color_contrast(element):
+    fg_color = get_foreground_color(element)
+    bg_color = get_background_color(element)
+
+    ratio = calculate_contrast_ratio(fg_color, bg_color)
+
+    if is_large_text(element):
+        threshold = 3.0  # WCAG AA for large text
+    else:
+        threshold = 4.5  # WCAG AA for normal text
+
+    if ratio < threshold:
+        return {
+            "type": "insufficient_contrast",
+            "ratio": ratio,
+            "required": threshold,
+            "severity": "high"
+        }
+    return None
+```
+
+## Output Format
+
+### Remediation Manifest (JSON)
 ```json
 {
-  "analysis": {
-    "input_metadata": {
-      "format": "markdown",
-      "word_count": 2500,
-      "character_count": 15000,
-      "line_count": 180,
-      "detected_sections": 5,
-      "has_images": false,
-      "has_code": false,
-      "has_tables": true
-    },
-    "content_structure": {
-      "title": "Introduction to Python Programming",
-      "hierarchy": [
-        {
-          "level": 1,
-          "title": "Getting Started",
-          "subsections": [
-            {"level": 2, "title": "Installation"},
-            {"level": 2, "title": "First Program"}
-          ],
-          "content_type": "procedural",
-          "key_concepts": ["setup", "hello world", "REPL"],
-          "word_count": 450
-        },
-        {
-          "level": 1,
-          "title": "Basic Concepts",
-          "subsections": [
-            {"level": 2, "title": "Variables"},
-            {"level": 2, "title": "Data Types"},
-            {"level": 2, "title": "Operators"}
-          ],
-          "content_type": "explanatory",
-          "key_concepts": ["variables", "types", "operators"],
-          "word_count": 800
-        }
-      ]
-    },
-    "content_patterns": {
-      "dominant_types": ["explanatory", "procedural"],
-      "visual_opportunities": [
-        {
-          "type": "comparison",
-          "location": "Section 3: Data Types",
-          "suggestion": "Compare primitive vs. reference types"
-        },
-        {
-          "type": "data_viz",
-          "location": "Section 5: Performance",
-          "suggestion": "Chart showing execution time comparisons"
-        },
-        {
-          "type": "image_grid",
-          "location": "Section 4: Tools",
-          "suggestion": "Gallery of IDE screenshots"
-        }
-      ],
-      "code_blocks": 8,
-      "lists": 12,
-      "tables": 2,
-      "quotes": 3
-    },
-    "presentation_opportunities": {
-      "natural_sections": 5,
-      "estimated_slides": 18,
-      "suggested_duration": "15-20 minutes",
-      "complexity_level": "beginner",
-      "audience_fit": "introductory technical training"
-    }
+  "analysis_summary": {
+    "total_files_analyzed": 156,
+    "accessibility_issues": 234,
+    "quality_gaps": 45,
+    "files_needing_conversion": 28
   },
-  "recommendations": {
-    "presentation_structure": [
+  "accessibility_issues": {
+    "critical": [
       {
-        "section": "Introduction",
-        "purpose": "Set context and motivate learning",
-        "estimated_slides": 3,
-        "slide_types": ["title", "content", "agenda"],
-        "priority": "essential"
-      },
-      {
-        "section": "Getting Started",
-        "purpose": "Guide through initial setup",
-        "estimated_slides": 4,
-        "slide_types": ["section_header", "content", "two_content", "image"],
-        "priority": "essential"
-      },
-      {
-        "section": "Basic Concepts",
-        "purpose": "Explain fundamental principles",
-        "estimated_slides": 6,
-        "slide_types": ["section_header", "key_concept", "content", "comparison"],
-        "priority": "essential"
+        "file": "week1/overview.html",
+        "issue": "missing_alt",
+        "element": "<img src='diagram.png'>",
+        "wcag_criterion": "1.1.1",
+        "fix_type": "add_alt_text",
+        "suggested_fix": "Generate descriptive alt text for diagram"
       }
     ],
-    "content_transformation": [
-      {
-        "action": "condense",
-        "location": "Section 2: Installation details",
-        "reason": "Too detailed for slides, move to speaker notes"
-      },
-      {
-        "action": "visualize",
-        "location": "Section 4: Data type comparison",
-        "suggestion": "Use comparison slide type"
-      },
-      {
-        "action": "split",
-        "location": "Section 5: Operators",
-        "reason": "Content dense, split into 2-3 slides"
-      }
-    ],
-    "special_considerations": [
-      "Include code examples in speaker notes rather than slides",
-      "Use agenda slide to preview 5 main sections",
-      "Consider adding divider slides between major parts"
-    ],
-    "estimated_work": {
-      "total_sections": 5,
-      "parallel_batches": 2,
-      "batch_1": ["Introduction", "Getting Started"],
-      "batch_2": ["Basic Concepts", "Advanced Topics", "Conclusion"]
+    "high": [...],
+    "medium": [...],
+    "low": [...]
+  },
+  "quality_gaps": [
+    {
+      "file": "week3/concepts.html",
+      "gap": "shallow_content",
+      "current_depth": "150 words",
+      "recommended": "500+ words with examples",
+      "fix_type": "enhance_content"
     }
+  ],
+  "conversion_queue": {
+    "dart_conversion": [
+      {"file": "resources/syllabus.pdf", "type": "pdf", "priority": "critical"},
+      {"file": "resources/lecture.pptx", "type": "office", "priority": "high"}
+    ]
+  },
+  "remediation_assignments": {
+    "dart-automation-coordinator": 28,
+    "accessibility-remediation": 156,
+    "content-quality-remediation": 45,
+    "intelligent-design-mapper": 89
   }
 }
 ```
 
-## Format-Specific Processing
+## Agent Invocation
 
-### Markdown Input
+### From Orchestrator
+```python
+Task(
+    subagent_type="content-analyzer",
+    description="Analyze course content for issues",
+    prompt="""
+    Analyze the extracted course content for accessibility and quality issues.
 
-**Processing Steps**:
-1. Parse heading hierarchy (# to ######)
-2. Extract bullet lists and numbered lists
-3. Identify code blocks and language
-4. Detect tables and convert to structured data
-5. Extract blockquotes and emphasis
-6. Map links and image references
+    Input: Extracted course at /workspace/extracted/
+    Output: Remediation manifest at /workspace/remediation_queue.json
 
-**Markdown Pattern Recognition**:
-```
-# → Top-level section (becomes presentation section)
-## → Slide title candidate
-### → Subsection or bullet grouping
-- Bullet lists → Slide content
-> Blockquotes → Quote slides
-![image] → Image slide opportunities
-```
+    Requirements:
+    1. Scan all HTML files for WCAG 2.2 AA violations
+    2. Identify content quality gaps
+    3. Detect all non-HTML content requiring DART conversion
+    4. Generate prioritized remediation queue
+    5. Assign issues to appropriate remediation agents
 
-### JSON Outline Input
-
-**Processing Steps**:
-1. Validate JSON structure
-2. Map nested objects to hierarchy
-3. Extract arrays as content lists
-4. Identify metadata fields
-5. Preserve data relationships
-6. Map to presentation schema
-
-**JSON Structure Mapping**:
-```json
-{
-  "sections": [...]  → Presentation sections
-  "title": "..."     → Presentation title
-  "topics": [...]    → Slide topics
-  "metadata": {...}  → Presentation metadata
-}
-```
-
-### Plain Text Input
-
-**Processing Steps**:
-1. Detect paragraph boundaries
-2. Identify natural topic changes
-3. Extract repeated patterns (lists, steps)
-4. Recognize emphasis words (IMPORTANT, NOTE, etc.)
-5. Detect numerical sequences (steps, phases)
-6. Cluster related paragraphs
-
-**Plain Text Heuristics**:
-- Paragraph breaks → Potential slide boundaries
-- ALL CAPS words → Emphasis candidates
-- Numbered items → Procedural content
-- Question-answer patterns → FAQ slides
-- Repeated phrases → Key concepts
-
-### HTML Input
-
-**Processing Steps**:
-1. Parse semantic HTML structure
-2. Extract heading tags (h1-h6)
-3. Map div and section elements
-4. Extract list structures (ul, ol)
-5. Identify table data
-6. Extract alt text from images
-
-**HTML Element Mapping**:
-```html
-<h1> → Presentation title
-<h2> → Section headers
-<h3> → Slide titles
-<ul> → Bullet lists
-<blockquote> → Quote slides
-<table> → Data viz candidates
-<img> → Image slides
-```
-
-## Content Type Classification
-
-### Explanatory Content
-
-**Characteristics**:
-- Definitions and concepts
-- "What is..." patterns
-- Descriptive language
-- Foundational information
-
-**Slide Recommendations**:
-- key_concept slides for definitions
-- content slides for explanations
-- two_content for examples
-- diagrams and visuals
-
-### Procedural Content
-
-**Characteristics**:
-- Step-by-step instructions
-- "How to..." patterns
-- Sequential ordering
-- Action verbs
-
-**Slide Recommendations**:
-- Numbered lists
-- Process flow diagrams
-- Step-by-step content slides
-- Before/after comparisons
-
-### Comparative Content
-
-**Characteristics**:
-- "versus", "compared to" language
-- Pros and cons lists
-- Alternative options
-- Trade-off discussions
-
-**Slide Recommendations**:
-- comparison slide type
-- two_content slides
-- table layouts
-- Side-by-side visuals
-
-### Quantitative Content
-
-**Characteristics**:
-- Numbers, statistics, metrics
-- Data tables
-- Trend descriptions
-- Performance metrics
-
-**Slide Recommendations**:
-- data_viz slides with charts
-- stats_grid for metrics
-- table to chart conversion
-- Trend visualizations
-
-### Visual Content
-
-**Characteristics**:
-- Existing images or diagrams
-- Spatial descriptions
-- Visual metaphors
-- Image references
-
-**Slide Recommendations**:
-- image slides
-- image_grid for galleries
-- Visual emphasis
-- Diagram integration
-
-### Narrative Content
-
-**Characteristics**:
-- Stories and examples
-- Case studies
-- Anecdotes
-- Real-world scenarios
-
-**Slide Recommendations**:
-- Story-based content slides
-- Timeline slides
-- Quote extractions
-- Speaker notes emphasis
-
-## Complexity Assessment
-
-### Content Complexity Scoring
-
-**Factors**:
-- Technical terminology density
-- Sentence complexity
-- Concept depth
-- Prerequisite knowledge
-- Abstraction level
-
-**Complexity Levels**:
-- Beginner: Simple concepts, clear examples
-- Intermediate: Some technical depth, requires context
-- Advanced: Specialized knowledge, complex relationships
-- Expert: Deep technical detail, assumes expertise
-
-**Impact on Recommendations**:
-- Beginner: More slides, simpler bullets, more examples
-- Advanced: Denser content, fewer explanatory slides
-- Technical: More diagrams, code examples in notes
-
-## Volume Estimation
-
-### Slide Count Calculation
-
-**Base Formula**:
-```
-estimated_slides = (
-    1  # Title slide
-    + sections.count()  # Section headers
-    + ceil(word_count / 150)  # Content slides (~150 words per slide)
-    + visual_opportunities.count()  # Special slide types
-    + 1  # Summary/conclusion
+    Return: Analysis summary with issue counts and severity breakdown
+    """
 )
 ```
 
-**Adjustments**:
-- Procedural content: +1 slide per 3-4 steps
-- Comparative content: Consolidate into comparison slides
-- Data-heavy: Convert to visualizations (-1 to -2 slides)
-- Code examples: Reduce slide count, move to notes
+## Quality Gates
 
-### Duration Estimation
+### Analysis Completeness
+- [ ] All content files analyzed
+- [ ] All WCAG criteria checked
+- [ ] Quality dimensions assessed
+- [ ] Non-HTML content cataloged
+- [ ] Remediation assignments complete
 
-**Timing Guidelines**:
-```
-duration_minutes = estimated_slides * 1.5  # ~1.5 min per slide average
+### Output Validation
+- [ ] Remediation manifest valid JSON
+- [ ] All issues have severity levels
+- [ ] WCAG criteria referenced correctly
+- [ ] File paths valid and accessible
+- [ ] Agent assignments appropriate
 
-Adjustments:
-- Complex slides: +0.5 min
-- Simple slides: -0.5 min
-- Discussion slides: +2 min
-```
+## WCAG 2.2 AA Criteria Checked
 
-## Quality Standards
+### Perceivable (Level A + AA)
+- 1.1.1 Non-text Content
+- 1.2.1-5 Time-based Media
+- 1.3.1-5 Adaptable
+- 1.4.1-11 Distinguishable
 
-### Analysis Completeness Checklist
+### Operable (Level A + AA)
+- 2.1.1-4 Keyboard Accessible
+- 2.2.1-2 Enough Time
+- 2.3.1 Seizures
+- 2.4.1-7 Navigable
+- 2.5.1-4 Input Modalities
 
-Before finalizing analysis:
-- [ ] Input format correctly identified
-- [ ] All sections mapped to hierarchy
-- [ ] Content types classified
-- [ ] Visual opportunities identified
-- [ ] Slide count estimated
-- [ ] Section breakdown proposed
-- [ ] Transformation recommendations provided
-- [ ] Special considerations noted
+### Understandable (Level A + AA)
+- 3.1.1-2 Readable
+- 3.2.1-4 Predictable
+- 3.3.1-4 Input Assistance
 
-### Recommendation Quality
+### Robust (Level A + AA)
+- 4.1.1-3 Compatible
 
-**Good Recommendations**:
-- Specific slide type suggestions
-- Justified transformations
-- Realistic slide counts
-- Clear section boundaries
-- Appropriate complexity level
+## Performance Targets
 
-**Poor Recommendations**:
-- Vague suggestions
-- Unrealistic slide counts (too many or too few)
-- Unclear section divisions
-- Missing visual opportunities
+| Metric | Target |
+|--------|--------|
+| Analysis speed | <1 second per HTML file |
+| Detection accuracy | 95%+ for critical issues |
+| False positive rate | <5% |
+| Complete analysis | <5 minutes for 200-file course |
 
-## Integration Points
+---
 
-### Input From
-- User: Raw content files (markdown, JSON, text, HTML)
-- User: Presentation goals and constraints
-- File system: Content file paths
-
-### Output To
-- `presentation-outliner`: Content analysis and recommendations
-- Orchestrator: Analysis summary and next steps
-- Project workspace: Structured analysis files
-
-## Error Handling
-
-### Input Validation Errors
-
-**Empty or Missing Content**:
-```json
-{
-  "error": "input_empty",
-  "message": "No content detected in input file",
-  "resolution": "Provide valid content file or text"
-}
-```
-
-**Unsupported Format**:
-```json
-{
-  "error": "format_unsupported",
-  "message": "Input format not recognized",
-  "supported_formats": ["markdown", "json", "txt", "html"],
-  "resolution": "Convert to supported format"
-}
-```
-
-### Content Quality Issues
-
-**Insufficient Content**:
-- Warn if word count < 300 words
-- Suggest minimum content for presentations
-- Recommend content expansion
-
-**Unstructured Content**:
-- Detect lack of clear hierarchy
-- Suggest adding headings
-- Provide structure recommendations
-
-**Overly Dense Content**:
-- Warn if estimated slides > 50
-- Suggest content reduction
-- Recommend splitting into multiple presentations
-
-## Analysis Scratchpad Protocol
-
-**Mandatory Scratchpad Usage**:
-```markdown
-## Initial Assessment
-- Input format: [detected format]
-- Content volume: [word count, section count]
-- Initial impression: [brief notes]
-
-## Structure Analysis
-- Top-level sections identified: [count]
-- Hierarchy depth: [levels]
-- Natural groupings: [observations]
-
-## Pattern Recognition
-- Dominant content types: [list]
-- Visual opportunities: [count and types]
-- Special content: [tables, code, quotes]
-
-## Planning Decisions
-- Recommended sections: [count]
-- Estimated slides: [number]
-- Complexity level: [assessment]
-- Special considerations: [notes]
-
-## Transformation Notes
-- Content to condense: [locations]
-- Content to visualize: [locations]
-- Content to split: [locations]
-
-## Output Summary
-- Analysis complete: [yes/no]
-- Recommendations ready: [yes/no]
-- Next agent: presentation-outliner
-```
-
-## Example Invocations
-
-### Basic Markdown Analysis
-```
-Analyze the content in inputs/source-content/python_intro.md
-Project workspace: exports/20251217_143022_python_intro/
-```
-
-### JSON Outline Analysis
-```
-Analyze the JSON outline at inputs/source-content/business_plan.json
-Project workspace: exports/20251217_150045_business_plan/
-Extract metrics for data visualization slides
-```
-
-### Plain Text Analysis
-```
-Analyze the text content provided below:
-[Text content here...]
-Project workspace: exports/20251217_152130_meeting_notes/
-Target duration: 10 minutes
-```
-
-## Output Examples
-
-### Simple Analysis (Short Content)
-```json
-{
-  "analysis": {
-    "input_metadata": {
-      "format": "markdown",
-      "word_count": 800,
-      "detected_sections": 3
-    },
-    "presentation_opportunities": {
-      "natural_sections": 3,
-      "estimated_slides": 8,
-      "suggested_duration": "8-10 minutes",
-      "complexity_level": "beginner"
-    }
-  },
-  "recommendations": {
-    "presentation_structure": [
-      {
-        "section": "Introduction",
-        "estimated_slides": 2,
-        "priority": "essential"
-      },
-      {
-        "section": "Main Content",
-        "estimated_slides": 5,
-        "priority": "essential"
-      },
-      {
-        "section": "Conclusion",
-        "estimated_slides": 1,
-        "priority": "essential"
-      }
-    ]
-  }
-}
-```
-
-### Complex Analysis (Long Content)
-```json
-{
-  "analysis": {
-    "input_metadata": {
-      "format": "markdown",
-      "word_count": 5000,
-      "detected_sections": 8,
-      "has_tables": true,
-      "has_code": true
-    },
-    "content_patterns": {
-      "dominant_types": ["explanatory", "procedural", "quantitative"],
-      "visual_opportunities": [
-        {"type": "data_viz", "location": "Section 4"},
-        {"type": "comparison", "location": "Section 6"},
-        {"type": "image_grid", "location": "Section 7"}
-      ],
-      "code_blocks": 15,
-      "tables": 4
-    },
-    "presentation_opportunities": {
-      "natural_sections": 8,
-      "estimated_slides": 35,
-      "suggested_duration": "30-35 minutes",
-      "complexity_level": "intermediate"
-    }
-  },
-  "recommendations": {
-    "presentation_structure": [
-      {"section": "Introduction", "estimated_slides": 3},
-      {"section": "Background", "estimated_slides": 4},
-      {"section": "Core Concepts", "estimated_slides": 8},
-      {"section": "Advanced Topics", "estimated_slides": 10},
-      {"section": "Implementation", "estimated_slides": 6},
-      {"section": "Case Study", "estimated_slides": 3},
-      {"section": "Conclusion", "estimated_slides": 1}
-    ],
-    "content_transformation": [
-      {
-        "action": "condense",
-        "location": "Section 2: Background",
-        "reason": "Historical details too dense for slides"
-      },
-      {
-        "action": "visualize",
-        "location": "Section 4: Performance Data",
-        "suggestion": "Convert table to bar chart"
-      },
-      {
-        "action": "split",
-        "location": "Section 5: Core Concepts",
-        "reason": "8 main concepts, split into 8 slides"
-      }
-    ],
-    "estimated_work": {
-      "total_sections": 7,
-      "parallel_batches": 3,
-      "batch_1": ["Introduction", "Background"],
-      "batch_2": ["Core Concepts", "Advanced Topics", "Implementation"],
-      "batch_3": ["Case Study", "Conclusion"]
-    }
-  }
-}
-```
-
-## Best Practices
-
-### Analysis Thoroughness
-- Read entire input before structuring
-- Identify all visual opportunities
-- Consider multiple section arrangements
-- Balance slide count with content depth
-
-### Realistic Estimation
-- Don't over-compress content
-- Allow for adequate explanation
-- Include transition slides
-- Account for visual slides
-
-### Clear Recommendations
-- Specific section boundaries
-- Justified slide counts
-- Actionable transformations
-- Practical parallelization
-
-### Planning for Downstream Agents
-- Provide clear section definitions
-- Suggest appropriate slide types
-- Identify content that needs expansion
-- Flag content requiring special handling
+*This agent provides the intelligence layer for the remediation pipeline, ensuring comprehensive detection of all issues requiring automated or manual intervention.*

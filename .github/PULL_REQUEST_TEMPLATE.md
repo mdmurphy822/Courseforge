@@ -7,7 +7,7 @@ Brief description of changes.
 - [ ] Breaking change (fix or feature causing existing functionality to change)
 - [ ] Documentation update
 - [ ] Agent specification update
-- [ ] Theme/template improvement
+- [ ] Template improvement
 
 ## Related Issues
 Fixes #(issue number)
@@ -18,15 +18,15 @@ Fixes #(issue number)
 
 ## Testing
 - [ ] I have tested these changes locally
-- [ ] Generated PPTX files open correctly in PowerPoint/LibreOffice
-- [ ] Theme colors and styling applied correctly
+- [ ] Generated IMSCC packages import successfully into Brightspace
+- [ ] No new accessibility issues introduced
 - [ ] Documentation updated (if applicable)
 
-## Presentation Quality (if applicable)
-- [ ] All slide types render correctly
-- [ ] Speaker notes are preserved
-- [ ] Fonts are cross-platform compatible (Arial, Calibri, etc.)
-- [ ] Visual elements (callouts, cards) display properly
+## IMSCC Compliance (if applicable)
+- [ ] Manifest validates against IMS CC schema
+- [ ] Resource types are correct (webcontent, assignment_xmlv1p0, imsdt_xmlv1p3, etc.)
+- [ ] XML namespaces are consistent (Pattern 24 prevention)
+- [ ] Container items have `<title>` elements (Pattern 26 prevention)
 
 ## Checklist
 - [ ] My code follows the project's style guidelines

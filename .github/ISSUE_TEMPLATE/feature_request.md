@@ -18,12 +18,18 @@ How do you envision this working?
 ## Alternative Solutions
 Any alternative approaches you've considered.
 
-## Feature Category
-- [ ] New slide type
-- [ ] Theme/styling enhancement
-- [ ] Content generation improvement
-- [ ] Agent workflow improvement
-- [ ] Documentation
+## Target LMS (if applicable)
+- [ ] Brightspace/D2L
+- [ ] Canvas
+- [ ] Moodle
+- [ ] Blackboard
+- [ ] Other: ___
+
+## Content Type (if applicable)
+- [ ] Course generation
+- [ ] Course remediation/intake
+- [ ] Accessibility improvements
+- [ ] Assessment generation
 - [ ] Other: ___
 
 ## Additional Context

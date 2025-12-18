@@ -1,19 +1,11 @@
 """
 Semantic Structure Extractor
 
-Main module that extracts complete semantic structure from HTML or Markdown content.
+Main module that extracts complete semantic structure from DART-processed HTML.
 Combines heading hierarchy parsing and content block classification to produce
-a structured representation of content suitable for presentation generation.
+a structured representation of textbook content.
 
-Supports:
-- HTML input (DART-processed or generic)
-- Markdown input with YAML front matter
-- Content profiling (difficulty, concepts)
-- Concept graph building
-- Presentation schema transformation
-
-Output conforms to schemas/presentation/presentation_schema.json or
-textbook_structure_schema.json based on extraction method used.
+Output conforms to schemas/learning-objectives/textbook_structure_schema.json
 """
 
 import json
@@ -32,12 +24,6 @@ from content_block_classifier import (
     Definition,
     KeyTerm
 )
-
-# Import new modules
-from markdown_parser import MarkdownParser, MarkdownDocument, detect_format
-from content_profiler import ContentProfiler, ContentProfile
-from concept_graph import ConceptGraphBuilder, ConceptGraph
-from presentation_transformer import PresentationTransformer
 
 
 @dataclass
@@ -156,12 +142,6 @@ class SemanticStructureExtractor:
         self.block_classifier = ContentBlockClassifier()
         self.config = self._load_config(config_path)
 
-        # Initialize new modules
-        self.markdown_parser = MarkdownParser(self.config.get('markdown_parsing', {}))
-        self.content_profiler = ContentProfiler(self.config)
-        self.concept_builder = ConceptGraphBuilder(self.config)
-        self.presentation_transformer = PresentationTransformer(self.config)
-
     def _load_config(self, config_path: Optional[str]) -> Dict[str, Any]:
         """Load configuration from file or use defaults."""
         default_config = {
@@ -225,203 +205,21 @@ class SemanticStructureExtractor:
             ]
         }
 
-    def extract_file(self, file_path: str, format: str = "auto") -> Dict[str, Any]:
+    def extract_file(self, file_path: str) -> Dict[str, Any]:
         """
-        Extract semantic structure from a file (HTML or Markdown).
+        Extract semantic structure from an HTML file.
 
         Args:
-            file_path: Path to the file
-            format: Format hint ("auto", "html", "markdown")
+            file_path: Path to the HTML file
 
         Returns:
             Dictionary conforming to textbook_structure_schema.json
         """
         path = Path(file_path)
         with open(path, 'r', encoding='utf-8') as f:
-            content = f.read()
+            html_content = f.read()
 
-        # Auto-detect format if needed
-        if format == "auto":
-            if path.suffix.lower() in ['.md', '.markdown']:
-                format = "markdown"
-            elif path.suffix.lower() in ['.html', '.htm']:
-                format = "html"
-            else:
-                format = detect_format(content)
-
-        return self.extract(content, str(path), format=format)
-
-    def extract(self, content: str, source_path: str = "", format: str = "auto") -> Dict[str, Any]:
-        """
-        Extract semantic structure from content (HTML or Markdown).
-
-        Args:
-            content: The content string to process
-            source_path: Path to the source file (for metadata)
-            format: Format hint ("auto", "html", "markdown")
-
-        Returns:
-            Dictionary conforming to textbook_structure_schema.json
-        """
-        # Auto-detect format
-        if format == "auto":
-            format = detect_format(content)
-
-        if format == "markdown":
-            return self._extract_from_markdown(content, source_path)
-        else:
-            return self._extract_from_html(content, source_path)
-
-    def _extract_from_markdown(self, content: str, source_path: str = "") -> Dict[str, Any]:
-        """Extract semantic structure from Markdown content."""
-        doc = self.markdown_parser.parse(content, source_path)
-        result = doc.to_dict()
-
-        # Add extraction metadata
-        result['documentInfo']['extractionTimestamp'] = datetime.now().isoformat()
-        result['documentInfo']['sourcePath'] = source_path
-        result['documentInfo']['sourceFormat'] = 'markdown'
-
-        return result
-
-    def _extract_from_html(self, html_content: str, source_path: str = "") -> Dict[str, Any]:
-        """Extract semantic structure from HTML content (original method)."""
-        soup = BeautifulSoup(html_content, 'html.parser')
-
-        # Extract heading hierarchy
-        hierarchy = self.heading_parser.parse(html_content)
-
-        # Extract document info
-        document_info = self._extract_document_info(soup, source_path)
-
-        # Build chapter structure
-        chapters = self._build_chapter_structure(soup, hierarchy)
-
-        # Extract concepts
-        extracted_concepts = self._extract_all_concepts(chapters)
-
-        # Extract review questions
-        review_questions = self._extract_review_questions(soup, chapters)
-
-        return {
-            "documentInfo": document_info,
-            "tableOfContents": hierarchy.to_toc(),
-            "chapters": [ch.to_dict() for ch in chapters],
-            "extractedConcepts": extracted_concepts,
-            "reviewQuestions": [
-                {
-                    "question": q.question,
-                    "chapterId": q.chapter_id,
-                    "sectionId": q.section_id,
-                    "bloomLevel": q.bloom_level
-                }
-                for q in review_questions
-            ]
-        }
-
-    def extract_with_profiling(
-        self,
-        content: str,
-        source_path: str = "",
-        format: str = "auto"
-    ) -> Dict[str, Any]:
-        """
-        Extract semantic structure with content profiling.
-
-        Adds difficulty assessment, concept extraction, and concept graph.
-
-        Args:
-            content: Content to extract from
-            source_path: Source file path
-            format: Format hint
-
-        Returns:
-            Dictionary with semantic structure plus profiling data
-        """
-        # Get base extraction
-        structure = self.extract(content, source_path, format)
-
-        # Profile content
-        profiles = self._profile_all_content(structure)
-        structure['contentProfiles'] = profiles
-
-        # Build concept graph
-        concept_graph = self.concept_builder.build_graph(structure)
-        structure['conceptGraph'] = concept_graph.to_dict()
-
-        # Detect pedagogical pattern
-        pattern = self.content_profiler.detect_pedagogical_pattern(
-            structure.get('chapters', [])
-        )
-        structure['pedagogicalPattern'] = pattern.value
-
-        return structure
-
-    def extract_for_presentation(
-        self,
-        content: str,
-        source_path: str = "",
-        format: str = "auto"
-    ) -> Dict[str, Any]:
-        """
-        Extract and transform content directly to presentation schema format.
-
-        This is the primary method for the presentation generation pipeline.
-
-        Args:
-            content: Content to extract from
-            source_path: Source file path
-            format: Format hint
-
-        Returns:
-            Dictionary conforming to schemas/presentation/presentation_schema.json
-        """
-        # Get profiled extraction
-        structure = self.extract_with_profiling(content, source_path, format)
-
-        # Transform to presentation format
-        concept_graph = structure.get('conceptGraph', {})
-        presentation = self.presentation_transformer.transform(
-            structure,
-            concept_graph
-        )
-
-        return presentation
-
-    def _profile_all_content(self, structure: Dict[str, Any]) -> Dict[str, Any]:
-        """Profile all content in the structure."""
-        profiles = {
-            'sections': {},
-            'aggregate': None,
-            'difficultyDistribution': {
-                'beginner': 0,
-                'intermediate': 0,
-                'advanced': 0
-            }
-        }
-
-        all_profiles = []
-
-        for chapter in structure.get('chapters', []):
-            section_profile = self.content_profiler.profile_section(chapter)
-            profiles['sections'][chapter.get('id', '')] = section_profile.to_dict()
-
-            if section_profile.aggregate_profile:
-                all_profiles.append(section_profile.aggregate_profile)
-
-                # Track difficulty distribution
-                level = section_profile.aggregate_profile.difficulty_level.value
-                profiles['difficultyDistribution'][level] = (
-                    profiles['difficultyDistribution'].get(level, 0) + 1
-                )
-
-        # Create overall aggregate
-        if all_profiles:
-            profiles['aggregate'] = self.content_profiler._aggregate_profiles(
-                all_profiles, 'document'
-            ).to_dict()
-
-        return profiles
+        return self.extract(html_content, str(path))
 
     def _extract_document_info(self, soup: BeautifulSoup, source_path: str) -> Dict[str, Any]:
         """Extract document metadata."""
@@ -475,6 +273,10 @@ class SemanticStructureExtractor:
             main = soup.find('main', attrs={'role': 'main'})
             if main:
                 return 'dart_html'
+
+        # Check for IMSCC markers
+        if soup.find(attrs={'class': lambda x: x and 'imscc' in str(x).lower()}):
+            return 'imscc_html'
 
         return 'generic_html'
 
@@ -897,37 +699,19 @@ class SemanticStructureExtractor:
         return None
 
 
-def extract_textbook_structure(file_path: str, config_path: Optional[str] = None) -> Dict[str, Any]:
+def extract_textbook_structure(html_path: str, config_path: Optional[str] = None) -> Dict[str, Any]:
     """
-    Convenience function to extract textbook structure from a file.
+    Convenience function to extract textbook structure from an HTML file.
 
     Args:
-        file_path: Path to the HTML or Markdown file
+        html_path: Path to the HTML file
         config_path: Optional path to configuration file
 
     Returns:
         Dictionary conforming to textbook_structure_schema.json
     """
     extractor = SemanticStructureExtractor(config_path)
-    return extractor.extract_file(file_path)
-
-
-def extract_for_presentation(file_path: str, config_path: Optional[str] = None) -> Dict[str, Any]:
-    """
-    Convenience function to extract and transform to presentation format.
-
-    Args:
-        file_path: Path to the HTML or Markdown file
-        config_path: Optional path to configuration file
-
-    Returns:
-        Dictionary conforming to presentation_schema.json
-    """
-    extractor = SemanticStructureExtractor(config_path)
-    path = Path(file_path)
-    with open(path, 'r', encoding='utf-8') as f:
-        content = f.read()
-    return extractor.extract_for_presentation(content, str(path))
+    return extractor.extract_file(html_path)
 
 
 def main():
@@ -936,9 +720,9 @@ def main():
     import argparse
 
     parser = argparse.ArgumentParser(
-        description='Extract semantic structure from HTML or Markdown content'
+        description='Extract semantic structure from DART-processed HTML'
     )
-    parser.add_argument('input_file', help='Path to the HTML or Markdown file')
+    parser.add_argument('html_file', help='Path to the HTML file to process')
     parser.add_argument(
         '-c', '--config',
         help='Path to configuration file',
@@ -954,37 +738,11 @@ def main():
         action='store_true',
         help='Pretty print JSON output'
     )
-    parser.add_argument(
-        '-f', '--format',
-        choices=['auto', 'html', 'markdown'],
-        default='auto',
-        help='Input format (default: auto-detect)'
-    )
-    parser.add_argument(
-        '-m', '--mode',
-        choices=['basic', 'profiled', 'presentation'],
-        default='basic',
-        help='Extraction mode: basic, profiled (with concept graph), or presentation (full transform)'
-    )
 
     args = parser.parse_args()
 
-    extractor = SemanticStructureExtractor(args.config)
+    result = extract_textbook_structure(args.html_file, args.config)
 
-    # Read input file
-    path = Path(args.input_file)
-    with open(path, 'r', encoding='utf-8') as f:
-        content = f.read()
-
-    # Extract based on mode
-    if args.mode == 'presentation':
-        result = extractor.extract_for_presentation(content, str(path), args.format)
-    elif args.mode == 'profiled':
-        result = extractor.extract_with_profiling(content, str(path), args.format)
-    else:
-        result = extractor.extract(content, str(path), args.format)
-
-    # Output
     indent = 2 if args.pretty else None
     output = json.dumps(result, indent=indent, ensure_ascii=False)
 

@@ -1,340 +1,501 @@
-# Slideforge Troubleshooting Guide
+# Courseforge Troubleshooting Guide
 
-Common issues and solutions for PPTX presentation generation.
-
----
-
-## Quick Reference
-
-| Issue | Likely Cause | Solution |
-|-------|--------------|----------|
-| Module not found | Missing dependencies | Activate venv or install python-pptx |
-| Theme not loading | Invalid theme name | Use `--list-templates` to verify |
-| Empty slides | Malformed JSON | Validate against schema |
-| Layout issues | Wrong slide type | Check slide type documentation |
-| Styling not applied | No theme specified | Add `--theme` flag |
+Condensed lessons from 24 failure patterns identified during IMSCC package development.
 
 ---
 
-## Installation Issues
+## Critical Prevention Protocols
 
-### ModuleNotFoundError: No module named 'pptx'
+### Pre-Generation Validation (MANDATORY)
 
-**Cause**: python-pptx not installed or virtual environment not activated.
+Before generating ANY IMSCC package:
 
-**Solution**:
-```bash
-# Option 1: Activate project virtual environment
-source scripts/venv/bin/activate
-
-# Option 2: Install directly
-pip install python-pptx Pillow
-```
-
-### ImportError: template_loader
-
-**Cause**: Running script from wrong directory.
-
-**Solution**:
-```bash
-cd scripts/pptx-generator
-python pptx_generator.py --help
-```
+- [ ] Schema/namespace consistency verified (IMSCC 1.3 recommended)
+- [ ] All learning units contain substantial content (1500+ chars/overview)
+- [ ] Zero placeholder content detected
+- [ ] Module structure matches course outline (no artificial consolidation)
+- [ ] Assessment XML uses QTI 1.2 / D2L formats
+- [ ] Organization structure includes item hierarchy
+- [ ] Assessments linked in organization (not just resources)
+- [ ] Resource identifiers use `_R` suffix
+- [ ] Content items sorted in pedagogical order
+- [ ] **IMSCC version consistent across manifest AND all XML files (Pattern 24)**
 
 ---
 
-## Theme Issues
+## Pattern Quick Reference
 
-### Theme Not Found
-
-**Symptom**: Warning "Template 'xxx' not found, using default"
-
-**Cause**: Invalid theme name or missing template file.
-
-**Solution**:
-```bash
-# List available themes
-python pptx_generator.py --list-templates
-
-# Verify template files exist
-ls templates/pptx/masters/
-```
-
-**Available themes**: `corporate`, `corporate_blue`, `creative`, `dark_mode`, `educational`, `minimal`, `stout`
-
-### Styles Not Applying
-
-**Cause**: Theme colors defined but master template missing.
-
-**Solution**:
-1. Ensure `.pptx` master file exists in `templates/pptx/masters/`
-2. Verify `registry.json` has correct path
-3. Check file permissions
+| Pattern | Issue | Prevention |
+|---------|-------|------------|
+| 1 | Schema/namespace mismatch | Use IMSCC 1.3 consistently |
+| 7 | Folder multiplication | Atomic single-file generation |
+| 10 | Empty ZIP files | Validate package size >100KB |
+| 14 | Mixed resource types | Standardize all resource declarations |
+| 15 | Invalid assessment XML / Quiz questions not loading | Use QTI 1.2 with cc_profile metadata (see Pattern 15 section) |
+| 17 | Empty organization | Include full item hierarchy |
+| 19 | Single-page consolidation | Maintain structure per course outline |
+| 20 | Version/namespace mismatch | Align schemaversion with namespace |
+| 21 | Incomplete content | Validate all units before packaging |
+| 22 | Educational Depth Deficiency | Ensure 600+ words, authentic examples with pedagogical context |
+| 23 | Wrong resource identifier format | Use `_R` suffix for resource identifiers |
+| 24 | IMSCC Version Mismatch | Match manifest version with content XML namespaces |
 
 ---
 
-## Content Issues
+## Schema Consistency (Patterns 1, 14, 20, 24)
 
-### Empty Slides Generated
-
-**Causes**:
-- Missing `content` object in slide definition
-- Wrong field names for slide type
-- Empty arrays
-
-**Solution**: Verify JSON structure matches slide type:
-
-```json
-// Content slide requires "bullets" array
-{
-  "type": "content",
-  "title": "My Slide",
-  "content": {
-    "bullets": ["Point 1", "Point 2"]
-  }
-}
-
-// Two-content requires "left" and "right" arrays
-{
-  "type": "two_content",
-  "title": "Comparison",
-  "content": {
-    "left": ["Left 1"],
-    "right": ["Right 1"]
-  }
-}
+**Correct IMS CC 1.3 manifest (RECOMMENDED):**
+```xml
+<manifest xmlns="http://www.imsglobal.org/xsd/imsccv1p3/imscp_v1p1"
+          xmlns:lom="http://ltsc.ieee.org/xsd/imsccv1p3/LOM/resource"
+          identifier="course_manifest">
+  <metadata>
+    <schema>IMS Common Cartridge</schema>
+    <schemaversion>1.3.0</schemaversion>
+  </metadata>
+</manifest>
 ```
 
-### Slide Type Not Recognized
-
-**Symptom**: Slide renders as basic content instead of expected layout.
-
-**Cause**: Invalid `type` value.
-
-**Valid types**:
-- `title` - Title slide
-- `section_header` - Section divider
-- `content` - Bullet points
-- `two_content` - Two columns
-- `comparison` - Labeled columns
-- `quote` - Quote display
-- `image` - Image slide
-- `blank` - Empty slide
-- `styled_content` - Content with callouts
-
-### Missing Speaker Notes
-
-**Cause**: Notes field not included or empty.
-
-**Solution**:
-```json
-{
-  "type": "content",
-  "title": "Slide Title",
-  "content": {"bullets": ["..."]},
-  "notes": "Speaker notes appear here in presenter view."
-}
-```
+**Resource type standards (IMSCC 1.3):**
+- Content: `type="webcontent"`
+- Quizzes: `type="imsqti_xmlv1p2/imscc_xmlv1p3/assessment"`
+- Assignments: `type="associatedcontent/imscc_xmlv1p3/learning-application-resource"`
+- Discussions: `type="imsdt_xmlv1p3"`
 
 ---
 
-## Layout Issues
+## Assessment XML Format (Pattern 15)
 
-### Text Overflowing Slides
-
-**Cause**: Too much content for slide type.
-
-**Solutions**:
-1. Follow 6x6 rule: max 6 bullets, 6 words each
-2. Split into multiple slides
-3. Use two-column layout for comparisons
-
-### Callout Box Not Appearing
-
-**Cause**: Using `content` type instead of `styled_content`.
-
-**Solution**:
-```json
-{
-  "type": "styled_content",
-  "title": "Key Info",
-  "content": {
-    "bullets": ["Point 1", "Point 2"],
-    "callout_text": "Important note",
-    "callout_type": "tip"
-  }
-}
+**Wrong (custom format):**
+```xml
+<quiz identifier="quiz_week_01">
+  <questions>...</questions>
+</quiz>
 ```
 
-**Callout types**: `info` (blue), `success` (green), `warning` (yellow), `tip` (purple)
+**Correct (QTI 1.2 with CC metadata):**
+```xml
+<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2
+    http://www.imsglobal.org/profile/cc/ccv1p3/ccv1p3_qtiasiv1p2p1_v1p0.xsd">
+  <assessment ident="quiz_week_01" title="Week 1 Quiz">
+    <qtimetadata>
+      <!-- REQUIRED for Brightspace to recognize as quiz -->
+      <qtimetadatafield>
+        <fieldlabel>cc_profile</fieldlabel>
+        <fieldentry>cc.exam.v0p1</fieldentry>
+      </qtimetadatafield>
+      <qtimetadatafield>
+        <fieldlabel>qmd_assessmenttype</fieldlabel>
+        <fieldentry>Examination</fieldentry>
+      </qtimetadatafield>
+    </qtimetadata>
+    <section ident="root_section">
+      <item ident="question_1">
+        <!-- REQUIRED for Brightspace to load questions -->
+        <itemmetadata>
+          <qtimetadata>
+            <qtimetadatafield>
+              <fieldlabel>cc_profile</fieldlabel>
+              <fieldentry>cc.multiple_choice.v0p1</fieldentry>
+            </qtimetadatafield>
+            <qtimetadatafield>
+              <fieldlabel>cc_weighting</fieldlabel>
+              <fieldentry>5</fieldentry>
+            </qtimetadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material><mattext texttype="text/html">Question text</mattext></material>
+          <response_lid ident="response1" rcardinality="Single">
+            <render_choice>
+              <response_label ident="A">
+                <material><mattext texttype="text/html">Option A</mattext></material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar varname="SCORE" vartype="Integer" minvalue="0" maxvalue="5"/>
+          </outcomes>
+          <respcondition>
+            <conditionvar>
+              <varequal respident="response1">A</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="SCORE">5</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+    </section>
+  </assessment>
+</questestinterop>
+```
+
+**Critical CC Metadata Requirements:**
+- `xmlns:xsi` and `xsi:schemaLocation` on root element
+- `cc_profile` at assessment level (cc.exam.v0p1 or cc.quiz.v0p1)
+- `itemmetadata` with `cc_profile` on each question item
+- Question types: `cc.multiple_choice.v0p1`, `cc.true_false.v0p1`, `cc.fib.v0p1`, `cc.essay.v0p1`
+
+**Fix Script**: `scripts/fix_quiz_metadata.py` can add missing metadata to existing packages
 
 ---
 
-## File Issues
+## Organization Structure (Patterns 17, 18)
 
-### Output File Not Created
-
-**Causes**:
-- Invalid output path
-- Permission denied
-- JSON parsing error
-
-**Solution**:
-```bash
-# Check for errors in output
-python pptx_generator.py -i input.json -o output.pptx 2>&1
-
-# Verify input JSON is valid
-python -c "import json; json.load(open('input.json'))"
+**Wrong (empty organization):**
+```xml
+<organization identifier="ORG" structure="rooted-hierarchy">
+</organization>
 ```
 
-### Overwriting Existing File
-
-**Behavior**: Existing files are overwritten without warning.
-
-**Prevention**: Use timestamped filenames:
-```bash
-python pptx_generator.py -i input.json -o "presentation_$(date +%Y%m%d_%H%M%S).pptx"
+**Correct (full hierarchy with assessments):**
+```xml
+<organization identifier="ORG" structure="rooted-hierarchy">
+  <item identifier="module_1_item">
+    <title>Module 1: Introduction</title>
+    <item identifier="module_1_overview_item" identifierref="module_1_overview_R">
+      <title>Module Overview</title>
+    </item>
+    <item identifier="module_1_content_item" identifierref="module_1_content_R">
+      <title>Content</title>
+    </item>
+    <item identifier="module_1_discussion_item" identifierref="discussion_module_1_R">
+      <title>Module 1 Discussion</title>
+    </item>
+    <item identifier="module_1_assignment_item" identifierref="assignment_module_1_R">
+      <title>Module 1 Assignment</title>
+    </item>
+    <item identifier="module_1_quiz_item" identifierref="quiz_module_1_R">
+      <title>Module 1 Quiz</title>
+    </item>
+  </item>
+</organization>
 ```
 
 ---
 
-## JSON Validation
+## Assessment Packaging (CRITICAL)
 
-### Schema Validation
+### Common Mistake: Assessments Missing from Navigation
 
-Validate your JSON against the presentation schema:
+Assessments must be included in BOTH the `<resources>` AND `<organization>` sections.
+
+**Wrong (assessments only in resources):**
+```xml
+<resources>
+  <resource identifier="quiz_1" type="imsqti_xmlv1p2/..." href="quiz_1.xml"/>
+</resources>
+<organization>
+  <!-- Quiz not linked - won't appear in Brightspace navigation! -->
+</organization>
+```
+
+**Correct (assessments in both sections):**
+```xml
+<resources>
+  <resource identifier="quiz_module_1_R" type="imsqti_xmlv1p2/..." href="quiz_module_1.xml"/>
+</resources>
+<organization>
+  <item identifier="module_1_item">
+    <title>Module 1</title>
+    <item identifier="quiz_module_1_item" identifierref="quiz_module_1_R">
+      <title>Module 1 Quiz</title>
+    </item>
+  </item>
+</organization>
+```
+
+### Resource Identifier Naming Convention
+
+Brightspace expects resource identifiers to end with `_R` suffix:
+- Organization item: `identifier="module_1_overview_item"`
+- Resource: `identifier="module_1_overview_R"`
+- Link: `identifierref="module_1_overview_R"`
+
+### Content Ordering Within Modules
+
+Items should be sorted in pedagogical order:
+1. Overview
+2. Learning Objectives
+3. Content sections (numbered)
+4. Summary/Self-check
+5. Discussion
+6. Assignment
+7. Quiz
+
+### Assessment-Module Association
+
+Assessments are mapped to modules by:
+1. Parsing week/module number from ID (e.g., `quiz_module_3_` → Module 3)
+2. Checking course structure for explicit assignment
+3. Defaulting to last module if no pattern detected
+
+---
+
+## Content Quality (Patterns 5, 16, 19, 21)
+
+### Minimum Content Requirements
+
+| Content Type | Minimum Words |
+|--------------|---------------|
+| Week overview | 400+ |
+| Concept explanation | 600+ |
+| Key concepts section | 300+ |
+| Applications | 400+ |
+| Study questions | 200+ |
+
+### Placeholder Detection
+
+Reject content containing:
+- "Content will be developed"
+- "TODO:" or "placeholder"
+- "Coming soon"
+- Generic text without subject matter
+
+### Structure Validation
+
+Each learning unit should contain modules appropriate to its complexity:
+- Overview module (required)
+- Content modules (1+ based on topic complexity)
+- Key concepts/summary module
+- Applications/examples module
+- Assessment module (aligned with learning objectives)
+
+**Note**: Module count is determined by course outline based on content scope - not a fixed number.
+
+---
+
+## Atomic Package Generation (Pattern 7)
+
+**Critical constraints:**
+- Generate exactly ONE .imscc file per execution
+- No intermediate working directories
+- Pre-flight validation: check export path doesn't exist
+- Post-execution validation: confirm single output file
+- Immediate cleanup on any error
 
 ```python
-import json
-import jsonschema
-
-with open('schemas/presentation/presentation_schema.json') as f:
-    schema = json.load(f)
-
-with open('your_presentation.json') as f:
-    content = json.load(f)
-
-jsonschema.validate(content, schema)
-```
-
-### Common JSON Errors
-
-**Missing commas**:
-```json
-// Wrong
-{
-  "title": "Slide 1"
-  "content": {}
-}
-
-// Correct
-{
-  "title": "Slide 1",
-  "content": {}
-}
-```
-
-**Trailing commas**:
-```json
-// Wrong (JSON doesn't allow trailing commas)
-{
-  "bullets": [
-    "Point 1",
-    "Point 2",
-  ]
-}
-
-// Correct
-{
-  "bullets": [
-    "Point 1",
-    "Point 2"
-  ]
-}
+def validate_single_output(export_dir):
+    files = os.listdir(export_dir)
+    if len(files) != 1 or not files[0].endswith('.imscc'):
+        raise SystemExit("Multiple files detected - aborting")
 ```
 
 ---
 
-## Performance Issues
+## IMSCC Version Mismatch (Pattern 24) - CRITICAL
 
-### Slow Generation
+### Symptoms
+When Pattern 24 occurs in Brightspace:
+- All content appears in ONE flat module instead of organized by week
+- Discussion topics show resource IDs (e.g., "RES_W01_DISC_R") instead of titles
+- Missing item titles throughout course structure
+- Navigation hierarchy collapses to flat list
 
-**Causes**:
-- Large number of slides
-- High-resolution images
-- Complex styled content
+### Root Cause
+Manifest declares one IMSCC version but content XMLs use different version namespaces.
 
-**Solutions**:
-1. Batch large presentations into sections
-2. Optimize images before including
-3. Use simpler slide types where possible
+**WRONG (version mismatch):**
+```xml
+<!-- Manifest says v1.1 -->
+<schemaversion>1.1.0</schemaversion>
+<resource type="imsdt_xmlv1p1" ...>
 
-### Memory Errors
+<!-- But discussion XML uses v1.3 namespace -->
+<topic xmlns="http://www.imsglobal.org/xsd/imsccv1p3/imsdt_v1p3">
+```
 
-**Cause**: Very large presentations or memory-intensive operations.
+**CORRECT (consistent v1.3):**
+```xml
+<!-- Manifest declares v1.3 -->
+<schemaversion>1.3.0</schemaversion>
+<resource type="imsdt_xmlv1p3" ...>
 
-**Solution**:
+<!-- Discussion XML uses matching v1.3 namespace -->
+<topic xmlns="http://www.imsglobal.org/xsd/imsccv1p3/imsdt_v1p3">
+```
+
+### Version Alignment Requirements
+
+| Component | IMSCC 1.3 (Recommended) |
+|-----------|------------------------|
+| Manifest xmlns | `imsccv1p3/imscp_v1p1` |
+| Schema version | `1.3.0` |
+| Discussion type | `imsdt_xmlv1p3` |
+| Discussion XML | `imsccv1p3/imsdt_v1p3` |
+| Quiz type | `imsqti_xmlv1p2/imscc_xmlv1p3/assessment` |
+| Assignment type | `assignment_xmlv1p0` |
+
+### Validation Command
 ```bash
-# Generate in sections
-python pptx_generator.py -i section1.json -o section1.pptx
-python pptx_generator.py -i section2.json -o section2.pptx
-# Combine in PowerPoint
+# Check for version mismatches (should not find v1p1 in a v1p3 package)
+grep -r "imsccv1p1" *.xml  # Should return NO results for v1.3 packages
+grep -r "imsccv1p3" *.xml  # Should find all IMSCC references
 ```
 
 ---
 
-## Agent Workflow Issues
+## Wrong Assignment Resource Type (Pattern 25) - CRITICAL
 
-### Batch Size Exceeded
+### Symptoms
+When Pattern 25 occurs in Brightspace:
+- Assignments import as raw .xml files instead of native Brightspace assignments
+- Assignment dropboxes not created in Brightspace
+- No assignment submission functionality available to students
+- Module contains "assignment_week_XX.xml" file link instead of assignment tool
 
-**Symptom**: Agents not completing or timing out.
+### Root Cause
+Manifest uses wrong resource type for assignments. The type `associatedcontent/imscc_xmlv1p3/learning-application-resource` tells Brightspace to treat assignments as generic associated content files rather than native assignments.
 
-**Cause**: More than 10 simultaneous Task calls.
+**WRONG (imports as XML file):**
+```xml
+<resource identifier="RES_W01_ASSIGN_R"
+    type="associatedcontent/imscc_xmlv1p3/learning-application-resource"
+    href="week_01/assignment_week_01.xml">
+```
 
-**Solution**: Limit to 10 agents per batch, wait for completion before next batch.
+**CORRECT (creates native Brightspace assignment):**
+```xml
+<resource identifier="RES_W01_ASSIGN_R"
+    type="assignment_xmlv1p0"
+    href="week_01/assignment_week_01.xml">
+```
 
-### Section Not Generated
+### Assignment XML Namespace
+Assignment XML files MUST use the correct IMSCC extension namespace:
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<assignment xmlns="http://www.imsglobal.org/xsd/imscc_extensions/assignment"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    identifier="assignment_week_01"
+    xsi:schemaLocation="http://www.imsglobal.org/xsd/imscc_extensions/assignment
+    http://www.imsglobal.org/profile/cc/cc_extensions/cc_extresource_assignmentv1p0_v1p0.xsd">
+  <title>Assignment Title</title>
+  <text texttype="text/html"><![CDATA[...]]></text>
+  <gradable>true</gradable>
+  <submission_types>
+    <submission_type>file_upload</submission_type>
+  </submission_types>
+  <points_possible>100</points_possible>
+</assignment>
+```
 
-**Cause**: Agent received multi-section prompt.
+### IMPORTANT: Do NOT include D2L namespace references
+Avoid d2l: prefixed elements like `<d2l:dropbox_type>` or `<d2l:rubric>` in assignment XMLs - these cause parsing errors when the d2l namespace is not declared.
 
-**Solution**: One agent = one section. Never ask an agent to create multiple sections.
+### Validation Command
+```bash
+# Check for wrong assignment resource types
+grep -r "learning-application-resource" imsmanifest.xml  # Should return NO results
+grep -r "assignment_xmlv1p0" imsmanifest.xml  # Should find all assignments
+```
+
+---
+
+## Missing Title Elements on Container Items (Pattern 26) - CRITICAL
+
+### Symptoms
+When Pattern 26 occurs in Brightspace:
+- Modules display as "imported module" instead of proper names like "Week 1: Introduction..."
+- Course structure imports but navigation shows generic labels
+- Week/unit titles are missing despite being in the manifest
+
+### Root Cause
+Container items (weeks, units, modules) use `title` **attributes** but lack `<title>` **child elements**. Brightspace ignores `title` attributes and only reads `<title>` elements.
+
+**WRONG (title attribute only - Brightspace ignores it):**
+```xml
+<item identifier="ITEM_WEEK_01" title="Week 1: Introduction to Python">
+  <item identifier="ITEM_W01_M01" identifierref="RES_W01_M01_R">
+    <title>Module 1: Welcome</title>
+  </item>
+</item>
+```
+
+**CORRECT (title as child element):**
+```xml
+<item identifier="ITEM_WEEK_01">
+  <title>Week 1: Introduction to Python</title>
+  <item identifier="ITEM_W01_M01" identifierref="RES_W01_M01_R">
+    <title>Module 1: Welcome</title>
+  </item>
+</item>
+```
+
+### IMS CC Specification
+The IMS Common Cartridge specification requires `<title>` child elements for organization items, not `title` attributes. While both may be valid XML, Brightspace only processes the child element.
+
+### Fix
+Convert all container items to use `<title>` child elements:
+1. Remove `title` attribute from `<item>` tag
+2. Add `<title>` child element as first child inside `<item>`
+3. Ensure ALL organizational levels have `<title>` elements (course, weeks, modules)
+
+### Validation Command
+```bash
+# Check for items with title attributes (potential issues)
+grep -E '<item[^>]+title=' imsmanifest.xml
+
+# Verify title elements exist
+grep -E '<item[^>]*>\s*<title>' imsmanifest.xml  # Should find container items
+```
+
+---
+
+## Common Import Errors
+
+### "Illegal XML, unable to load"
+- Check schema/namespace consistency
+- Verify all resource types are valid
+- Validate assessment XML format
+- **Check for IMSCC version mismatch (Pattern 24)**
+
+### "Schema version does not match XML Namespace"
+- Align `<schemaversion>` with xmlns namespace
+- Use 1.3.0 with imsccv1p3 (recommended)
+
+### "Number of content items converted: 0"
+- Check organization structure has item hierarchy
+- Verify resources are properly linked
+- Ensure content files exist and are referenced
+
+### "Plugin not found"
+- Use Brightspace-compatible resource types
+- Include proper D2L metadata for assessments
 
 ---
 
 ## Validation Checklist
 
-### Before Generation
-- [ ] JSON is valid (no syntax errors)
-- [ ] All slides have `type` field
-- [ ] Content fields match slide type
-- [ ] Bullet arrays are not empty
+### Before Packaging
+- [ ] All HTML files contain substantial content
+- [ ] No placeholder text in any file
+- [ ] All learning units have appropriate depth for their topics
+- [ ] Assessment XML validates against QTI schema
+- [ ] Manifest organization has full hierarchy
+- [ ] All file references resolve correctly
 
-### After Generation
-- [ ] PPTX opens in PowerPoint/LibreOffice
-- [ ] All slides render correctly
-- [ ] Theme colors applied
-- [ ] Speaker notes present
-
----
-
-## Getting Help
-
-If issues persist:
-
-1. **Check examples**: `templates/pptx/examples/beekeeping_example.json`
-2. **Review schemas**: `schemas/presentation/`
-3. **Test with minimal input**: Create simple 2-slide presentation first
-4. **Check logs**: Generator outputs INFO/WARNING messages
+### After Packaging
+- [ ] Package size >100KB (substantial content)
+- [ ] Single .imscc file generated
+- [ ] ZIP structure valid
+- [ ] Test import in Brightspace dev environment
 
 ---
 
-## Error Messages Reference
+## Success Criteria
 
-| Error | Meaning | Fix |
-|-------|---------|-----|
-| `Layout index X not found` | Theme missing layouts | Use different theme or check master file |
-| `Image not found` | Image path invalid | Use absolute path or verify file exists |
-| `No module named 'pptx'` | Dependency missing | `pip install python-pptx` |
-| `JSONDecodeError` | Invalid JSON syntax | Validate JSON structure |
-| `KeyError: 'content'` | Missing required field | Add `content` object to slide |
+A properly generated IMSCC package will:
+1. Import without XML errors
+2. Create navigation structure with all weeks
+3. Display content within modules
+4. Create native assessment tools (quizzes, assignments)
+5. Integrate with Brightspace gradebook
+6. Render properly on mobile devices
+
+---
+
+*For complete pattern documentation, see [PATTERN_PREVENTION_GUIDE.md](PATTERN_PREVENTION_GUIDE.md)*
